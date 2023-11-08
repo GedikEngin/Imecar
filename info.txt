@@ -1,2 +1,28 @@
 basic script to compare single thread vs multi thread performance
 noticed that using averages increased the time it takes to complete the task but still maintains the point of multi thread being more suitable for larger tasks
+
+rough guide & documentation & source
+
+multiprocessing.cpu_count()
+returns number of cpu cores available, logic and physical
+
+max(1, n // num_processes)
+https://docs.python.org/3/library/functions.html#max
+makes it so the value of max will be either arg1 (1), or arg2 (n//num_processes)
+
+multiprocessing.Process(target=cpu_bound_task, args=(part_n,))
+https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process
+takes in target, the function that is being called
+and the argument that will be passed into the function in tuple form
+
+process.start()
+starts the processing/computation of task
+
+process.join()
+joins the threads end result together
+
+start_time = time.time()
+sets start time to current time
+
+end_time = time.time()
+sets end time to current time
