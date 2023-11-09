@@ -40,3 +40,9 @@ DROP DATABASE <name>;
 example:
 DROP DATABASE soap_store;
 
+equilavent of double clicking (making it focus)
+USE <db name>;
+
+to view database being used:
+SELECT DATABASE();
+
