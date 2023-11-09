@@ -12,8 +12,13 @@ FLUSH PRIVILEGES;
 links:
 https://dev.mysql.com/doc/refman/8.0/en/database-use.html
 https://www.w3schools.com/mysql/
+
+keyboard shortcuts:
 https://dev.mysql.com/doc/workbench/en/wb-keys.html
 https://www.youtube.com/watch?v=4VLKbZDbpAs
+
+data types:
+https://dev.mysql.com/doc/refman/8.0/en/data-types.html
 
 main shortcuts:
 to run highlighted statements
@@ -46,3 +51,10 @@ USE <db name>;
 to view database being used:
 SELECT DATABASE();
 
+to create table using varchar&int: // you need to specify use just before table creation
+USE animals;
+CREATE TABLE cats(
+    name VARCHAR(100),
+    breed VARCHAR(30),
+    age INT
+);
