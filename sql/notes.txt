@@ -26,3 +26,30 @@ DROP DATABASE <name>;
 example:
 DROP DATABASE soap_store;
 
+links:
+https://dev.mysql.com/doc/refman/8.0/en/database-use.html
+https://www.w3schools.com/mysql/
+https://dev.mysql.com/doc/workbench/en/wb-keys.html
+
+main shortcuts:
+to run highlighted statements
+ctrl + shift + enter 
+
+run highlighted/cursor statement
+ctrl + enter
+
+The general command for creating a database:
+CREATE DATABASE <database_name>;
+
+A specific example:
+CREATE DATABASE soap_store;
+
+to create db but check if it exsists or not
+
+CREATE DATABASE IF NOT EXISTS <name>
+
+to delete/drop a db with all its contents
+DROP DATABASE <name>;
+
+example:
+DROP DATABASE soap_store;
