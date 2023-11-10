@@ -1,8 +1,13 @@
+regex:
+https://www.postgresql.org/docs/current/functions-matching.html
+
 # pay attention to joins, relations
+
+SELECT <col> FROM <table> # basic column
 
 SELECT <column1>, <col2>..., FROM <table name> # returns the columns specified from table
 
-ORDER BY <col> ASC/DESC # orders info in ascending/descending order
+ORDER BY <col> ASC/DESC,  <col2> ASC/DESC, <col3> ASC/DESC # orders info in ascending/descending order, you can also sort by columns that you dont select but its better to have it
 
 SELECT DISTINCT <col> FROM <table> #returns the different entries that arent duplicate in table
 #or for legability/ease of use
@@ -19,5 +24,23 @@ ex: SELECT title, rental_rate FROM film WHERE rental_rate <= 3
 
 SELECT <col1> <col2>... FROM <table> WHERE <col you want to apply condition to> {condition} and {condition2} and {con3}.... # you can chain conditions
 
-  
+LIMIT # goes at the end of the command, as its the final command and cuts out data that surpasses the amount requested
+SELECT <column1> FROM <table> LIMIT 10 # will give us the first 10 rows
+SELECT * FROM payment ORDER BY payment_date DESC LIMIT 10 # gives the most recent 10 transactions within context
+
+SELECT <column1> FROM <table> WHERE <col> BETWEEN val1 AND val2 # it works for dates also in format 'YYYY-MM-DD', keep in mind end date goes upp to 00:00 time only
+SELECT <column1> FROM <table> WHERE <col> NOT BETWEEN val1 AND val2 #i.e. if you want info between 12 nov and 14 nov, you need to put 15 nov as end date
+
+SELECT <col> FROM <table> WHERE <col> IN <val you are looking to match> # returns items from col where they match the values provided from in
+SELECT <col> FROM <table> WHERE <col> NOT IN <val you are looking to match> # does the same but returns items that arent in val
+
+SELECT <col> FROM <table> LIKE '%gmail.com' # returns all strings with gmail.com at the end, % matches any sequence of characters
+
+SELECT <col> FROM <table> LIKE 'Mission Impossible _' # means it will only be the _ being replaced, _ matches one character
+
+you can mix and match wildcards:
+WHERE name LIKE '_her%' # name will be one opening character, followed by her, followed by any number of characters
+you can also use ilike if you want the string like to be case insensitive
+or you can sandwhich it as '%er%' to return names with er at any point in their name
+you can use it in tandem with not to look for data that doesnt include the like
 
