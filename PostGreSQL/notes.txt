@@ -1,3 +1,23 @@
-SELECT <column1>, <col2>..., FROM <table name>
-ORDER BY <col> ASC/DESC
-SELECT DISTINCT <col> FROM <table>
+# pay attention to joins, relations
+
+SELECT <column1>, <col2>..., FROM <table name> # returns the columns specified from table
+
+ORDER BY <col> ASC/DESC # orders info in ascending/descending order
+
+SELECT DISTINCT <col> FROM <table> #returns the different entries that arent duplicate in table
+#or for legability/ease of use
+SELECT DISTINCT(<col>) FROM <table>
+
+SELECT COUNT(<col>) FROM <table> #returns the number of items of column in table
+
+SELECT COUNT(DISTINCT(<col>)) FROM <table> # returns number of unique items in column in table
+
+SELECT WHERE # has comparison operators, = equal > graeter than < less than >= greater than or equal to <= less than or equal to <> or != not equal to
+
+SELECT <col1> <col2>... FROM <table> WHERE <col you want to apply condition to> {condition} # returns selected columns where condition is applied to column from table
+ex: SELECT title, rental_rate FROM film WHERE rental_rate <= 3
+
+SELECT <col1> <col2>... FROM <table> WHERE <col you want to apply condition to> {condition} and {condition2} and {con3}.... # you can chain conditions
+
+  
+
