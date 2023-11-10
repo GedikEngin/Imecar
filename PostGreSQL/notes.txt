@@ -97,3 +97,51 @@ INSERT INTO job(job_name) VALUES ('President')
 
 connection insert:
 INSERT INTO account_job(user_id, job_id, hire_date) VALUES (1, 1, CURRENT_TIMESTAMP)
+
+to update:
+UPDATE account SET last_login = CURRENT_TIMESTAMP;
+
+update join:
+UPDATE account_job SET hire_date = account.created_on FROM account WHERE account_job.user_id = account.user_id
+# updates hire_date in account_job to created_on inside account table, and where the id's match up from user_id in account_job and account
+
+update using return command:
+UPDATE account SET last_login = CURRENT_TIMESTAMP RETURNING email, created_on, last_login
+# updates account last_login to current_timestamp and returns columns specified <email, created_on, last_login> 
+
+DELETE FROM <table> # deletes the entire contents of table
+DELETE FROM <table> WHERE <col> = <condition> # deletes based on condition
+DELETE FROM job WHERE <job_name> = <'cowboy'> # deletes cowboy from job table
+
+deleting based on presence in other tables:
+DELETE FROM <tableA> USING <tableB> WHERE tableA.id = tableB.id
+
+Alter is used to add drop or renaming columns. change data types and setting constants, check constraints and renaming table
+ALTER TABLE <table_name> # the base command
+
+ALTER TABLE <table_name> RENAME TO <new_name>
+
+ADD COLUMN new_col TYPE # to add new column
+DROP COLUMN <col_name> # drops the column
+
+ALTER COLUMN <col_name> # to execute an action from below
+	SET DEFAULT value #implement this to have a default value to act as an initial entry to column
+	DROP DEFAULT # removes default value
+	SET NOT NULL # prevents column from being a blank entry
+	DROP NOT NULL # drops not null constraints
+	ADD CONSTRAINT <constraint_name> # add a constraint using the name like check constraint
+
+ALTER TABLE <table_name>
+DROP COLUMN IF EXISTS <col_name>
+#drops the column if it exists, think of it as error catching
+
+check constraint:
+create table employees(
+	emp_id serial primary key,
+	first_name varchar(50) not null,
+	last_name varchar(50) not null,
+	birthdate date check (birthdate > '1900-01-01'), # checks birthdate is greaater than (after) 1900-01-01
+	hire_date date check (hire_date > birthdate), # checks hire date is post birthdate
+	salary integer check (salary > 0) # ensures salary cannot be 0
+)
+
