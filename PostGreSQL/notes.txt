@@ -44,3 +44,50 @@ you can also use ilike if you want the string like to be case insensitive
 or you can sandwhich it as '%er%' to return names with er at any point in their name
 you can use it in tandem with not to look for data that doesnt include the like
 
+data types:
+boolean: true or false
+character: char, varchar, text
+numeric: integet, float
+temporal: date, time. timestamp, interval
+uuid: universally unique identifiers
+array
+json
+hstore key value pair
+special types: network addresses, geometric data
+
+constraints:
+2 types, column & table constraints
+column constraints:
+not null: ensures column isnt null
+unique: ensures all values in column are different
+primary key: uniquely identifies each row/record in db
+foreign key: constrains data based on columns in other tables
+check: ensures all values in a column satify certain conditions
+exclusion: if any 2 rows are compared on the specified column or expression using the specified operator, not all of these comparisons will return true
+
+table constraints:
+check(condition): to check a condition when inserting or updating data references : to constrain the value stored in the column that must exists in a column in another table
+unique(column_list): forces the values stored in the columns listed inside the brackets to be unique
+primary key(column_list): allows you to define the primary key that consists of multiple columns
+
+example table creation & linking:
+CREATE TABLE account(
+	user_id SERIAL PRIMARY KEY,
+	username VARCHAR(50) UNIQUE NOT NULL,
+	password VARCHAR(50) NOT NULL,
+	email VARCHAR(250) UNIQUE NOT NULL,
+	created_on TIMESTAMP NOT NULL,
+	last_login TIMESTAMP
+)
+
+CREATE TABLE job(
+	job_id SERIAL PRIMARY KEY,
+	job_name VARCHAR(200) UNIQUE NOT NULL
+)
+
+CREATE TABLE account_job(
+	user_id INTEGER REFERENCES account(user_id),
+	job_id INTEGER REFERENCES job(job_id),
+	hire_date TIMESTAMP
+)
+
