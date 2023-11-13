@@ -1,8 +1,7 @@
 from PIL import Image
 from io import BytesIO
 import os
-
-# pip install Pillow
+import base64
 
 def image_to_blob(image_path):
     with open(image_path, 'rb') as image_file:
@@ -13,9 +12,15 @@ def blob_to_image(blob_data, output_path):
     image = Image.open(BytesIO(blob_data))
     image.save(output_path)
 
+def encode_blob_data(blob_data):
+    return base64.b64encode(blob_data).decode('utf-8')
+
+def decode_blob_data(encoded_blob_data):
+    return base64.b64decode(encoded_blob_data.encode('utf-8'))
+
 def read_blob_from_file(blob_file_path):
     with open(blob_file_path, 'rb') as blob_file:
-        return BytesIO(blob_file.read())
+        return blob_file.read()
 
 def main():
     print("Choose an option:")
@@ -38,17 +43,17 @@ def main():
         blob = image_to_blob(image_path)
         print("Image converted to Blob.")
 
-        # Create a .txt file with the blob data in the same directory as the image
+        # Create a .txt file with the encoded blob data in the same directory as the image
         image_name = os.path.splitext(os.path.basename(image_path))[0]
         output_file_path = os.path.join(os.path.dirname(image_path), f"{image_name}.txt")
 
-        with open(output_file_path, 'wb') as output_file:
-            output_file.write(blob.getvalue())
-            print(f"Blob saved to '{output_file_path}'.")
+        with open(output_file_path, 'w') as output_file:
+            output_file.write(encode_blob_data(blob.getvalue()))
+            print(f"Encoded Blob saved to '{output_file_path}'.")
 
     elif choice == "2":
-        # Ask the user for a relative path to the .txt file containing the blob
-        blob_file_path = input("Enter the relative path to the .txt file containing the blob: ")
+        # Ask the user for a relative path to the .txt file containing the encoded blob
+        blob_file_path = input("Enter the relative path to the .txt file containing the encoded blob: ")
 
         # Construct the full path based on the current working directory
         blob_file_path = os.path.abspath(os.path.join(os.getcwd(), blob_file_path))
@@ -57,14 +62,15 @@ def main():
             print("Error: The specified blob file does not exist.")
             return
 
-        blob_data = read_blob_from_file(blob_file_path)
+        encoded_blob_data = read_blob_from_file(blob_file_path)
+        decoded_blob_data = decode_blob_data(encoded_blob_data)
 
         # Automatically generate the output image file name based on the text file name
         output_image_name = os.path.splitext(os.path.basename(blob_file_path))[0]
         output_path = os.path.join(os.path.dirname(blob_file_path), f"{output_image_name}.png")
 
-        blob_to_image(blob_data.getvalue(), output_path)
-        print(f"Blob converted to Image. Image saved as '{output_path}'.")
+        blob_to_image(decoded_blob_data, output_path)
+        print(f"Decoded Blob converted to Image. Image saved as '{output_path}'.")
 
     else:
         print("Invalid choice. Please enter either '1' or '2'.")
