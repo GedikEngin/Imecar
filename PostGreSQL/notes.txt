@@ -146,3 +146,23 @@ create table employees(
 	salary integer check (salary > 0) # ensures salary cannot be 0
 )
 
+
+aggregate function:
+takes multiple inputs and returns one output:
+ROUND(<column>, <digits to round to>) # rounds to the number of specified digits
+AVG(<column>) # returns average value, gives float
+COUNT(<column>) # returns the number of values
+MAX(<column>) # returns maximum value
+MIN(<column>) # returns minimum value
+SUM(<column>) # returns the sum of all values
+
+only happens when using select or have in
+
+group by is suitable for grouping similar types, i.e. cabins in planes, first class, business, economy, etc.
+GROUP BY needs to appear right after a FROM or WHERE statement
+
+items from SELECT need to come up in GROUP BY:
+SELECT company, division, SUM(sales) FROM finance_table GROUP BY company, division # groups the sum of total sales for each company and their divisions
+
+SELECT customer_id FROM payment GROUP BY customer_id # gets all the customer ids, almost a distinct function in this case
+SELECT customer_id, SUM(amount) FROM payment GROUP BY customer_id ORDER BY SUM(amount) # checks the most spending customers
