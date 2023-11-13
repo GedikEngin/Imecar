@@ -2,6 +2,8 @@ from PIL import Image
 from io import BytesIO
 import os
 
+# pip install Pillow
+
 def image_to_blob(image_path):
     with open(image_path, 'rb') as image_file:
         image_data = image_file.read()
