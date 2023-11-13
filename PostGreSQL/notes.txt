@@ -124,6 +124,7 @@ ALTER TABLE <table_name> RENAME TO <new_name>
 ADD COLUMN new_col TYPE # to add new column
 DROP COLUMN <col_name> # drops the column
 
+ALTER TABLE <table_name> # the base command, followed by:
 ALTER COLUMN <col_name> # to execute an action from below
 	SET DEFAULT value #implement this to have a default value to act as an initial entry to column
 	DROP DEFAULT # removes default value
