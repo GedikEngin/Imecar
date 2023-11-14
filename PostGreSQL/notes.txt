@@ -1,6 +1,9 @@
 regex:
 https://www.postgresql.org/docs/current/functions-matching.html
 
+joins:
+https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/
+
 # pay attention to joins, relations
 
 SELECT <col> FROM <table> # basic column
@@ -166,3 +169,19 @@ SELECT company, division, SUM(sales) FROM finance_table GROUP BY company, divisi
 
 SELECT customer_id FROM payment GROUP BY customer_id # gets all the customer ids, almost a distinct function in this case
 SELECT customer_id, SUM(amount) FROM payment GROUP BY customer_id ORDER BY SUM(amount) # checks the most spending customers
+
+SELECT staff_id, COUNT(amount) FROM payment GROUP BY staff_id # returns the staff id and corresponding number of sales as it GROUPs the count of ''payments' made by them
+SELECT staff_id, COUNT(*) FROM payment GROUP BY staff_id # returns the staff id and corresponding number of rows as it GROUPs the count of ''payments' made by them
+
+SELECT rating, AVG(replacement_cost) FROM film GROUP BY rating # returns average replacement cost for each movie rating
+
+select customer_id, sum(amount) from payment GROUP BY customer_id ORDER BY SUM(amount) DESC LIMIT 5 # returms the top spending 5 customers, and the amount they spent as well as their id
+
+SELECT customer_id, SUM(amount) FROM payment WHERE customer_id > 100 GROUP BY customer_ID ORDER BY customer_id ASC # ordering template
+
+having clause allows you to filter post aggregation, so after group by
+
+SELECT customer_id, SUM(amount) FROM payment GROUP BY customer_id HAVING SUM(amount) > 100 # groups the spendings from customer id to one, and then returns ones which have a total sum spent over 100
+
+select store_id, count(customer_id) from customer group by store_id having count(customer_id) > 300 # returns store ids that have over 300 customers associated with that store
+
