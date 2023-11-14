@@ -185,3 +185,70 @@ SELECT customer_id, SUM(amount) FROM payment GROUP BY customer_id HAVING SUM(amo
 
 select store_id, count(customer_id) from customer group by store_id having count(customer_id) > 300 # returns store ids that have over 300 customers associated with that store
 
+
+AS clause:
+gives a temporay name to a column to use during output
+
+SELECT amount AS rental_price FROM payment # displays the amount column under rental_price column
+# however it cannot be used as a parameter in any other use outside of SELECT, useful for when you cant see query/need more context. makes columns easier to interpret
+# this is due to alias being applied after all operations are done, so they arent suitable for filtering
+
+inner join:
+SELECT payment_id, payment.customer_id, first_name # if a column name exists in both tables, you need to specify which table it is fetching info from, if it is unique you can use regular name
+FROM payment
+INNER JOIN customer # joins information where both payment and customer tables overlap
+ON payment.customer_id = customer.customer_id # the tables to join
+
+full outer join:
+SELECT * FROM customer
+FULL OUTER JOIN payment
+ON customer.customer_id = payment.customer_id
+# this returns all columns for customer and payment combined
+# every single row in every single table
+WHERE customer.customer_id IS null
+OR payment.payment_id IS null
+# filter shows informaton that has null values (no payment or customer id)
+
+left outer join:
+# treat as venn, takes contents from A and the intersection, but not B, and order matters
+# you can use it with a WHERE statement to get rows unique to table A, ignoring intersection and table B
+SELECT film.film_id, title, inventory_id, store_id #title, inventory_id, store_id is all unique so you dont need to specify the table
+FROM film # this is the left part to base the query upon
+LEFT OUTER JOIN inventory ON #you can also just say LEFT JOIN, they're the same syntax wise
+inventory.film_id = film.film_id # the order here doesnt matter
+
+#gives the movies that are in the film table but do not exist in inventory as you will get NULL in inventory_id and store_id
+SELECT film.film_id, title, inventory_id, store_id
+FROM film
+LEFT OUTER JOIN inventory ON
+inventory.film_id = film.film_id
+WHERE inventory.film_id IS NULL 
+
+right join:
+# identical to left join, just bases it on the 'right venn diagram'
+RIGHT OUTER JOIN
+RIGHT JOIN
+# you can also replace the left table with right table and you will get results as though youre doing a right join
+
+union:
+table1					table2
+name		amount		name		amount
+david		100			david		200
+claire		50			claier		100
+
+SELECT * FROM table1 UNION SELECT * FROM table2
+
+table1
+name		amount
+david		100
+claire		50
+david		200
+claire		100
+
+SELECT * FROM table1 UNION SELECT * FROM table2 ORDER BY name
+name		amount
+david		100
+david		200
+claire		50
+claire		100
+
