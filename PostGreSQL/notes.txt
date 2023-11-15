@@ -4,7 +4,12 @@ https://www.postgresql.org/docs/current/functions-matching.html
 joins:
 https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/
 
-# pay attention to joins, relations
+different templates for date/time formats:
+https://www.postgresql.org/docs/16/functions-formatting.html
+
+date time docs:
+https://www.postgresql.org/docs/current/functions-datetime.html
+
 
 SELECT <col> FROM <table> # basic column
 
@@ -271,3 +276,48 @@ AND
 	actor.last_name = 'Wahlberg'
 
 # when doing 3 way joins write it down and work through it section by section to abstract the issue
+
+
+different ways to store dates&time:
+TIME - contains only time
+DATE - contains only date
+TIMESTAMP - contains only date and time
+TIMESTAMPTZ - containts date time and timezone
+
+you can enter date&time via:
+TIMEZONE 
+NOW 
+TIMEOFDAY
+CURRENT_TIME
+CURRENT_DATE
+
+SHOW ALL # gives list of all settings and parameters that are being used/preset
+SHOW TIMEZONE # gives current timezone 
+SELECT NOW() # gives current timestamp
+SELECT TIMEOFDAY() # gives long hand/string notation of date and time
+SELECT CURRENT_TIME # gives current time
+SELECT CURRENT_DATE # gives current date 
+
+EXTRACT() allows you to extract or obtain a sub-component of a date value such as:
+	YEAR
+	MONTH
+	DAY
+	WEEK 
+	QUARTER
+example usage:
+EXTRACT(YEAR FROM date_col)
+SELECT EXTRACT(YEAR FROM payment_date) AS year FROM payment # gets list of years transactions were made and displays them AS year
+
+AGE()
+Calculates and returns the current age in relation to a timestamp given
+usage:
+AGE(date_col) 
+SELECT AGE(payment_date) FROM payment
+
+TO_CHAR() is a general way to convert data types to text, not limited to timestamps
+usage:
+TO_CHAR(date_col, 'mm-dd-yyyy')
+SELECT TO_CHAR(payment_date, 'MONTH YY') FROM payment # returns payemnt dates in format of FEBRUARY 07
+SELECT TO_CHAR(payment_date, 'DD/MM/YY') FROM payment # returns in 15/02/07
+# use documentation to experiment with it
+
