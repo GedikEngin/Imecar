@@ -375,3 +375,21 @@ WHERE EXISTS
 
 # checks if customers that spent at least 11 dollars exist, and returns their first and last name
 
+
+self join:
+useful or comparing values within the same table
+a join of 2 copies of same table
+but you need to use alias (AS) or it will be ambiguous
+
+SELECT tableA.col, tableB.col
+FROM table AS tableA
+JOIN table as tableB ON
+tableA.col1 = tableB.col2
+
+# assigns table to tableA and tableB, and allows you to compare them when you use conditions and aggregate functions
+
+SELECT f1.title, f2.title, f1.length # select title from film table1, film table2 and the length of film table1
+FROM film AS f1 # fetches the info from film table, but it is now addressed as f1
+INNER JOIN film AS f2 ON # initiates the join command and addresses the 'duplicate' film table as f2
+f1.film_id != f2.film_id # avoids matching the same film with to the same film from duplicate table	
+AND f1.length = f2.length # second condition where the different film_id's from above are matched with the same movie length
