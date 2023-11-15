@@ -10,6 +10,12 @@ https://www.postgresql.org/docs/16/functions-formatting.html
 date time docs:
 https://www.postgresql.org/docs/current/functions-datetime.html
 
+mathematical functions:
+https://www.postgresql.org/docs/16/functions.html
+
+string functions:
+https://www.postgresql.org/docs/16/functions-string.html
+
 
 SELECT <col> FROM <table> # basic column
 
@@ -320,4 +326,15 @@ TO_CHAR(date_col, 'mm-dd-yyyy')
 SELECT TO_CHAR(payment_date, 'MONTH YY') FROM payment # returns payemnt dates in format of FEBRUARY 07
 SELECT TO_CHAR(payment_date, 'DD/MM/YY') FROM payment # returns in 15/02/07
 # use documentation to experiment with it
+
+
+maths operators:
+SELECT ROUND(rental_rate/replacement_cost, 2)*100 AS percent_cost FROM film
+divides the rental_rate by replacement_cost, rounds it to 2dp. and multiplies it by 100, and displays it under percent_cost column
+
+
+string operators:
+SELECT LENGTH(first_name) FROM customer # gets the length of customers names
+SELECT first_name || ' ' || last_name FROM customer # concatonates first_name, space, last_name into one column. you need to concatonate space or they will be mushed
+SELECT UPPER(first_name) from customer # makes first name all capitals
 
