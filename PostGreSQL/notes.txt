@@ -196,6 +196,11 @@ SELECT customer_id, SUM(amount) FROM payment GROUP BY customer_id HAVING SUM(amo
 
 select store_id, count(customer_id) from customer group by store_id having count(customer_id) > 300 # returns store ids that have over 300 customers associated with that store
 
+SELECT facid, SUM(slots) AS total_slots
+FROM cd.bookings
+GROUP BY facid
+HAVING SUM(slots) > 1000
+ORDER BY facid
 
 AS clause:
 gives a temporay name to a column to use during output
@@ -393,3 +398,15 @@ FROM film AS f1 # fetches the info from film table, but it is now addressed as f
 INNER JOIN film AS f2 ON # initiates the join command and addresses the 'duplicate' film table as f2
 f1.film_id != f2.film_id # avoids matching the same film with to the same film from duplicate table	
 AND f1.length = f2.length # second condition where the different film_id's from above are matched with the same movie length
+
+-----
+
+SELECT joindate FROM cd.members
+ORDER BY joindate DESC
+LIMIT 1
+
+# this is one way to get the latest time a member joins the resort
+
+SELECT MAX(joindate) AS latest_signup FROM cd.members
+# this is another way as the later date will be the 'maximum' value, it is returned labeled as signup date
+
