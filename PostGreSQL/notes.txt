@@ -410,3 +410,25 @@ LIMIT 1
 SELECT MAX(joindate) AS latest_signup FROM cd.members
 # this is another way as the later date will be the 'maximum' value, it is returned labeled as signup date
 
+Views:
+useful for having queries as a 'shortcut'
+SELECT * FROM view
+
+it is a virtual table, the query is stored as a fake table, and makes it easier to execute operations on it
+you can alter and update existing views
+especcially suitable for complex joins that are called regularly
+
+CREATE OR REPLACE VIEW customer_info AS
+SELECT first_name, last_name, address, district FROM customer
+INNER JOIN address
+ON customer.address_id = address.address_id
+
+you can refer to this as customer_info, this is your new virtual table
+
+DROP VIEW
+# drops the view
+DROP VIEW IF EXISTS
+# drops view if it existst only
+
+ALTER VIEW customer_info RENAME TO c_info
+# renames the view
