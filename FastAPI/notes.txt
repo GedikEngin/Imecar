@@ -1,0 +1,35 @@
+Sources:
+https://www.youtube.com/watch?v=5GxQ1rLTwaU
+
+documentation/fast api:
+https://fastapi.tiangolo.com/
+
+creating secret key because openssl doesnt want to work:
+https://seanwasere.com/generate-random-hex/
+
+lib installations
+
+pip install fastapi
+# Connects front and back end. Used for everything and serves as the building blocks for creating APIs
+
+# Server interface for FastAPI. Can handle a large number of simultaneous connections with good asynchronous capability
+pip install uvicorn[standard]
+
+# Handles JSON and other files, allows to reading, writing, and decoding
+pip install python-multipart
+
+# Password and token encryption. Needs the [cryptography] additional for cryptographic operations
+pip install python-jose[cryptography]
+
+# Password and token encryption. [bcrypt] specifies the bcrypt hashing algorithm
+pip install passlib[bcrypt]
+
+async def(): # async function, useful for waiting on webrequest, or any other operation that needs to be completed before proceeding to the next step
+
+# @app refers to our application from FastAPI, .get defines the route that handles HTTP GET requests, in this case from the "/test/" end
+
+# to run uvicorn <file contained within>.<name of python file>:<name of application where you run FastAPI from> --reload
+# uvicorn FastAPI.main:app --reload
+
+to access web server:
+http://127.0.0.1:8000/docs
