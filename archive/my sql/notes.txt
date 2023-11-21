@@ -1,0 +1,60 @@
+starting stopping server:
+https://phoenixnap.com/kb/start-mysql-server#:~:text=To%20start%20MySQL%20service%20and,Server%20followed%20by%20the%20version.
+
+to connect db to vscode:
+CREATE USER 'sqluser'@'%' IDENTIFIED
+WITH mysql_native_password BY 'password';
+
+GRANT ALL PRIVILEGES ON *.* TO 'sqluser'@'%';
+
+FLUSH PRIVILEGES;
+
+links:
+https://dev.mysql.com/doc/refman/8.0/en/database-use.html
+https://www.w3schools.com/mysql/
+
+keyboard shortcuts:
+https://dev.mysql.com/doc/workbench/en/wb-keys.html
+https://www.youtube.com/watch?v=4VLKbZDbpAs
+
+data types:
+https://dev.mysql.com/doc/refman/8.0/en/data-types.html
+
+main shortcuts:
+to run highlighted statements
+ctrl + shift + enter 
+
+run highlighted/cursor statement
+ctrl + enter
+
+----------------
+
+The general command for creating a database:
+CREATE DATABASE <database_name>;
+
+A specific example:
+CREATE DATABASE soap_store;
+
+to create db but check if it exsists or not
+
+CREATE DATABASE IF NOT EXISTS <name>
+
+to delete/drop a db with all its contents
+DROP DATABASE <name>;
+
+example:
+DROP DATABASE soap_store;
+
+equilavent of double clicking (making it focus)
+USE <db name>;
+
+to view database being used:
+SELECT DATABASE();
+
+to create table using varchar&int: // you need to specify use just before table creation
+USE animals;
+CREATE TABLE cats(
+    name VARCHAR(100),
+    breed VARCHAR(30),
+    age INT
+);
