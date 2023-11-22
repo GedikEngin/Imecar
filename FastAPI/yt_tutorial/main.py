@@ -24,7 +24,7 @@ async def test(item_id:str, query:int = 1): # asynchronous function that can wai
     return{"hello":item_id}
 
 # to run uvicorn <file contained within>.<name of python file>:<name of application where you run FastAPI from> --reload
-# uvicorn FastAPI.main:app --reload
+# uvicorn FastAPI.yt_tutorial.main:app --reload
 # to access web server:
 # http://127.0.0.1:8000/docs
 

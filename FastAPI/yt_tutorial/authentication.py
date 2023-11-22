@@ -153,4 +153,4 @@ async def read_own_items(current_user: User = Depends(get_current_active_user)):
 #     uvicorn.run(app, host="127.0.0.1", port=8000)
 
 # to run through terminal
-# uvicorn FastAPI.authentication:app --reload
+# uvicorn FastAPI.yt_tutorial.authentication:app --reload
