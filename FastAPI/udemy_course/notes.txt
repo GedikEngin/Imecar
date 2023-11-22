@@ -1,0 +1,23 @@
+FastAPI is a python web-framework
+Keeps everything simple and easy to scale
+Fast - Performance, faster than other options, comes with data validation and documentation
+Fast - It is very easy to develop with, prevents reinventing the wheel. Easy to deploy and has good community
+
+Key notes:
+allows you to develop your own APIs with less bugs due to data validation
+easy to learn and develop as its built with consideration to developers
+robust
+it has development standards, matches json schema and means api standards
+
+https://fastapi.tiangolo.com/
+
+application architechture
+
+Web Page <--> Rest API for data transfer <--> Server, FastAPI
+handles logic and renders webpage
+
+example use of FastAPI:
+netflix
+uber
+microsoft
+
