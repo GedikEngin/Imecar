@@ -33,3 +33,111 @@ async def(): # async function, useful for waiting on webrequest, or any other op
 
 to access web server:
 http://127.0.0.1:8000/docs
+
+### Bcrypt Hashing:
+The system utilizes the bcrypt algorithm for hashing user passwords. Bcrypt is a key derivation function designed for secure password hashing. It incorporates salting and a cost factor to slow down the hashing process, making it resilient against brute force attacks. The `CryptContext` class from the `passlib` library manages the hashing and verification of passwords.
+
+### Salt Generation:
+Each password is hashed with a unique salt, generated using the bcrypt algorithm. Salting prevents identical passwords from producing the same hash and enhances password security. It adds a random and unique value to each password before hashing, making it challenging for attackers to use precomputed tables (rainbow tables) for password cracking.
+
+### OAuth2PasswordBearer:
+The `OAuth2PasswordBearer` class from FastAPI is employed to handle the OAuth2 password flow. It allows clients to provide login details and receive an access token directly. The access token enables clients to make authenticated requests to resources requiring user-specific access.
+
+### JSON Web Token (JWT):
+Access tokens are implemented using JWT, a compact, URL-safe means of representing claims between parties. JWTs provide stateless authentication, allowing servers to avoid maintaining user sessions. The `create_access_token` function encodes user data into a token, which can be decoded later to validate the user's identity.
+
+### Dependency Injection:
+FastAPI's dependency injection is used throughout the code. Functions with dependencies (e.g., `Depends(get_current_user)`) are automatically provided with the required objects, enhancing code organization and readability.
+
+
+- **Constants:**
+    - `SECRET_KEY`: Establishing encoding key for JWT tokens
+    - `ALGORITHM`: Type of encryption key for JWT tokens
+    - `ACCESS_TOKEN_EXPIRE_MINUTES`: Token expiry time in minutes
+
+- **Database:**
+    - `db`: Dictionary creating a users' database
+
+- **Model Classes:**
+    - `Token`: Represents the structure of the access token
+    - `TokenData`: Represents the structure of the token with a username property
+    - `User`: Represents user structure with username, email, full_name, and disabled user account
+    - `UserInDB`: Inherits from User, keeps hashed_password separate for security
+
+- **CryptContext:**
+    - `pwd_context`: Used for hashing and verifying passwords
+    - `scheme=["bcrypt"]`: Specifies bcrypt algorithm for hashing passwords
+    - Key features: Slow, resistant to brute force attacks, key stretching, salt generation
+
+- **OAuth2 Password Bearer:**
+    - `oauth_2_scheme`: Class provided by FastAPI for user login and obtaining an access token
+
+
+FastAPI: A modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
+
+Depends: A function dependency system in FastAPI used to declare dependencies in route functions, allowing automatic handling of the
+injection of required dependencies.
+
+HTTPException: An exception class in FastAPI used for handling HTTP exceptions, allowing customization of error responses with appropriate
+status codes and details.
+
+OAuth2PasswordBearer: A class in FastAPI for handling OAuth2 password flow, used for extracting and validating OAuth2 tokens from the
+Authorization header.
+
+OAuth2PasswordRequestForm: A class in FastAPI that represents the form data expected in OAuth2 password flow, used in route functions
+to extract login credentials.
+
+Pydantic: A data validation library in Python that is used in FastAPI for defining data schemas using Python type hints.
+
+BaseModel: A class provided by Pydantic used for creating models with validation and serialization capabilities.
+
+Jose: A library used for working with JSON Web Tokens (JWT) in Python, providing functions for encoding and decoding JWTs.
+
+JWTError: An exception in the Jose library, raised when there are issues with decoding or verifying JSON Web Tokens.
+
+CryptContext: A class in the passlib library used for securely hashing and verifying passwords. It supports various hashing algorithms,
+including bcrypt.
+
+uvicorn: A lightweight ASGI server that is used to run FastAPI applications.
+
+Token: A Pydantic model representing the structure of an access token.
+
+TokenData: A Pydantic model representing the structure of token data, including the username.
+
+pwd_context: An instance of CryptContext used in FastAPI for hashing and verifying passwords.
+
+Bcrypt: A password hashing algorithm designed to be slow and resistant to brute-force attacks, used for securely hashing passwords.
+
+Salt: Random unique values combined with passwords during hashing to enhance password security by preventing identical attacks and
+increasing password randomness.
+
+Dependency Injection: Dependency Injection is a design pattern that enhances the flexibility and maintainability of software by allowing
+external entities to supply the dependencies needed by a component. This promotes a separation of concerns, where different modules or
+components handle specific functionality, improving maintainability and readability. It becomes easier to swap out components,
+configure behavior, and conduct unit testing with mock or substitute dependencies.
+
+JSON Web Token (JWT): A compact, URL-safe means of representing claims between two parties, commonly used for authentication and
+authorization.
+
+Access Token: A token, often a JWT, that is used for making authenticated requests to resources and is obtained after a successful
+authentication process.
+
+FastAPI (post): A decorator in FastAPI used to define a route that handles HTTP POST requests.
+
+POST request: A request to the web server to accept the data you are attempting to send to them, posting (context of shipping) them info almost
+
+FastAPI (get): A decorator in FastAPI used to define a route that handles HTTP GET requests.
+
+GET request: Opposite of post. Request to the web server, asking to it to retrieve and send the information to you, getting information
+
+uvicorn run: The command used to run a FastAPI application using the uvicorn server.
+
+passlib: 
+Passlib is a Python library for secure password hashing and verification. It supports various algorithms, including bcrypt, with features
+like key stretching and salt generation for enhanced security. It's commonly used in web applications to safeguard user passwords.
+
+
+
+How does Pydantic work?
+
+Pydantic builds on the existing potential of regular classes in python, allowing devs to improve the versatility and it can be used. It is lightweight and efficient with minimal dependencies and a small code base. Has good documentation. Its main focus is to validate data and 
