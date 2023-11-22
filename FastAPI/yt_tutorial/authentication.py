@@ -112,7 +112,7 @@ async def get_current_active_user(current_user: UserInDB = Depends(get_current_u
         raise HTTPException(status_code=400, detail="Inactive user") # returns error if inactive
     return current_user # passes it through if it exists
 
-@app.post("/token", response_model=Token) # end point for FastAPI, handles HTTP POST requests at the /token path,
+@app.post("/token",tags=['main'] ,response_model=Token) # end point for FastAPI, handles HTTP POST requests at the /token path,
 # And specifies type of response should match Token Model
 
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()): # async function, expects data entry from OAuth2PasswordRequestForm
@@ -149,8 +149,9 @@ async def read_own_items(current_user: User = Depends(get_current_active_user)):
 # print(get_password_hash('engin'))
 
 # to run through python for debugging
-# if __name__ == "__main__":
-#     uvicorn.run(app, host="127.0.0.1", port=8000)
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)
 
 # to run through terminal
 # uvicorn FastAPI.yt_tutorial.authentication:app --reload
+

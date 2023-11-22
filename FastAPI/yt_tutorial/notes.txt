@@ -31,6 +31,9 @@ async def(): # async function, useful for waiting on webrequest, or any other op
 # to run uvicorn <file contained within>.<name of python file>:<name of application where you run FastAPI from> --reload
 # uvicorn FastAPI.main:app --reload
 
+# @app.get("/users/me/items", tags=['main'] response_model=User)
+# use tags to change the name 
+
 to access web server:
 http://127.0.0.1:8000/docs
 
@@ -140,4 +143,16 @@ like key stretching and salt generation for enhanced security. It's commonly use
 
 How does Pydantic work?
 
-Pydantic builds on the existing potential of regular classes in python, allowing devs to improve the versatility and it can be used. It is lightweight and efficient with minimal dependencies and a small code base. Has good documentation. Its main focus is to validate data and 
+Pydantic, enhancing Python classes, is a lightweight data validation tool with key features:
+Data Validation:
+Uses types, validators, and constraints to ensure data adheres to specified schemas.
+Automatic Documentation:
+Generates documentation automatically, aiding in maintaining clarity.
+Usage in Web Frameworks:
+Commonly used in web frameworks like FastAPI for seamless request/response validation.
+Custom Validators:
+Allows creation of custom validation functions beyond built-in data types.
+Immutable Models:
+Models are immutable by default, ensuring data integrity during validation.
+In summary, Pydantic is efficient, versatile, and well-suited for data validation, with features like automatic documentation and seamless integration with web frameworks.
+
