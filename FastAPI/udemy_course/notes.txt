@@ -21,3 +21,72 @@ netflix
 uber
 microsoft
 
+libraries
+pip install bcrypt==4.0.1, cryptography, fastapi, psycopg2-binary, PyMySQL, python-jose, python-multipart, SQLAlchemy, uvicorn, passlib
+
+fast api has has their own equilavent of crud operations
+
+CRUD              HTTP Request Methods
+Create            POST
+Read              GET
+Update            PUT
+Delete            DELETE
+
+async is not needed for FastAPI, as FastAPI automatically treats it as an async function regardless but it is beneficial to be explicit
+
+uvicorn being used is the web server that is used to start the FastAPI application
+
+items addressed by @ is a decorative
+
+swagger is a interactive ui that helps display fast api requests in a more user friendly manner
+http://127.0.0.1:8000/docs
+
+uvicorn FastAPI.udemy_course.own_code.books:app --reload
+this runs the FastAPI app, the --reload automatically reloads the site everytime a save is changed, and with VSCode it is automatically saved so it updates as you tab out to view the site
+
+
+
+path paameters are request aparamets that are attached to the url
+defined as a way to find information, based on the url
+
+you can make dynammic paths
+
+order matters with path params
+have static/ smaller and faster apis first, so they load in order
+
+for urls, if they have " " <space>, substitute it with "%20"
+
+you can go to:
+http://127.0.0.1:8000/books/title%20one
+directly, but swagger makes it easier to view and understand
+
+
+query parameters are request parameters that have been attatched after a "?"
+query params have a name=value pairs
+
+http://127.0.0.1:8000/books/?category=science
+it acts as a filter almost
+
+query parameters can be used with path parameters, especially when trying to figure out additional information
+
+
+
+POST requests are used to create data. youre posting data to the system
+POST can have additional info that GET does not have within
+POST can take in an aidditional parameter body that GET cannot
+
+what does = mean when passing parameters into a function?
+it will assign a defualt value to the parameter being passed through, i.e:
+
+async def create_book(new_book=Body()):
+    ...
+    ...
+    ...
+    return ...
+
+if there isnt new_book being passed into the function it will be taken as Body() automatically, as a defualt value
+
+
+PUT requests are CRUD updates
+can have additional information like a POST that GET may not have
+
