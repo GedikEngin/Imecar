@@ -38,7 +38,7 @@ GAMES = [
 
 app = FastAPI()
 
-# to get all books
+# to get all games
 @app.get("/games/", tags=["get"])
 async def fetch_all_games():
     return GAMES
@@ -114,7 +114,7 @@ async def update_game(updated_game=Body()):
 
 
 @app.put("/games/update_game_guided/", tags=["put"]) # allows users to add games with ui aid
-async def add_game(game_to_update: str, input_developer: str, input_genre: str, input_price: int):
+async def update_game(game_to_update: str, input_developer: str, input_genre: str, input_price: int):
     for i in range(len(GAMES)):
         if GAMES[i].get("game_name").casefold() == game_to_update.casefold():
             GAMES[i]["developer"] = input_developer
