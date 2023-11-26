@@ -86,3 +86,73 @@ async def fetch_game_by_game_name(price: int, more_less_equal: str = Query(enum 
         elif more_less_equal == "less" and game_price < price:
             return_games.append(game)
     return return_games
+
+
+@app.post("/games/add_game_manual/", tags=["post"]) # allows user to add games free hand
+async def add_game(add_game=Body()):
+    GAMES.append(add_game)
+
+
+@app.post("/games/add_game_gudied/", tags=["post"]) # allows users to add games with ui aid
+async def add_game(input_name: str, input_developer: str, input_genre: str, input_price: int):
+    new_game = { # creates new dictionary entry
+        "game_name": input_name,
+        "developer": input_developer,
+        "genre": input_genre,
+        "price": input_price
+    }
+    GAMES.append(new_game) # passes it into GAMES dictionary
+    return (new_game)
+
+
+@app.put("/games/update_game_manual/", tags=["put"]) # updates games based on title matching and full user entry
+async def update_game(updated_game=Body()):
+    for i in range(len(GAMES)):
+        if GAMES[i].get("game_name").casefold() == updated_game.get("game_name").casefold():
+            GAMES[i] = updated_game
+    return updated_game
+
+
+@app.put("/games/update_game_guided/", tags=["put"]) # allows users to add games with ui aid
+async def add_game(game_to_update: str, input_developer: str, input_genre: str, input_price: int):
+    for i in range(len(GAMES)):
+        if GAMES[i].get("game_name").casefold() == game_to_update.casefold():
+            GAMES[i]["developer"] = input_developer
+            GAMES[i]["genre"] = input_genre
+            GAMES[i]["price"] = input_price
+
+
+@app.delete("/games/delete_game_title/{game_name}", tags=["delete"]) # deletes games based on their titles
+async def delete_game(game_name: str):
+    for i in range(len(GAMES)):
+        if GAMES[i].get("game_name").casefold() == game_name.casefold():
+            GAMES.pop(i)
+            break
+
+
+@app.delete("/games/delete_game_genre/{genre}", tags=["delete"]) # removes games based on thier genres
+async def delete_game(genre: str):
+    games_to_remove = []
+    for game in GAMES:
+        if game.get("genre").casefold() == genre.casefold():
+            games_to_remove.append(game)
+
+    for game_to_remove in games_to_remove:
+        if game_to_remove["genre"].casefold() == genre.casefold():
+            GAMES.remove(game_to_remove)
+            
+
+# go through dictionary
+# if the game that youre looking at matches the genre provided by the user, remove it from dictionary
+# keep going through the dictionary
+# remove game from dictionary if the genre matches user provided one
+
+
+    # games_to_remove = [game for game in GAMES if game.get("genre").casefold() == genre.casefold()]
+
+    # for game in games_to_remove:
+    #     GAMES.remove(game)
+
+    # response_data = {"message": f"All {genre} games deleted", "remaining_games": GAMES}
+    # return response_data
+
