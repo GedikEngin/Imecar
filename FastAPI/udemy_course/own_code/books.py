@@ -63,13 +63,7 @@ async def create_book(new_book=Body()): # new book parameter will have default p
 # have function, explicityly state type will be string
 # for book in books, looping through all the BOOKS
 # .casefold is a more aggressive/dominant .lower function
-import string
-from fastapi import FastAPI, Body
-
 # uvicorn FastAPI.udemy_course.own_code.books:app --reload
-
-app = FastAPI()
-
 
 BOOKS = [
     {"title": "Title One", "author": "Author One", "category": "science"},
