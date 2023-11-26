@@ -97,6 +97,10 @@ async def read_all_book(book_title: str):  # dynamic_param must be a string
             return book
         
 
+# if my book matches first func
+# if last variable is different in func, dynamic param catches it
+
+
 @app.get("/books/") # goes through the books, and then if they exist and match query adds it to list and returns it, i.e. ?category=science
 async def read_category_by_query(category:str):
     books_to_return = []
@@ -120,14 +124,14 @@ async def read_category_by_query(book_author:str, category:str): # takes in auth
 async def create_book(new_book=Body()): # new book parameter will have default paramter Body()
     BOOKS.append(new_book) # adds new_book to the BOOKS "database"/dictionary
 
-@app.put("/books/update_book")
-async def update_book(update_book=Body()):
+@app.put("/books/update_book") # PUT is equal to UPDATE from CRUD, allows you to change the information without touching title, i.e. author and category
+async def update_book(updated_book=Body()):
     for i in range(len(BOOKS)):
-        if BOOOKS[i].get("title").casefold == updated_book.get("title").casefold():
-            Books[i] = updated_book
+        if BOOKS[i].get("title").casefold() == updated_book.get("title").casefold():
+            BOOKS[i] = updated_book
 
-# if my book matches first func,Enggdk13!Enggdk13!
-# if last variable is different in func, dynamic param catches it
+
+
 
 # have function, explicityly state type will be string
 # for book in books, looping through all the BOOKS
