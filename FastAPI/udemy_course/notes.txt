@@ -90,3 +90,18 @@ if there isnt new_book being passed into the function it will be taken as Body()
 PUT requests are CRUD updates
 can have additional information like a POST that GET may not have
 
+DELETE method, is the CRUD DELETE
+used to delete data
+if you have request, you can attatch path param, i.e. book param and delete that entry
+
+
+what is a path parameter:
+variables that are a part of the API's url
+
+query parameters are used to sort and filter through data that is not marked by a path parameter
+
+
+for path parameters, /books/author/{author} means we are passing a dynamic author paramter, which is contained within author, which is contained within books
+
+query parameters are used for when you know one aspect of the search you want to do, i.e. if you want to search for the authors within the science category of books
+query params are used to provide additional context to a serach

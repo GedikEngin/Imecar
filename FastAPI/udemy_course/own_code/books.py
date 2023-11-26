@@ -118,6 +118,15 @@ async def read_category_by_query(book_author:str, category:str): # takes in auth
             books_to_return.append(book) # if they do it appends it to the list of books to return
     return books_to_return
 
+ # goes through the books, and then if they exist and match query adds it to list and returns it, i.e. ?category=science
+@app.get("/books/by_author/{author}") # captures author path directly from user
+async def read_author_by_author_path(author: str): # takes in author as a string
+    books_to_return = [] # empty list 
+    for book in BOOKS: # goes through the books indexing under book
+        if book.get("author").casefold() == author.casefold(): # if index book matches other books with the same author append to list
+            books_to_return.append(book)
+    return books_to_return # return list at the end
+
 
 @app.post("/books/create_book")
 # when post is called, we want data inside body to be saved to new_book and add new_book to our BOOKS database/dict
@@ -129,6 +138,19 @@ async def update_book(updated_book=Body()):
     for i in range(len(BOOKS)):
         if BOOKS[i].get("title").casefold() == updated_book.get("title").casefold():
             BOOKS[i] = updated_book
+# we pass body through put
+# looping through all elements in book we want to update book in the specific index
+# it allows you to update pieces of information internally
+
+
+@app.delete("/books/delete_book/{book_title}")
+async def delete_book(book_title:str): # for deleting books
+    for i in range(len(BOOKS)): # goes through all elements in books
+        if BOOKS[i].get('title').casefold() == book_title.casefold(): # checks if book at index matches the title put in by user via GET, and checks to match if it exists within db
+            BOOKS.pop(i) # pops it out of the books db
+            break
+
+
 
 
 
