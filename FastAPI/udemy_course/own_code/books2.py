@@ -1,4 +1,6 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, Body, Path, Query
+# path is used for validating path parameters
+# query is used for validating query parameters
 from typing import Optional
 from pydantic import BaseModel, Field # framework for validation & the model for validation, imports field for setting constraints
 
@@ -53,20 +55,21 @@ BOOKS = [
     Book(6, "HP3", "Author 3", "Book Description", 1, 2013) 
 ]
 
-@app.get("/books/")
+@app.get("/books/") # gets all books
 async def read_all_books():
     return BOOKS
 
 
-@app.get("/books/book_id/{book_id}/") # searching by book id
-async def read_book_by_id(book_id: int):
+@app.get("/books/{book_id}") # searching by book id
+async def read_book_by_id(book_id: int = Path(gt=0)): # Path has to be greater than 0
+    # books id will be path parameter greater than 0 or error flag is raised, it adds extra validation to path paremeters
     for book in BOOKS:
         if book.id == book_id:
             return book
 
 
-@app.get("/books/book_rating/{book_rating}/")
-async def read_book_by_rating(book_rating: int):
+@app.get("/books/by_rating/") # searches through ratings
+async def read_book_by_rating(book_rating: int = Query(gt=0, lt=6)): # specift query when using query constraints/validation
     books_to_return = []
     for book in BOOKS:
         if book.rating == book_rating:
@@ -74,7 +77,7 @@ async def read_book_by_rating(book_rating: int):
     return books_to_return
 
 
-@app.get("/books/published_date/{published_date}/")
+@app.get("/books/published_date/") # searches through release date
 async def read_books_by_publish_date(published_date: int):
     books_to_return = []
     for book in BOOKS:
@@ -117,7 +120,7 @@ async def update_book(book: BookRequest):
 
 
 @app.delete("/books/book_id/{book_id}")
-async def delete_book(book_id: int):
+async def delete_book(book_id: int = Path(gt=0)):
     for i in range(len(BOOKS)):
         if BOOKS[i].id == book_id:
             BOOKS.pop(i)
