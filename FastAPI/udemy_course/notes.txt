@@ -102,9 +102,12 @@ query parameters are used to sort and filter through data that is not marked by 
 
 
 for path parameters, /books/author/{author} means we are passing a dynamic author paramter, which is contained within author, which is contained within books
+path is for specific parameter/value you are after, i.e. id or title of a game
+
 
 query parameters are used for when you know one aspect of the search you want to do, i.e. if you want to search for the authors within the science category of books
 query params are used to provide additional context to a serach
+query is for broader searches, such as genres, ratings, 'queries' with multiple outputs
 
 
 Pydantic v1 versus Pydantic v2:
