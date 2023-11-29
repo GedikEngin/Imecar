@@ -105,3 +105,18 @@ for path parameters, /books/author/{author} means we are passing a dynamic autho
 
 query parameters are used for when you know one aspect of the search you want to do, i.e. if you want to search for the authors within the science category of books
 query params are used to provide additional context to a serach
+
+
+Pydantic v1 versus Pydantic v2:
+
+.dict() [function] .model_dump()
+schema_extra [function in Config class] json_schema_extra
+Optional variables require to be assinged None, i.e.        id = optional[int] = None
+
+
+What is Pydantics?
+
+Python lib that is used for data modelling, data parsing and efficient error handling
+Used commonly as a tool for data validation and handling for FastAPI application
+
+ 
