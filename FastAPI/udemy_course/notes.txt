@@ -122,4 +122,28 @@ What is Pydantics?
 Python lib that is used for data modelling, data parsing and efficient error handling
 Used commonly as a tool for data validation and handling for FastAPI application
 
- 
+
+
+What are status codes?
+
+Http status code is used to help client and system to understand what is happening server side
+they are based on an international standard on how a client/server should handle requests
+
+allows users that sent a request to know if its successful or not
+
+1XX information responses, request is being processed
+2XX the successful requests
+3XX redirection codes meaning more actions needed
+4XX client based errors
+5XX server based errors
+
+200: ok --> standard success response to get requests
+201: created --> request to create is successful used with posts
+204: no content --> successful but did not create an entity or return anything, mainly for put requests
+
+400: bad request --> cannot process request due to invalid client request
+401: unauthorised --> client does not have the correct authentication for the target resource
+404: not found --> the client requested a resource that cannot be found
+422: unprocessable entity --> semantic errors in client request
+
+500: internal server error --> unexpected issue on server side, random break 
