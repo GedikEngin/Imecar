@@ -123,6 +123,12 @@ Python lib that is used for data modelling, data parsing and efficient error han
 Used commonly as a tool for data validation and handling for FastAPI application
 
 
+Path data validation example:
+async def delete_book(book_id: int = Path(gt=0)):
+
+query data validation example
+async def read_book_by_rating(book_rating: int = Query(gt=0, lt=6))
+
 
 What are status codes?
 
@@ -147,3 +153,7 @@ allows users that sent a request to know if its successful or not
 422: unprocessable entity --> semantic errors in client request
 
 500: internal server error --> unexpected issue on server side, random break 
+
+@app.delete("/books/book_id/{book_id}", status_code = status.HTTP_204_NO_CONTENT)
+returns 204 success code in the endpoint using Starlette
+
