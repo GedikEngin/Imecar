@@ -1,8 +1,9 @@
-from fastapi import FastAPI, Body, Path, Query
+from fastapi import FastAPI, Body, Path, Query, HTTPException
 # path is used for validating path parameters
 # query is used for validating query parameters
 from typing import Optional
 from pydantic import BaseModel, Field # framework for validation & the model for validation, imports field for setting constraints
+from starlette import status # fast api is built using starlette, you can dictate what status is returned after every api endpoint 
 
 app = FastAPI()
 
@@ -55,20 +56,21 @@ BOOKS = [
     Book(6, "HP3", "Author 3", "Book Description", 1, 2013) 
 ]
 
-@app.get("/books/") # gets all books
+@app.get("/books/", status_code=status.HTTP_200_OK) # gets all books
 async def read_all_books():
     return BOOKS
 
 
-@app.get("/books/{book_id}") # searching by book id
+@app.get("/books/{book_id}, status_code=status.HTTP_200_OK") # searching by book id
 async def read_book_by_id(book_id: int = Path(gt=0)): # Path has to be greater than 0
     # books id will be path parameter greater than 0 or error flag is raised, it adds extra validation to path paremeters
     for book in BOOKS:
         if book.id == book_id:
             return book
+    raise HTTPException(status_code=404, detail="item not found")
 
 
-@app.get("/books/by_rating/") # searches through ratings
+@app.get("/books/by_rating/", status_code=status.HTTP_200_OK) # searches through ratings
 async def read_book_by_rating(book_rating: int = Query(gt=0, lt=6)): # specift query when using query constraints/validation
     books_to_return = []
     for book in BOOKS:
@@ -77,7 +79,7 @@ async def read_book_by_rating(book_rating: int = Query(gt=0, lt=6)): # specift q
     return books_to_return
 
 
-@app.get("/books/published_date/") # searches through release date
+@app.get("/books/published_date/", status_code=status.HTTP_200_OK) # searches through release date
 async def read_books_by_publish_date(published_date: int):
     books_to_return = []
     for book in BOOKS:
@@ -92,7 +94,7 @@ async def read_books_by_publish_date(published_date: int):
 #     added_book = BOOKS.append(book_request)
 #     return added_book
 
-@app.post("/create_book/")
+@app.post("/create_book/", stauts_code = status.HTTP_201_CREATED)
 async def create_book(book_request: BookRequest): # the book request now has to obey the data validation/constrains placed on it from the class it inherits from
     new_book = Book(**book_request.dict()) # ** means it passes key values from BookRequest() into Book() constructor, .dict attempts to convert data into dictionary
     # new_book = Book(**book_request.model_dump()) # same as func above, just for newer pydantic versions
@@ -112,16 +114,24 @@ def find_book_id(book: Book):
     # it overrides the id being passed from the Body of the application
 
 
-@app.put("/books/update_book/")
+@app.put("/books/update_book/", status_code = status.HTTP_204_NO_CONTENT)
 async def update_book(book: BookRequest):
+    book_changed = False
     for i in range(len(BOOKS)):
         if BOOKS[i].id == book.id:
             BOOKS[i] = book
+            book_changed = True
+    if not book_changed:
+        raise HTTPException(status_code=404, detail="item not found")
 
 
-@app.delete("/books/book_id/{book_id}")
+@app.delete("/books/book_id/{book_id}", status_code = status.HTTP_204_NO_CONTENT)
 async def delete_book(book_id: int = Path(gt=0)):
+    book_deleted = False
     for i in range(len(BOOKS)):
         if BOOKS[i].id == book_id:
             BOOKS.pop(i)
+            book_deleted = True
             break
+    if not book_deleted:
+        raise HTTPException(status_code=404, detail="item not found")
