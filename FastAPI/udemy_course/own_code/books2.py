@@ -94,7 +94,7 @@ async def read_books_by_publish_date(published_date: int):
 #     added_book = BOOKS.append(book_request)
 #     return added_book
 
-@app.post("/create_book/", stauts_code = status.HTTP_201_CREATED)
+@app.post("/create_book/", status_code = status.HTTP_201_CREATED)
 async def create_book(book_request: BookRequest): # the book request now has to obey the data validation/constrains placed on it from the class it inherits from
     new_book = Book(**book_request.dict()) # ** means it passes key values from BookRequest() into Book() constructor, .dict attempts to convert data into dictionary
     # new_book = Book(**book_request.model_dump()) # same as func above, just for newer pydantic versions
