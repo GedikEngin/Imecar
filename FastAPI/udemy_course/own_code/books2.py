@@ -61,7 +61,7 @@ async def read_all_books():
     return BOOKS
 
 
-@app.get("/books/{book_id}, status_code=status.HTTP_200_OK") # searching by book id
+@app.get("/books/{book_id}", status_code=status.HTTP_200_OK) # searching by book id
 async def read_book_by_id(book_id: int = Path(gt=0)): # Path has to be greater than 0
     # books id will be path parameter greater than 0 or error flag is raised, it adds extra validation to path paremeters
     for book in BOOKS:
