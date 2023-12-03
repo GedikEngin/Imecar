@@ -26,7 +26,7 @@ class GameRequest(BaseModel):
     game_desc: str = Field(min_length=10)
     game_rating: int = Field(gt=-1, lt=6) # allows ratings to be between 0 and 5, under the assumption that the game can be really poor
     game_published: int = Field(max_length=4, gt=1900) # forces game to be between 1900 onwards and 4 digit year
-    game_pric: int = Field(gt=0)
+    game_price: int = Field(gt=0)
 
     class Config:
         json_schema_extra = {
@@ -77,9 +77,23 @@ async def read_all_games():
 
 
 # gets games based on id input
-@app.get("/GAME/{game_id}", status_code=status.HTTP_200_OK)
+@app.get("/games/{game_id}", status_code=status.HTTP_200_OK)
 async def read_game_by_id(game_id: int):
     for game in GAMES:
         if game.game_id == game_id:
             return game
     raise HTTPException(status_code=404, detail="item not found")
+
+
+@app.get("/games/rating/")
+async def read_by_game_rating(rating: int, more_less_equal: str = Query(enum = ("equal", "more", "less"))):
+    return_games = []
+    for game in GAMES:
+        game_rating = game.game_rating
+        if more_less_equal == "equal" and game_rating == rating:
+            return_games.append(game)
+        elif more_less_equal == "more" and game_rating > rating:
+            return_games.append(game)
+        elif more_less_equal == "less" and game_rating < rating:
+            return_games.append(game)
+    return return_games
