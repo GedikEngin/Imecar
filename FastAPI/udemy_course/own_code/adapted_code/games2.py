@@ -71,13 +71,13 @@ GAMES = [
 
 
 # gets all books
-@app.get("/GAME/", status_code=status.HTTP_200_OK)
+@app.get("/GAME/", tags=["GET REQUESTS"], status_code=status.HTTP_200_OK)
 async def read_all_games():
     return GAMES
 
 
 # gets games based on id input
-@app.get("/games/{game_id}", status_code=status.HTTP_200_OK)
+@app.get("/games/{game_id}", tags=["GET REQUESTS"], status_code=status.HTTP_200_OK)
 async def read_game_by_id(game_id: int):
     for game in GAMES:
         if game.game_id == game_id:
@@ -85,7 +85,7 @@ async def read_game_by_id(game_id: int):
     raise HTTPException(status_code=404, detail="item not found")
 
 
-@app.get("/games/rating/")
+@app.get("/games/rating/", tags=["GET REQUESTS"], status_code=status.HTTP_200_OK)
 async def read_by_game_rating(rating: int, more_less_equal: str = Query(enum = ("equal", "more", "less"))):
     return_games = []
     for game in GAMES:
@@ -97,3 +97,19 @@ async def read_by_game_rating(rating: int, more_less_equal: str = Query(enum = (
         elif more_less_equal == "less" and game_rating < rating:
             return_games.append(game)
     return return_games
+
+
+@app.get("/games/price/", tags=["GET REQUESTS"], status_code=status.HTTP_200_OK)
+async def read_by_game_price(price: int, more_less_equal: str = Query(enum = ("equal", "more", "less"))):
+    return_games = []
+    for game in GAMES:
+        game_price = game.game_price
+        if more_less_equal == "equal" and game_rating == price:
+            return_games.append(game)
+        elif more_less_equal == "more" and game_rating > price:
+            return_games.append(game)
+        elif more_less_equal == "less" and game_rating < price:
+            return_games.append(game)
+    return return_games
+
+## 
