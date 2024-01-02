@@ -1,0 +1,68 @@
+Theory notes:
+https://docs.google.com/document/d/1EBYyMSSXVT85tp4wJ_puxrNur7rCuZi36y66f9DLWns/edit?usp=sharing
+Better formatting on Google Docs
+
+
+SOLID programming principles.
+
+S: Single-responsability principle
+O: Open-closed principle
+L: Liskov Substitution principle
+I: Interface Segregation principle
+D: Dependency Inversion principle
+
+Recognised as one of the dominant and better practices when it comes to Object Oriented Programming (OOP).
+It focuses on improving the scalability, ease of maintenance, and reusability of a codebase. It achieves this by creating clear and isolated sections that can be improved individually as well as together. It focuses on creating a decoupled and modular codebase. 
+
+Single Responsibility Principle (SRP):
+
+SRP states that a class should only have one reason to change.
+
+A class should have one purpose/responsibility. As more unrelated functions and tasks are given to any one class, the complexity starts to increase making it harder to maintain the code and keep track of what is going on when the code is running or troubleshooting and has increased likelihood of error. If one class is performing multiple tasks, it may start limiting or affecting concurrent tasks it is responsible for.
+
+Open/Closed Principle (OCP):
+
+Entity within the code, such as classes, functions and modules [see dictionary] should be written in a manner that allows you to add new functionality to it, without having to change the existing code. 
+
+This could be done using inheritance in OOP or abstract classes and interfaces [see dictionary]. However, modifying existing code risks breaking code that already works and might affect the operations of the system.
+
+This does not mean you are unable to go back to the previous code to optimize, bugfix and refactor it for ease of maintenance. It refers to maintaining stability within the codebase.
+
+Liskov Substitution Principle (LSP):
+
+A superclass can be replaced with objects its subclasses have.
+
+A superclass should be able to take in parameters and values from subclasses that are inheriting from it without breaking or having any issues. If the subclasses cannot be used as a drop-in replacement it can lead to unexpected behaviour and bugs within the code.
+
+The subclasses should be able to handle and work with any operation/task expected of the parent class they are inheriting from. This principle makes it so fundamental behaviours stay consistent throughout the class tree. Subclasses will maintain the same behaviour as its parent class.
+
+An example would be having a Vehicle class, with speed, value, and passenger seating. Then there can be subclasses such as Car and Bus. The car takes in speed, value and passenger, and can have an additional parameter like a sports car (bool). Bus then can take speed, value, passengers, and the number of standing passengers. Both subclasses can be passed into the parent class and still have the main constructing parameters which would make them suitable for a drop-in.
+
+
+Interface Segregation Principle (ISP):
+
+Clients (classes, modules, functions) should not be forced to depend upon interfaces/functions they do not use.
+
+The principle focuses on creating specific interfaces that will be used by the client, as opposed to having a general function that is not necessarily used fully. It encourages tailored and specific methods to achieve what is necessary.
+
+As classes grow and depend on a large interface it doesn't directly interact with it becomes dependent on parts of the code that is not relevant to itself. Isolating and removing redundant dependencies makes the codebase easier to maintain and work with as well as less prone to interference from other sections of the code.
+
+
+Dependency Inversion Principle (DIP):
+
+This principle focuses on decoupling and logical dependencies.
+
+High-level modules (ones that dictate behaviour, rules, features etc) should not depend on low-level modules (data storage, basic utilities etc). Both depend separately on abstraction. Abstractions should not be dependent on details, but rather details depend on abstractions. 
+
+This prevents changes in any of the 3 influencing the other 2, meaning changes in low-level modules won't impact high-level and vice versa.
+
+
+DICTIONARY:
+
+Modules: a collection of related functions and code that can be used freely independent of its original use case, similar to libraries. It focuses on reusability in different scenarios independent of the different cases it is used for.
+
+Abstract Classes: the main blueprint for classes that will inherit from it. Dictates rough structure and properties.
+
+Interface: defining traits and parameters a class must obey and have. Not how they are done, but rather what should be done.
+
+
