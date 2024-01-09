@@ -1,0 +1,1 @@
+notes regarding web dev including JavaScript, React, NodeJS, JSX, HTML, CSS
