@@ -5,21 +5,24 @@ when initializing or setting up JavaScript make sure NodeJS is added to path.
 use Shift + 1 + Enter to auto populate the start of an .html file
 
 
-is line break in HTML
+### Linebreak
+
+how to do a linebreak
 ```html
 <br>
 ```
 
-
-tag identifiers, used to label elements you want JavaScript to be able to easily access
+### Identifier (ID) and Form tags
+identifier tags are used to label elements you want JavaScript to be able to easily access, it needs to be unique across the page. you can use them to create a class almost within a form
 
 ```html
 <form id="identifier">
 ```
 
-assigning an id to a entity created from inputs in the form
+assigning an id to a form. which can be populated further later down the line
 
-i.e. getting a vehicle data form:
+
+i.e. getting vehicle data using a form:
 
 ```html
 <form id="vehicle-form" action="/tutorial/action.html">
@@ -47,15 +50,13 @@ which would look like
   </fieldset>
 </form>
 
+this creates a form, which has id vehicle-form, that takes inputs and can be used easily with js to fetch from it
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>This is a title</title>
-  </head>
-  <body>
-    <p>Hello world!</p>
-  </body>
-</html>
-```
+the action="/tutorial/action.html" is used to direct where the form data will be forwarded to, i.e. backend for processing or server for storage
+
+there are plenty of different input types available, the default being text
+https://www.w3schools.com/tags/tag_input.asp
+
+
+### Symbols
+using ```&#247;``` will give you &#247;
