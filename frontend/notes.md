@@ -58,5 +58,49 @@ there are plenty of different input types available, the default being text
 https://www.w3schools.com/tags/tag_input.asp
 
 
+they are referred by #id_name in CSS, i.e:
+```css
+#vehicle-form{
+  ~
+  ~
+  ~
+}
+```
+
+
+### OnClick
+
+you can send signals in html using the onclick event attribute, you can specify the path and the action to do, i.e.
+```html 
+<input type="button" value="2" onclick="calc.display.value+='2'">
+```
+
+
+### CSS alignmnets
+
+#### Flex
+when using flex displays you can control the horizontal and vertical:
+
+```css
+/* horizontal */
+target_entity{
+  justify-content: center
+}
+
+/* vertical */
+target_entity{
+  alignt-items: center
+}
+```
+
+it does matter on the element being used, for example inputs within myform are text datatypes, so you need to use:
+/* alternative */
+target_entity{
+  text-align: center
+}
+```
+
+
 ### Symbols
+<u> Division </u>
 using ```&#247;``` will give you &#247;

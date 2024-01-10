@@ -1,5 +1,19 @@
 
-/* changes the style of all input tages universally */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+}
+
+.main_body{
+    text-align: center;
+    padding: 10px;
+    border: medium solid purple;
+}
 
 input{
     width: 150px;
@@ -10,17 +24,18 @@ input{
     background-color: #000;
     color: #fff;
     border-style: none;
+    
 }
 
 #myform{
-    margin-left: 225px;
-    margin-top: 20px;
-    /* border: medium solid purple */
+    align-items: center;   
+    margin-top: 10px;
 }
+
 
 h1{
     text-align: center;
     font-size: 80px;
-    margin-right: 150px;
-    margin-top: 20px;
+    margin-bottom: 0;
+    /* margin-top: 20px; */
 }
