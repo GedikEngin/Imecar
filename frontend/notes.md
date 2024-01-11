@@ -94,11 +94,19 @@ target_entity{
 ```
 
 it does matter on the element being used, for example inputs within myform are text datatypes, so you need to use:
+
+```
 /* alternative */
 target_entity{
   text-align: center
 }
 ```
+
+
+## Course Based Notes
+
+To access JavaScript Developer Console:
+```CTRL + SHIFT + J```
 
 
 ### Symbols
