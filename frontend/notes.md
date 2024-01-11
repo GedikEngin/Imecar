@@ -8,7 +8,34 @@ when initializing or setting up JavaScript make sure NodeJS is added to path.
 
 use Shift + 1 + Enter to auto populate the start of an .html file
 
-<br/>
+<br>
+
+### Linking Files
+
+there needs to be a connection between different aspects of the code, the structure needs to be linked to style, structure also needs to be linked to the processing in the backend etc
+
+<br>
+
+linking css to html
+
+```html
+<!-- before the head tag is closed -->
+<head>
+	<link rel="stylesheet" type="text/css" href="myStyle.css" />
+</head>
+```
+
+linking js to html
+
+```html
+<!-- at the end of the body tag -->
+<body>
+	~ ~ ~
+	<script src="./script.js"></script>
+</body>
+```
+
+<br>
 
 ### Linebreak
 
@@ -122,7 +149,7 @@ Javascript is a programming language that is:
 - multi-paradigm
   - it allows the use of different styles of programming, such as imperative and functional programming
 
-<br/>
+<br>
 
 Web development has 3 main areas
 
@@ -133,7 +160,7 @@ Web development has 3 main areas
 - programming language: building web applications
   - the JS (in this case) acting as the verbs
 
-<br/>
+<br>
 
 JavaScript is very dynamic, it can be used on dynamic web apps as well as web servers. It can also be used to create native mobile and desktop apps.
 
