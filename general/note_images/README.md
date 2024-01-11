@@ -1,0 +1,1 @@
+# The images in this folder are used in notes. If the notes are converted to PDF, the images will be moved here to limit clutter.

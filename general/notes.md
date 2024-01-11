@@ -1,20 +1,25 @@
-Theory notes:
-https://docs.google.com/document/d/1EBYyMSSXVT85tp4wJ_puxrNur7rCuZi36y66f9DLWns/edit?usp=sharing
-Better formatting on Google Docs
+#Theory notes
+**https://docs.google.com/document/d/1EBYyMSSXVT85tp4wJ\_puxrNur7rCuZi36y66f9DLWns/edit?usp=sharing**
 
+_Better formatting on Google Docs_
 
-SOLID programming principles:
+###SOLID programming principles:
 
 S: Single-responsability principle
+
 O: Open-closed principle
+
 L: Liskov Substitution principle
+
 I: Interface Segregation principle
+
 D: Dependency Inversion principle
 
 Recognised as one of the dominant and better practices when it comes to Object Oriented Programming (OOP).
-It focuses on improving the scalability, ease of maintenance, and reusability of a codebase. It achieves this by creating clear and isolated sections that can be improved individually as well as together. It focuses on creating a decoupled and modular codebase. 
 
-Single Responsibility Principle (SRP):
+It focuses on improving the scalability, ease of maintenance, and reusability of a codebase. It achieves this by creating clear and isolated sections that can be improved individually as well as together. It focuses on creating a decoupled and modular codebase.
+
+**Single Responsibility Principle (SRP):**
 
 SRP states that a class should only have one reason to change.
 
@@ -22,7 +27,7 @@ A class should have one purpose/responsibility. As more unrelated functions and 
 
 Open/Closed Principle (OCP):
 
-Entity within the code, such as classes, functions and modules [see dictionary] should be written in a manner that allows you to add new functionality to it, without having to change the existing code. 
+Entity within the code, such as classes, functions and modules [see dictionary] should be written in a manner that allows you to add new functionality to it, without having to change the existing code.
 
 This could be done using inheritance in OOP or abstract classes and interfaces [see dictionary]. However, modifying existing code risks breaking code that already works and might affect the operations of the system.
 
@@ -38,7 +43,6 @@ The subclasses should be able to handle and work with any operation/task expecte
 
 An example would be having a Vehicle class, with speed, value, and passenger seating. Then there can be subclasses such as Car and Bus. The car takes in speed, value and passenger, and can have an additional parameter like a sports car (bool). Bus then can take speed, value, passengers, and the number of standing passengers. Both subclasses can be passed into the parent class and still have the main constructing parameters which would make them suitable for a drop-in.
 
-
 Interface Segregation Principle (ISP):
 
 Clients (classes, modules, functions) should not be forced to depend upon interfaces/functions they do not use.
@@ -47,20 +51,22 @@ The principle focuses on creating specific interfaces that will be used by the c
 
 As classes grow and depend on a large interface it doesn't directly interact with it becomes dependent on parts of the code that is not relevant to itself. Isolating and removing redundant dependencies makes the codebase easier to maintain and work with as well as less prone to interference from other sections of the code.
 
-
 Dependency Inversion Principle (DIP):
 
 This principle focuses on decoupling and logical dependencies.
 
-High-level modules (ones that dictate behaviour, rules, features etc) should not depend on low-level modules (data storage, basic utilities etc). Both depend separately on abstraction. Abstractions should not be dependent on details, but rather details depend on abstractions. 
+High-level modules (ones that dictate behaviour, rules, features etc) should not depend on low-level modules (data storage, basic utilities etc). Both depend separately on abstraction. Abstractions should not be dependent on details, but rather details depend on abstractions.
 
 This prevents changes in any of the 3 influencing the other 2, meaning changes in low-level modules won't impact high-level and vice versa.
 
-KISS Concepts:
+**KISS Concepts:**
 
 K - Keep
+
 I - It
+
 S - Simple
+
 S - Silly/Stupid
 
 In a broader sense, with no context, it refers to keeping solutions and problems simple, avoiding overcomplicating the task and what you have at hand. The benefit of this is you can handle smaller and simpler chunks of a solution/task.
@@ -78,10 +84,13 @@ L - Whilst it does not directly tie into Liskov's substitution, it would be easi
 I - Interface Segregation is directly tied into KISS, as it focuses on removing items that are not being utilised. This directly keeps software entities (classes, modules, functions etc) simpler and easier to work with.
 
 D - Dependency inversion would be focused on creating a logical and less complicated set of dependencies that is easier to work with when looking at the hierarchy of a system in place. It keeps things simple by isolating high-level & low-level modules and details from each other and directly tying them to the objective, the abstract.
-DRY Concepts:
+
+**DRY Concepts:**
 
 D - Don't
+
 R - Repeat
+
 Y - Yourself
 
 The focus of DRY is to prevent redundancies within the system/codebase. It focuses on abstracting the problem/task at hand into smaller segments, and further breaking them down until they are one task/one problem at a time.
@@ -91,144 +100,145 @@ This allows you to recognise when tasks are similar or duplicates of one another
 This reduces redundant code within a system allowing for easier maintenance and alteration of the codebase. It focuses on automating repeat tasks/solutions as well as reducing overall lines of code being used as there isn't a need to have a unique solution to each repeat problem.
 
 This heavily ties into KISS principles, as it encourages a simpler system to be used, reducing overall complexity and improving ease of maintenance and use for the system. As KISS ties into SOLID principles, DRY is also heavily related to that.
-React:
 
-React is a JavaScript library that focuses on UI. Its main speciality is for single-page applications that can be updated without requiring a full reload of the webpage. 
+**React:**
+
+React is a JavaScript library that focuses on UI. Its main speciality is for single-page applications that can be updated without requiring a full reload of the webpage.
 
 Here are the main features/points of React:
 
 Component-based architecture:
+
 React applications are built using components, which are reusable chunks of code contained within itself. You can use multiple components, such as a button component, a textbox component and an image component to create increasingly complex UIs. Components both dictate the structure and behaviour, allowing for a more reusable and modular codebase.
 
-
 Declarative Syntax:
+
 It allows for code to be written telling what to have and what to do, as opposed to coding how that item is created and how it works. A better definition is available in the dictionary.
+
 Developers need to define the UI they want and how they wish for it to appear and React will render it for them as opposed to having to render it manually each time.
 
-
 Virtual DOM (Document Object Model):
+
 It is a system in place that helps React webpages render state changes and alterations to elements faster.
+
 When there is a state change of the UI, there is another Virtual DOM created, with the changes in place to the elements. The differences between Virtual DOMs are compared, and then only the necessary updates are re-rendered and shown on the Real DOM.
+
 This prevents unnecessary re-rendering of elements that do not require it. And as the Virtual DOMs are not rendered at all, it is a very lightweight task to do.
 
-
 JavaScript XML (JSX):
+
 JSX allows DOMs to be created and managed directly within the JavaScript code. It makes it easier to declare the UI structure in React as it is a syntax extension for JaveScript.
+
 It does require an interpreter (i.e. Babel) for browsers to understand as it does not do so naturally.
+
 It allows for directly creating expressions in JavaScript, which can be used to create dynamic content, manipulate data and create conditions when rendering the UI.
+
 It facilitates the logic of JavaScript whilst being able to use HTML-like scripting (making it more familiar to web developers) to manipulate DOMs
+
 Unidirectional Data Flow:
+
 Dataflow is not restricted directionally. It allows for communication between parents and children, by directly passing data to them via props, and from children to parents using callback functions.
 
-
 React Hooks:
+
 Introduced in early 2019. React hooks allow for functional components to also manage states, life cycle methods and other React features without relying on class components.
+
 Hooks simplify the structure of functional components improving the ease of reading and maintenance.
+
 It is one of the standout features of React as it contributes directly to the simplicity and flexibility React applications have. It allows for the handling of states and side effects for functional components.
 
-
 React Router:
-A popular React library that is used for navigation and routing in React applications. It allows for the creation of dynamic single-page applications that have multiple views.
+ A popular React library that is used for navigation and routing in React applications. It allows for the creation of dynamic single-page applications that have multiple views.
 
 With the use of JSX, the application's navigation structure can be defined in a declarative manner. It also allows for the use of nested navigation and route parameters, which allow for data to be routed within the application as well.
 
 React Router also utilizes programmatic navigation by using the history object, allowing for redirection dynamically based on previous navigation and interactions within the application.
 
-
 Ecosystem and Community:
+
 React has a wide set of libraries and tools. These range from state management (i.e. Redux) and testing libraries (i.e. Jest).
+
 Due to the widespread use and the active community, the codebase directly as well as the libraries are maintained and updated. This also results in a variety of third-party sources to learn from such as online courses and books.
-Message Queuing Telemetry Transport (MQTT):
+
+**Message Queuing Telemetry Transport (MQTT):**
 
 MQTT is a lightweight and open messaging protocol that is designed to be used within small sensors and high latency/unreliable network mobile devices. It was developed by IBM in the 1990s and became an open standard later down the line. It is suitable for things such as home and industrial automation as well as transmitting telemetry data. It is also scalable if needed.
 
 Key points and features:
 
 Publish/subscribe model:
+
 MQTT utilises a publish/subscribe model. The entities are the publishers, the components that can send a message, and the subscribers, the ones that receive the message. Similar to YouTube content publishers and their subscribers.
 
 There is a third component;
 
 Broker:
+
 Acts as a median between the publishers and subscribers, it is the component that relays the message between the two. It is essential in decoupling the other 2 entities. It receives the information from the publisher/s and relays it to relevant subscribers. Similar to stock brokers, acting as a median between you buying shares in a company and you.
 
 Topics:
+
 The messages that are published get categorized into channels or labels, these are referred to as topics. Subscribers follow (express interest) in these topics so they receive information from the topics when publishers post into them.
 
 Quality of Service (QoS):
+
 MQTT has 3 different message delivery assurance, acting as error detection/handling.
-QoS 0 (At most once)
-The message is delivered at most one time, and delivery is not confirmed
-QoS 1 (At least once)
-The message is delivered at least once and expects acknowledgement from the receiver 
-QoS 2 (Exactly once)
-It requires overhead when performing this type of communication
-The message is delivered exactly once using a 4 step handshake:
-Publish (PUB)
-the publisher sends the message to the broker, the broker stores the message and acknowledges the receipt to the publisher
-Publish received (PUBREC)
-After receiving PUB acknowledgement from the broker, the publisher sends PUBREC to the broker
-PUBREC message is an acknowledgement of the broker's receipt of the original message
-Publish release (PUBREL)
-After the broker receives PUBREC, it acknowledges it to the publisher
-Broker stores PUBREC state and forwards the original message to the subscriber
-Publish Complete (PUBCOMP)
-after receiving PUBREC acknowledgement from the broker, the publisher sends a PUBCOMP message to the broker
-PUBCOMP confirms the completion of QoS 2 handshake
 
-
-
-
-
-
-
-
-
-
-
-
+- QoS 0 (At most once)
+  - The message is delivered at most one time, and delivery is not confirmed
+- QoS 1 (At least once)
+  - The message is delivered at least once and expects acknowledgement from the receiver
+- QoS 2 (Exactly once)
+  - It requires overhead when performing this type of communication
+  - The message is delivered exactly once using a 4 step handshake:
+  - Publish (PUB)
+    - the publisher sends the message to the broker, the broker stores the message and acknowledges the receipt to the publisher
+  - Publish received (PUBREC)
+    - After receiving PUB acknowledgement from the broker, the publisher sends PUBREC to the broker
+    - PUBREC message is an acknowledgement of the broker's receipt of the original message
+  - Publish release (PUBREL)
+    - After the broker receives PUBREC, it acknowledges it to the publisher
+    - Broker stores PUBREC state and forwards the original message to the subscriber
+  - Publish Complete (PUBCOMP)
+    - after receiving PUBREC acknowledgement from the broker, the publisher sends a PUBCOMP message to the broker
+    - PUBCOMP confirms the completion of QoS 2 handshake ![](RackMultipart20240111-1-q7ktsj_html_1165c7253e98bab.png)
 
 Retained Messages:
+
 MQTT has retained messages, almost acting as an archive. Messages can be marked as retained for a select topic. Retained messages are held by brokers, which are then passed on to any new subscribers to the topic.
 
 Lightweight:
+
 As mentioned, being lightweight is one of its key standouts. The communication protocol is designed to use minimal bandwidth and be efficient. It is designed to be suitable for restrictive environments such as IoT (Internet of Things) and networks with resource limitations.
 
+**DICTIONARY:**
 
+_Modules: a collection of related functions and code that can be used freely independent of its original use case, similar to libraries. It focuses on reusability in different scenarios independent of the different cases it is used for._
 
+_Abstract Classes: the main blueprint for classes that will inherit from it. Dictates rough structure and properties._
 
+_Interface: defining traits and parameters a class must obey and have. Not how they are done, but rather what should be done._
 
+_Software entities: General way of referring to classes, modules and functions._
 
+_Declarative syntax: Code that can be written procedurally. You tell what you want the code to do as opposed to telling it how to do it. i.e. create a 10px square vs draw 4 lines that are connecting at 90 deg angles each measuring 10px_
 
-DICTIONARY:
+_Document Object Model (DOM): A structure representation of the HTML elements within the code. It is represented as a tree data structure, showing which top element has which subelements._
 
-Modules: a collection of related functions and code that can be used freely independent of its original use case, similar to libraries. It focuses on reusability in different scenarios independent of the different cases it is used for.
+_Real DOM: A type of Document Object Model that requires a full re-render of all elements within the DOM when there is any update of any component. It can be resource-intensive if there are a large number of elements to rerender_
 
-Abstract Classes: the main blueprint for classes that will inherit from it. Dictates rough structure and properties.
+_Virtual DOM: A lightweight version of Real DOM. It is a virtual representation of the real DOM without the ability to change the layout of a document directly._
 
-Interface: defining traits and parameters a class must obey and have. Not how they are done, but rather what should be done.
+_Extensible Markup Language (XML): It is a markup language and file format that allows for storing, transmitting and reconstructing data. It has a format that is both human/machine-readable._
 
-Software entities: General way of referring to classes, modules and functions.
+_JavaScript XML (JSX): JSX is an extension of JavaScript that allows you to directly write HTML within the JavaScript code. It is translated into regular JavaScript at runtime. Not compulsory but used heavily._
 
-Declarative syntax: Code that can be written procedurally. You tell what you want the code to do as opposed to telling it how to do it. i.e. create a 10px square vs draw 4 lines that are connecting at 90 deg angles each measuring 10px
+_Props: The data type object where attributes about a tag are stored. Usually read-only components._
 
-Document Object Model (DOM): A structure representation of the HTML elements within the code. It is represented as a tree data structure, showing which top element has which subelements.
+_Functional component: A JavaScipt function that returns a React element. Takes in props as data entry, and are more refined way to define components vs class components._
 
-Real DOM: A type of Document Object Model that requires a full re-render of all elements within the DOM when there is any update of any component. It can be resource-intensive if there are a large number of elements to rerender
+_Class components: The older method of rendering and defining components. It is now treated as boilerplate code._
 
-Virtual DOM: A lightweight version of Real DOM. It is a virtual representation of the real DOM without the ability to change the layout of a document directly. 
+_Programmatic navigation: Redirection and/or dynamic routing based on prior interactions. Such as a login vs signup action._
 
-Extensible Markup Language (XML): It is a markup language and file format that allows for storing, transmitting and reconstructing data. It has a format that is both human/machine-readable.
-
-JavaScript XML (JSX): JSX is an extension of JavaScript that allows you to directly write HTML within the JavaScript code. It is translated into regular JavaScript at runtime. Not compulsory but used heavily.
-
-Props: The data type object where attributes about a tag are stored. Usually read-only components.
-
-Functional component: A JavaScipt function that returns a React element. Takes in props as data entry, and are more refined way to define components vs class components.
-
-
-Class components: The older method of rendering and defining components. It is now treated as boilerplate code.
-
-Programmatic navigation: Redirection and/or dynamic routing based on prior interactions. Such as a login vs signup action.
-
-Internet of Things (IoT): The network and communications between physical devices. Such as vehicles, appliances and other objects that have sensors or data to transmit. It uses the internet to achieve this. Summarised to 'smart' devices communicating without direct human involvement.
+_Internet of Things (IoT): The network and communications between physical devices. Such as vehicles, appliances and other objects that have sensors or data to transmit. It uses the internet to achieve this. Summarised to 'smart' devices communicating without direct human involvement._
