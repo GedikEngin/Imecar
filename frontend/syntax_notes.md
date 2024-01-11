@@ -1,4 +1,4 @@
-# Notes only for JavaScript
+# Notes for JavaScript syntax
 
 Alert is used to force a pop up window in the browser. 
 ```JS

@@ -1,4 +1,7 @@
  # notes regarding web dev including JavaScript, React, NodeJS, JSX, HTML, CSS
+*if images are not available download md and convert to pdf*
+
+---
 
 when initializing or setting up JavaScript make sure NodeJS is added to path.
 
@@ -76,7 +79,7 @@ you can send signals in html using the onclick event attribute, you can specify 
 ```
 
 
-### CSS alignmnets
+### CSS alignments
 
 #### Flex
 when using flex displays you can control the horizontal and vertical:
@@ -89,11 +92,11 @@ target_entity{
 
 /* vertical */
 target_entity{
-  alignt-items: center
+  aligned-items: center
 }
 ```
 
-it does matter on the element being used, for example inputs within myform are text datatypes, so you need to use:
+it does matter on the element being used, for example inputs within myform are text data types, so you need to use:
 
 ```
 /* alternative */
@@ -107,6 +110,15 @@ target_entity{
 
 To access JavaScript Developer Console:
 ```CTRL + SHIFT + J```
+
+
+Javascript is a programming language that is:
+* high-level language
+  * Do not need to worry about memory management or lower level interaction with system
+* object-oriented
+  * uses objects to store and created data types
+* multi-paradigm
+  * it allows the use of different styles of programming
 
 
 ### Symbols
