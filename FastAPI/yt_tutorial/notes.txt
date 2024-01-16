@@ -4,12 +4,12 @@ https://www.youtube.com/watch?v=5GxQ1rLTwaU
 documentation/fast api:
 https://fastapi.tiangolo.com/
 
-creating secret key because openssl doesnt want to work:
+creating secret key because openssl doesn't want to work:
 https://seanwasere.com/generate-random-hex/
 
 lib installations
 
-pip install fastapi
+pip install FastAPI
 # Connects front and back end. Used for everything and serves as the building blocks for creating APIs
 
 # Server interface for FastAPI. Can handle a large number of simultaneous connections with good asynchronous capability
@@ -24,7 +24,7 @@ pip install python-jose[cryptography]
 # Password and token encryption. [bcrypt] specifies the bcrypt hashing algorithm
 pip install passlib[bcrypt]
 
-async def(): # async function, useful for waiting on webrequest, or any other operation that needs to be completed before proceeding to the next step
+async def(): # async function, useful for waiting on web request, or any other operation that needs to be completed before proceeding to the next step
 
 # @app refers to our application from FastAPI, .get defines the route that handles HTTP GET requests, in this case from the "/test/" end
 
@@ -117,7 +117,7 @@ increasing password randomness.
 Dependency Injection: Dependency Injection is a design pattern that enhances the flexibility and maintainability of software by allowing
 external entities to supply the dependencies needed by a component. This promotes a separation of concerns, where different modules or
 components handle specific functionality, improving maintainability and readability. It becomes easier to swap out components,
-configure behavior, and conduct unit testing with mock or substitute dependencies.
+configure behaviour, and conduct unit testing with mock or substitute dependencies.
 
 JSON Web Token (JWT): A compact, URL-safe means of representing claims between two parties, commonly used for authentication and
 authorization.
