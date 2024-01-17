@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>ESP Web Server</title>
+		<title>--- ESP EXP---</title>
 		<style>
 			html {
 				font-family: Arial;
@@ -44,10 +44,21 @@
 				background: #003249;
 				cursor: pointer;
 			}
+			button {
+				font-size: 1.5rem;
+				margin-top: 15px;
+				padding: 10px;
+				background-color: #4caf50;
+				color: white;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
 		</style>
 	</head>
 	<body>
 		<h2>ESP Web Server</h2>
+
 		<p>Red (GPIO 21): <span id="textSliderValueRed">%SLIDERVALUERED%</span></p>
 		<p>
 			<input
@@ -94,32 +105,8 @@
 			/>
 		</p>
 
-		<p>
-			Brightness:
-			<span id="textSliderValueBrightness">%SLIDERVALUEBRIGHTNESS%</span>
-		</p>
-		<p>
-			<input
-				type="range"
-				onchange="updateSliderPWM(this, 'textSliderValueBrightness', 'light')"
-				id="pwmSliderBrightness"
-				min="0"
-				max="255"
-				value="%SLIDERVALUEBRIGHTNESS%"
-				step="1"
-				class="slider"
-			/>
-		</p>
+		<button onclick="toggleRGB()">Toggle RGB</button>
 
-		<script>
-			function updateSliderPWM(element, targetElementId, color) {
-				var sliderValue = element.value;
-				document.getElementById(targetElementId).innerHTML = sliderValue;
-				console.log(sliderValue);
-				var xhr = new XMLHttpRequest();
-				xhr.open("GET", "/slider?" + color + "=" + sliderValue, true);
-				xhr.send();
-			}
-		</script>
+		<script src="view2.js"></script>
 	</body>
 </html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>--- ESP EXP---</title>
+		<style>
+			html {
+				font-family: Arial;
+				display: inline-block;
+				text-align: center;
+			}
+			h2 {
+				font-size: 2.3rem;
+			}
+			p {
+				font-size: 1.9rem;
+			}
+			body {
+				max-width: 400px;
+				margin: 0px auto;
+				padding-bottom: 25px;
+			}
+			.slider {
+				-webkit-appearance: none;
+				margin: 14px;
+				width: 360px;
+				height: 25px;
+				background: #ffd65c;
+				outline: none;
+				-webkit-transition: 0.2s;
+				transition: opacity 0.2s;
+			}
+			.slider::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 35px;
+				height: 35px;
+				background: #003249;
+				cursor: pointer;
+			}
+			.slider::-moz-range-thumb {
+				width: 35px;
+				height: 35px;
+				background: #003249;
+				cursor: pointer;
+			}
+			button {
+				font-size: 1.5rem;
+				margin-top: 15px;
+				padding: 10px;
+				background-color: #4caf50;
+				color: white;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>ESP Web Server</h2>
+
+		<p>Red (GPIO 21): <span id="textSliderValueRed">%SLIDERVALUERED%</span></p>
+		<p>
+			<input
+				type="range"
+				onchange="updateSliderPWM(this, 'textSliderValueRed', 'red')"
+				id="pwmSliderRed"
+				min="0"
+				max="255"
+				value="%SLIDERVALUERED%"
+				step="1"
+				class="slider"
+			/>
+		</p>
+
+		<p>
+			Green (GPIO 19): <span id="textSliderValueGreen">%SLIDERVALUEGREEN%</span>
+		</p>
+		<p>
+			<input
+				type="range"
+				onchange="updateSliderPWM(this, 'textSliderValueGreen', 'green')"
+				id="pwmSliderGreen"
+				min="0"
+				max="255"
+				value="%SLIDERVALUEGREEN%"
+				step="1"
+				class="slider"
+			/>
+		</p>
+
+		<p>
+			Blue (GPIO 18): <span id="textSliderValueBlue">%SLIDERVALUEBLUE%</span>
+		</p>
+		<p>
+			<input
+				type="range"
+				onchange="updateSliderPWM(this, 'textSliderValueBlue', 'blue')"
+				id="pwmSliderBlue"
+				min="0"
+				max="255"
+				value="%SLIDERVALUEBLUE%"
+				step="1"
+				class="slider"
+			/>
+		</p>
+
+		<button onclick="toggleRGB()">Toggle RGB</button>
+
+		<script>
+			// creates a function that takes in parameters element, the element id and then the slider color
+			// element is the item that triggered the DOM event, which is the OnChange for the sliders
+			// same with color, it is specified manually when being passed through when OnChange is called
+			function updateSliderPWM(element, targetElementId, color) {
+				// sets sliderValue to be the element.value, so the DOM being passed's RGB value (0-255)
+				var sliderValue = element.value;
+
+				// finds the html element within the document/dom that has the targetElementID (being passed through when function is called)
+				// and updates the inner content of the html elements
+				document.getElementById(targetElementId).innerHTML = sliderValue;
+
+				// creates a new variable to use for html request, used to interact with servers and make http requests
+				var xhr = new XMLHttpRequest();
+
+				// initializes a new get request with a target slider to query for the color and assigns it to the colorSliderValue
+				// i.e. gets color blue (passed from updateSliderPWM) and slider value is 43, blue=43
+				xhr.open("GET", "/slider?" + color + "=" + sliderValue, true);
+
+				// sends the html request (the get request for the sliders in this case)
+				xhr.send();
+			}
+
+			// creates flags that are used by loops for conditions when running events/functions
+			var isRGBEnabled = true;
+
+			// variable created to be used with setInterval function when creating time-based
+			// constraints/functions, the identifier for the interval
+			var redCycleInterval;
+			var greenCycleInterval;
+			var blueCycleInterval;
+
+			var redInterval;
+			var blueInterval;
+			var greenInterval;
+
+			var intervalDuration = 1000;
+
+			// Function to clear color intervals
+			function clearColorInterval() {
+				// clearInterval(redCycleInterval);
+				// clearInterval(redInterval);
+				// clearInterval(greenCycleInterval);
+				// clearInterval(greenInterval);
+				// clearInterval(blueCycleInterval);
+				// clearInterval(blueInterval);
+			}
+
+			function autoRGB() {
+				redColorCycle();
+				greenColorCycle();
+				blueColorCycle();
+			}
+
+			// function for the rgb toggle
+			function toggleRGB() {
+				// checks for the rgb flag
+				isRGBEnabled = !isRGBEnabled;
+				console.log("rgb status: " + isRGBEnabled);
+
+				// if flag is true, call the autoCycleRGBSliders function
+				if (isRGBEnabled) {
+					// autoCycleRGBSliders();
+					autoRGB();
+
+					// else clear the interval to stop the cycle running function from being called by an interval
+				} else {
+					// clearInterval(autoCycleInterval);
+					clearColorInterval(); // Call the function to clear color intervals
+				}
+			}
+
+			function redColorCycle() {
+				redCycleInterval = setInterval(function redController(redSlider) {
+					if (isRGBEnabled) {
+						console.log("red signal");
+						var redSlider = document.getElementById("pwmSliderRed");
+						if (Math.random() > 0.5) {
+							redInterval = setInterval(function incrementSlider() {
+								redSlider.value++;
+								updateSliderPWM(redSlider, "textSliderValueRed", "red");
+							}, intervalDuration);
+
+							// or decremented by 1
+						} else {
+							redInterval = setInterval(function decrementSlider() {
+								redSlider.value--;
+								updateSliderPWM(redSlider, "textSliderValueRed", "red");
+							}, intervalDuration);
+						}
+					} else {
+						console.log("red off");
+						clearInterval(redCycleInterval);
+						clearInterval(redInterval);
+					}
+				}, 1000);
+			}
+
+			function greenColorCycle() {
+				greenCycleInterval = setInterval(function greenController(greenSlider) {
+					if (isRGBEnabled) {
+						console.log("green signal");
+						var greenSlider = document.getElementById("pwmSliderGreen");
+						if (Math.random() > 0.5) {
+							greenInterval = setInterval(function incrementSlider() {
+								greenSlider.value++;
+								updateSliderPWM(greenSlider, "textSliderValueGreen", "green");
+							}, intervalDuration);
+						} else {
+							greenInterval = setInterval(function decrementSlider() {
+								greenSlider.value--;
+								updateSliderPWM(greenSlider, "textSliderValueGreen", "green");
+							}, intervalDuration);
+						}
+					} else {
+						console.log("green off");
+						clearInterval(greenCycleInterval);
+						clearInterval(greenInterval);
+					}
+				}, 1000);
+			}
+
+			function blueColorCycle() {
+				blueCycleInterval = setInterval(function blueController(blueSlider) {
+					if (isRGBEnabled) {
+						console.log("blue signal");
+						var blueSlider = document.getElementById("pwmSliderBlue");
+						if (Math.random() > 0.5) {
+							blueInterval = setInterval(function incrementSlider() {
+								blueSlider.value++;
+								updateSliderPWM(blueSlider, "textSliderValueBlue", "blue");
+							}, intervalDuration);
+						} else {
+							blueInterval = setInterval(function decrementSlider() {
+								blueSlider.value--;
+								updateSliderPWM(blueSlider, "textSliderValueBlue", "blue");
+							}, intervalDuration);
+						}
+					} else {
+						console.log("blue off");
+						clearInterval(blueCycleInterval);
+						clearInterval(blueInterval);
+					}
+				}, 1000);
+			}
+
+			// Initial call to start the auto cycle with RGB initially off
+			toggleRGB();
+		</script>
+	</body>
+</html>

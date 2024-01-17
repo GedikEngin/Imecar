@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style>
+			#toggleButton {
+				background-color: red;
+				color: white;
+				padding: 10px 20px;
+				border: none;
+				cursor: pointer;
+			}
+		</style>
+		<script>
+			function toggleButton() {
+				var button = document.getElementById("toggleButton");
+				if (button.style.backgroundColor === "red") {
+					button.style.backgroundColor = "green";
+					button.innerHTML = "On";
+				} else {
+					button.style.backgroundColor = "red";
+					button.innerHTML = "Off";
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<button id="toggleButton" onclick="toggleButton()">Off</button>
+	</body>
+</html>

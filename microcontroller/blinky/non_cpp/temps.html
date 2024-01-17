@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>ESP Web Server</title>
+		<style>
+			html {
+				font-family: Arial;
+				display: inline-block;
+				text-align: center;
+			}
+			h2 {
+				font-size: 2.3rem;
+			}
+			p {
+				font-size: 1.9rem;
+			}
+			body {
+				max-width: 400px;
+				margin: 0px auto;
+				padding-bottom: 25px;
+			}
+			.slider {
+				-webkit-appearance: none;
+				margin: 14px;
+				width: 360px;
+				height: 25px;
+				background: #ffd65c;
+				outline: none;
+				-webkit-transition: 0.2s;
+				transition: opacity 0.2s;
+			}
+			.slider::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 35px;
+				height: 35px;
+				background: #003249;
+				cursor: pointer;
+			}
+			.slider::-moz-range-thumb {
+				width: 35px;
+				height: 35px;
+				background: #003249;
+				cursor: pointer;
+			}
+
+			button {
+				font-size: 1.5rem;
+				margin-top: 15px;
+				padding: 10px;
+				background-color: #4caf50;
+				color: white;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+
+			#toggleOnOff {
+				background-color: red;
+				color: white;
+				padding: 10px 20px;
+				border: none;
+				cursor: pointer;
+			}
+
+			#turnRed {
+				background-color: red;
+				color: white;
+				padding: 10px 20px;
+				border: none;
+				cursor: pointer;
+			}
+
+			#turnYellow {
+				background-color: yellow;
+				color: white;
+				padding: 10px 20px;
+				border: none;
+				cursor: pointer;
+			}
+			#turnGreen {
+				background-color: green;
+				color: white;
+				padding: 10px 20px;
+				border: none;
+				cursor: pointer;
+			}
+
+			.controlButton {
+				text-shadow: 1px 1px 2px black;
+			}
+
+			.controlButton.clicked {
+				background-color: gray !important;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>ESP Web Server</h2>
+		<p>Red (GPIO 21): <span id="textSliderValueRed">%SLIDERVALUERED%</span></p>
+		<p>
+			<input
+				type="range"
+				onchange="updateSliderPWM(this, 'textSliderValueRed', 'red')"
+				id="pwmSliderRed"
+				min="0"
+				max="255"
+				value="%SLIDERVALUERED%"
+				step="1"
+				class="slider"
+			/>
+		</p>
+
+		<p>
+			Green (GPIO 19): <span id="textSliderValueGreen">%SLIDERVALUEGREEN%</span>
+		</p>
+		<p>
+			<input
+				type="range"
+				onchange="updateSliderPWM(this, 'textSliderValueGreen', 'green')"
+				id="pwmSliderGreen"
+				min="0"
+				max="255"
+				value="%SLIDERVALUEGREEN%"
+				step="1"
+				class="slider"
+			/>
+		</p>
+
+		<p>
+			Blue (GPIO 18): <span id="textSliderValueBlue">%SLIDERVALUEBLUE%</span>
+		</p>
+		<p>
+			<input
+				type="range"
+				onchange="updateSliderPWM(this, 'textSliderValueBlue', 'blue')"
+				id="pwmSliderBlue"
+				min="0"
+				max="255"
+				value="%SLIDERVALUEBLUE%"
+				step="1"
+				class="slider"
+			/>
+		</p>
+
+		<button id="toggleOnOff" class="controlButton" onclick="toggleOnOff()">
+			Off
+		</button>
+		<button
+			id="turnRed"
+			class="controlButton"
+			onclick='interactWithLED(this, "red")'
+		>
+			Red
+		</button>
+		<button
+			id="turnYellow"
+			class="controlButton"
+			onclick='interactWithLED(this, "yellow")'
+		>
+			Yellow
+		</button>
+		<button
+			id="turnGreen"
+			class="controlButton"
+			onclick='interactWithLED(this, "green")'
+		>
+			Green
+		</button>
+
+		<script>
+			function updateSliderPWM(element, targetElementId, color) {
+				var sliderValue = element.value;
+				document.getElementById(targetElementId).innerHTML = sliderValue;
+				console.log(sliderValue);
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/slider?" + color + "=" + sliderValue, true);
+				xhr.send();
+			}
+
+			function toggleOnOff() {
+				var button = document.getElementById("toggleOnOff");
+				var toggleState;
+				var xhr = new XMLHttpRequest();
+				if (button.style.backgroundColor === "green") {
+					button.style.backgroundColor = "red";
+					button.innerHTML = "Off";
+					toggleState = "off";
+				} else {
+					button.style.backgroundColor = "green";
+					button.innerHTML = "On";
+					toggleState = "on";
+				}
+				xhr.open("GET", "/toggleOnOff?state=" + toggleState, true);
+				xhr.send();
+				console.log(toggleState);
+			}
+
+			function interactWithLED(button, colorLED) {
+				var xhr = new XMLHttpRequest();
+				console.log(colorLED);
+				xhr.open("GET", "/colorLED?colorLED=" + colorLED, true);
+				xhr.send();
+
+				// Apply acknowledgment effect to the button
+				button.classList.add("controlButton-clicked");
+
+				// Optionally, you can reset the button state after a delay
+				setTimeout(function () {
+					button.classList.remove("controlButton-clicked");
+				}, 1000); // Adjust the delay as needed
+			}
+		</script>
+	</body>
+</html>
