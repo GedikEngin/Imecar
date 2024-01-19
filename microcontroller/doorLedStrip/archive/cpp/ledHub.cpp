@@ -268,57 +268,57 @@ const char index_html[] PROGMEM = R"rawliteral(
 // Replaces placeholder with button section in your web page
 String processor(const String &var)
 {
-    // Serial.println(var);
-    if (var == "SLIDERVALUERED")
-    {
-        return "red " + sliderValueRed;
-    }
-    else if (var == "SLIDERVALUEGREEN")
-    {
-        return "green " + sliderValueGreen;
-    }
-    else if (var == "SLIDERVALUEBLUE")
-    {
-        return "blue " + sliderValueBlue;
-    }
-    return String();
+	// Serial.println(var);
+	if (var == "SLIDERVALUERED")
+	{
+		return "red " + sliderValueRed;
+	}
+	else if (var == "SLIDERVALUEGREEN")
+	{
+		return "green " + sliderValueGreen;
+	}
+	else if (var == "SLIDERVALUEBLUE")
+	{
+		return "blue " + sliderValueBlue;
+	}
+	return String();
 }
 
 void setup()
 {
-    // Serial port for debugging purposes
-    Serial.begin(115200);
+	// Serial port for debugging purposes
+	Serial.begin(115200);
 
-    // color
-    // configuring led for color
-    pinMode(redOutput, OUTPUT);
-    pinMode(greenOutput, OUTPUT);
-    pinMode(blueOutput, OUTPUT);
+	// color
+	// configuring led for color
+	pinMode(redOutput, OUTPUT);
+	pinMode(greenOutput, OUTPUT);
+	pinMode(blueOutput, OUTPUT);
 
-    // color selection
-    analogWrite(redOutput, sliderValueRed.toInt());
-    analogWrite(greenOutput, sliderValueGreen.toInt());
-    analogWrite(blueOutput, sliderValueBlue.toInt());
+	// color selection
+	analogWrite(redOutput, sliderValueRed.toInt());
+	analogWrite(greenOutput, sliderValueGreen.toInt());
+	analogWrite(blueOutput, sliderValueBlue.toInt());
 
-    // Connect to Wi-Fi
-    WiFi.begin(ssid, password);
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        delay(1000);
-        Serial.println("Connecting to WiFi..");
-    }
+	// Connect to Wi-Fi
+	WiFi.begin(ssid, password);
+	while (WiFi.status() != WL_CONNECTED)
+	{
+		delay(1000);
+		Serial.println("Connecting to WiFi..");
+	}
 
-    // Print ESP Local IP Address
-    Serial.println(WiFi.localIP());
+	// Print ESP Local IP Address
+	Serial.println(WiFi.localIP());
 
-    // controls and fetches sliders
-    // Route for root / web page
-    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send_P(200, "text/html", index_html, processor); });
+	// controls and fetches sliders
+	// Route for root / web page
+	server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+			  { request->send_P(200, "text/html", index_html, processor); });
 
-    // Send a GET request to <ESP_IP>/slider?value=<inputMessage>
-    server.on("/slider", HTTP_GET, [](AsyncWebServerRequest *request)
-              {
+	// Send a GET request to <ESP_IP>/slider?value=<inputMessage>
+	server.on("/slider", HTTP_GET, [](AsyncWebServerRequest *request)
+			  {
     if (request->hasParam("red")) {
         sliderValueRed = request->getParam("red")->value();
 		Serial.println("Red Value: " + sliderValueRed);
@@ -336,10 +336,10 @@ void setup()
     }
     request->send(200, "text/plain", "OK"); });
 
-    // toggles on off
-    // New endpoint to execute a command
-    server.on("/toggleOnOff", HTTP_GET, [](AsyncWebServerRequest *request)
-              {
+	// toggles on off
+	// New endpoint to execute a command
+	server.on("/toggleOnOff", HTTP_GET, [](AsyncWebServerRequest *request)
+			  {
     // Retrieve the 'state' query parameter from the request
     if (request->hasParam("state"));
 	String toggleState = "off"; // Default value if not present
@@ -371,14 +371,14 @@ void setup()
     // Send a response to the client
     request->send(200, "text/plain", "Command Executed"); });
 
-    // -----------------------------------------------------------
-    // -----------------------------------------------------------
-    // -----------------------------------------------------------
-    // set colors
-    // New endpoint to execute a command
+	// -----------------------------------------------------------
+	// -----------------------------------------------------------
+	// -----------------------------------------------------------
+	// set colors
+	// New endpoint to execute a command
 
-    server.on("/colorLED", HTTP_GET, [](AsyncWebServerRequest *request)
-              {
+	server.on("/colorLED", HTTP_GET, [](AsyncWebServerRequest *request)
+			  {
     // Retrieve the 'color' query parameter from the request
     String colorLED = "default"; // Default value if not present
     if (request->hasParam("colorLED"))
@@ -423,8 +423,8 @@ void setup()
     // Send a response to the client
     request->send(200, "text/plain", "Command Executed"); });
 
-    // Start server
-    server.begin();
+	// Start server
+	server.begin();
 }
 
 void loop()
