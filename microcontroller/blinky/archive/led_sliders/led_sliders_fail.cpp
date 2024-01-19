@@ -7,7 +7,7 @@
 const char *ssid = "MW42V_A8CA";
 const char *password = "91014264";
 
-const int output = 18;
+const int output = 19;
 
 String sliderValue = "0";
 
@@ -155,45 +155,45 @@ const char index_html[] PROGMEM = R"rawliteral(
 // Replaces placeholder with button section in your web page
 String processor(const String &var)
 {
-    // Serial.println(var);
-    if (var == "SLIDERVALUE")
-    {
-        return sliderValue;
-    }
-    return String();
+	// Serial.println(var);
+	if (var == "SLIDERVALUE")
+	{
+		return sliderValue;
+	}
+	return String();
 }
 
 void setup()
 {
-    // Serial port for debugging purposes
-    Serial.begin(115200);
+	// Serial port for debugging purposes
+	Serial.begin(115200);
 
-    // configure LED PWM functionalitites
-    ledcSetup(ledChannel, freq, resolution);
+	// configure LED PWM functionalitites
+	ledcSetup(ledChannel, freq, resolution);
 
-    // attach the channel to the GPIO to be controlled
-    ledcAttachPin(output, ledChannel);
+	// attach the channel to the GPIO to be controlled
+	ledcAttachPin(output, ledChannel);
 
-    ledcWrite(ledChannel, sliderValue.toInt());
+	ledcWrite(ledChannel, sliderValue.toInt());
 
-    // Connect to Wi-Fi
-    WiFi.begin(ssid, password);
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        delay(1000);
-        Serial.println("Connecting to WiFi..");
-    }
+	// Connect to Wi-Fi
+	WiFi.begin(ssid, password);
+	while (WiFi.status() != WL_CONNECTED)
+	{
+		delay(1000);
+		Serial.println("Connecting to WiFi..");
+	}
 
-    // Print ESP Local IP Address
-    Serial.println(WiFi.localIP());
+	// Print ESP Local IP Address
+	Serial.println(WiFi.localIP());
 
-    // Route for root / web page
-    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-              { request->send_P(200, "text/html", index_html, processor); });
+	// Route for root / web page
+	server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+			  { request->send_P(200, "text/html", index_html, processor); });
 
-    // Send a GET request to <ESP_IP>/slider?value=<inputMessage>
-    server.on("/slider", HTTP_GET, [](AsyncWebServerRequest *request)
-              {
+	// Send a GET request to <ESP_IP>/slider?value=<inputMessage>
+	server.on("/slider", HTTP_GET, [](AsyncWebServerRequest *request)
+			  {
     String inputMessage;
     // GET input1 value on <ESP_IP>/slider?value=<inputMessage>
     if (request->hasParam(PARAM_INPUT)) {
@@ -207,8 +207,8 @@ void setup()
     Serial.println(inputMessage);
     request->send(200, "text/plain", "OK"); });
 
-    // Start server
-    server.begin();
+	// Start server
+	server.begin();
 }
 
 void loop()

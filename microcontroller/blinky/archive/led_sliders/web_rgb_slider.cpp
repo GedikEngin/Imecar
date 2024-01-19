@@ -7,8 +7,8 @@ const char *ssid = "MW42V_A8CA";
 const char *password = "91014264";
 
 const int outputBlue = 18;
-const int outputRed = 21;
-const int outputGreen = 19;
+const int outputRed = 18;
+const int outputGreen = 5;
 
 String sliderValueRed = "0";
 String sliderValueGreen = "0";

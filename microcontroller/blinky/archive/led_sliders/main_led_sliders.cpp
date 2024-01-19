@@ -18,9 +18,9 @@ const int greenChannel = 1;
 const int blueChannel = 2;
 const int resolution = 8;
 
-#define redOutput 21   // GPIO21
-#define greenOutput 19 // GPIO19
-#define blueOutput 18  // GPIO18
+#define redOutput 19   // GPIO19
+#define greenOutput 18 // GPIO18
+#define blueOutput 5   // GPIO05
 
 const char *PARAM_INPUT = "value";
 

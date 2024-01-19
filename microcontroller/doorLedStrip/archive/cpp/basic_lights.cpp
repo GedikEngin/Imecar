@@ -12,8 +12,7 @@
 // number of leds in a strip
 #define NUM_LEDS 6
 
-#define DATA_PIN 3
-#define CLOCK_PIN 13
+#define DATA_PIN 3 // GPIO03
 
 // Define the array of leds
 CRGB leds[NUM_LEDS];
@@ -46,13 +45,28 @@ void loop()
 {
     // Turn the LED on, then pause
     // refers to the led at point
-    leds[1] = CRGB(255, 0, 0);
+
+    leds[0] = CRGB(255, 0, 0);
     delay(3000);
     FastLED.show();
-    leds[0] = CRGB(0, 255, 0);
+
+    leds[1] = CRGB(0, 255, 0);
     delay(3000);
     FastLED.show();
+
     leds[2] = CRGB(0, 0, 255);
+    delay(3000);
+    FastLED.show();
+
+    leds[3] = CRGB(255, 0, 0);
+    delay(3000);
+    FastLED.show();
+
+    leds[4] = CRGB(0, 255, 0);
+    delay(3000);
+    FastLED.show();
+
+    leds[5] = CRGB(0, 0, 255);
     delay(3000);
     FastLED.show();
 

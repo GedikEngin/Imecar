@@ -1,9 +1,9 @@
 #include <Arduino.h>
 
 // pins
-#define PIN_RED 21   // GPIO21
-#define PIN_GREEN 19 // GPIO19
-#define PIN_BLUE 18  // GPIO18
+#define PIN_RED 18   // GPIO19
+#define PIN_GREEN 18 // GPIO18
+#define PIN_BLUE 5   // GPIO5
 
 void setup()
 {

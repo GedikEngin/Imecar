@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Front-end Website</title>
+		<style>
+			body {
+				background-color: #f2f2f2;
+			}
+			h1 {
+				color: #4d4d4d;
+				font-family: Arial, sans-serif;
+				font-size: 36px;
+				font-weight: bold;
+				margin-top: 50px;
+				margin-bottom: 50px;
+				text-align: center;
+			}
+			form {
+				background-color: #ffffff;
+				border-radius: 5px;
+				box-shadow: 0px 0px 10px #bfbfbf;
+				margin: auto;
+				padding: 20px;
+				width: 500px;
+			}
+			label {
+				color: #4d4d4d;
+				display: block;
+				font-family: Arial, sans-serif;
+				font-size: 18px;
+				font-weight: bold;
+				margin-bottom: 10px;
+			}
+			input[type="text"] {
+				border: 1px solid #bfbfbf;
+				border-radius: 5px;
+				font-family: Arial, sans-serif;
+				font-size: 16px;
+				margin-bottom: 20px;
+				padding: 10px;
+				width: 100%;
+			}
+			input[type="submit"] {
+				background-color: #4d4d4d;
+				border: none;
+				border-radius: 5px;
+				color: #ffffff;
+				cursor: pointer;
+				font-family: Arial, sans-serif;
+				font-size: 18px;
+				font-weight: bold;
+				margin-top: 20px;
+				padding: 10px;
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Front-end Website</h1>
+		<form>
+			<label for="red_val">Red Value:</label>
+			<input type="text" id="red_val" name="red_val" required />
+
+			<label for="blue_val">Blue Value:</label>
+			<input type="text" id="blue_val" name="blue_val" required />
+
+			<label for="green_val">Green Value:</label>
+			<input type="text" id="green_val" name="green_val" required />
+
+			<label for="orange_val">Orange Value:</label>
+			<input type="text" id="orange_val" name="orange_val" required />
+
+			<label for="pink_val">Pink Value:</label>
+			<input type="text" id="pink_val" name="pink_val" required />
+
+			<label for="black_val">Black Value:</label>
+			<input type="text" id="black_val" name="black_val" required />
+
+			<input type="submit" value="Submit" onclick="storeValues()" />
+		</form>
+
+		<script>
+			function storeValues() {
+				var red_val = document.getElementById("red_val").value;
+				var blue_val = document.getElementById("blue_val").value;
+				var green_val = document.getElementById("green_val").value;
+				var orange_val = document.getElementById("orange_val").value;
+				var pink_val = document.getElementById("pink_val").value;
+				var black_val = document.getElementById("black_val").value;
+
+				var data = {
+					red_val: red_val,
+					blue_val: blue_val,
+					green_val: green_val,
+					orange_val: orange_val,
+					pink_val: pink_val,
+					black_val: black_val,
+				};
+
+				var json = JSON.stringify(data);
+				var blob = new Blob([json], { type: "application/json" });
+				var url = URL.createObjectURL(blob);
+
+				var a = document.createElement("a");
+				a.href = url;
+				a.download = "data.json";
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+			}
+		</script>
+	</body>
+</html>

@@ -1,3 +1,12 @@
 {
-	"cmake.sourceDirectory": "C:/Users/Administrator/Documents/dev/Imecar/microcontroller/blinky/.pio/libdeps/esp32dev/AsyncTCP"
+	"cmake.sourceDirectory": "C:/Users/Administrator/Documents/dev/Imecar/microcontroller/blinky/.pio/libdeps/esp32dev/AsyncTCP",
+	"cSpell.words": [
+		"onchange",
+		"onclick",
+		"PROGMEM",
+		"rawliteral",
+		"SLIDERVALUEBLUE",
+		"SLIDERVALUEGREEN",
+		"SLIDERVALUERED"
+	]
 }

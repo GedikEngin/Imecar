@@ -19,9 +19,9 @@ const int greenChannel = 1;
 const int blueChannel = 2;
 const int resolution = 8;
 
-#define redOutput 21   // GPIO21
-#define greenOutput 19 // GPIO19
-#define blueOutput 18  // GPIO18
+#define redOutput 19
+#define greenOutput 18
+#define blueOutput 5
 
 const char *PARAM_INPUT = "value";
 
@@ -87,12 +87,22 @@ const char index_html[] PROGMEM = R"rawliteral(
 				cursor: pointer;
 			}
 
-			#toggleOnOff {
-				background-color: red;
+			#toggleOnOff[data-state="off"] {
+				/* Add any styling for the "Off" state */
 				color: white;
 				padding: 10px 20px;
 				border: none;
 				cursor: pointer;
+				background-color: red;
+			}
+
+			#toggleOnOff[data-state="on"] {
+				/* Add any styling for the "On" state */
+				color: white;
+				padding: 10px 20px;
+				border: none;
+				cursor: pointer;
+				background-color: green;
 			}
 
 			#turnRed {
@@ -129,7 +139,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 	</head>
 	<body>
 		<h2>ESP Web Server</h2>
-		<p>Red (GPIO 21): <span id="textSliderValueRed">%SLIDERVALUERED%</span></p>
+		<p>Red (GPIO 19): <span id="textSliderValueRed">%SLIDERVALUERED%</span></p>
 		<p>
 			<input
 				type="range"
@@ -144,7 +154,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 		</p>
 
 		<p>
-			Green (GPIO 19): <span id="textSliderValueGreen">%SLIDERVALUEGREEN%</span>
+			Green (GPIO 18): <span id="textSliderValueGreen">%SLIDERVALUEGREEN%</span>
 		</p>
 		<p>
 			<input
@@ -160,7 +170,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 		</p>
 
 		<p>
-			Blue (GPIO 18): <span id="textSliderValueBlue">%SLIDERVALUEBLUE%</span>
+			Blue (GPIO 5): <span id="textSliderValueBlue">%SLIDERVALUEBLUE%</span>
 		</p>
 		<p>
 			<input
@@ -175,7 +185,12 @@ const char index_html[] PROGMEM = R"rawliteral(
 			/>
 		</p>
 
-		<button id="toggleOnOff" class="controlButton" onclick="toggleOnOff()">
+		<button
+			id="toggleOnOff"
+			class="controlButton"
+			data-state="off"
+			onclick="toggleOnOff()"
+		>
 			Off
 		</button>
 		<button
@@ -200,47 +215,50 @@ const char index_html[] PROGMEM = R"rawliteral(
 			Green
 		</button>
 
-		<script>function updateSliderPWM(element, targetElementId, color) {
-			var sliderValue = element.value;
-			document.getElementById(targetElementId).innerHTML = sliderValue;
-			console.log(sliderValue);
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "/slider?" + color + "=" + sliderValue, true);
-			xhr.send();
-		}
-		
-		function toggleOnOff() {
-			var button = document.getElementById("toggleOnOff");
-			var toggleState;
-			var xhr = new XMLHttpRequest();
-			if (button.style.backgroundColor === "green") {
-				button.style.backgroundColor = "red";
-				button.innerHTML = "Off";
-				toggleState = "off";
-			} else {
-				button.style.backgroundColor = "green";
-				button.innerHTML = "On";
-				toggleState = "on";
+		<script>
+			function updateSliderPWM(element, targetElementId, color) {
+				var sliderValue = element.value;
+				document.getElementById(targetElementId).innerHTML = sliderValue;
+				console.log(sliderValue);
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/slider?" + color + "=" + sliderValue, true);
+				xhr.send();
 			}
-			xhr.open("GET", "/toggleOnOff?state=" + toggleState, true);
-			xhr.send();
-			console.log(toggleState);
-		}
-		
-		function interactWithLED(button, colorLED) {
-			var xhr = new XMLHttpRequest();
-			console.log(colorLED);
-			xhr.open("GET", "/colorLED?colorLED=" + colorLED, true);
-			xhr.send();
-		
-			// Apply acknowledgment effect to the button
-			button.classList.add("controlButton-clicked");
-		
-			// Optionally, you can reset the button state after a delay
-			setTimeout(function () {
-				button.classList.remove("controlButton-clicked");
-			}, 1000); // Adjust the delay as needed
-		}
+
+			function toggleOnOff() {
+				var button = document.getElementById("toggleOnOff");
+				var toggleState;
+				var xhr = new XMLHttpRequest();
+
+				if (button.getAttribute("data-state") === "off") {
+					button.setAttribute("data-state", "on");
+					button.innerHTML = "On";
+					toggleState = "on";
+				} else {
+					button.setAttribute("data-state", "off");
+					button.innerHTML = "Off";
+					toggleState = "off";
+				}
+
+				xhr.open("GET", "/toggleOnOff?state=" + toggleState, true);
+				xhr.send();
+				console.log(toggleState);
+			}
+
+			function interactWithLED(button, colorLED) {
+				var xhr = new XMLHttpRequest();
+				console.log(colorLED);
+				xhr.open("GET", "/colorLED?colorLED=" + colorLED, true);
+				xhr.send();
+
+				// Apply acknowledgment effect to the button
+				button.classList.add("controlButton-clicked");
+
+				// Optionally, you can reset the button state after a delay
+				setTimeout(function () {
+					button.classList.remove("controlButton-clicked");
+				}, 1000); // Adjust the delay as needed
+			}
 		</script>
 	</body>
 </html>
@@ -250,57 +268,57 @@ const char index_html[] PROGMEM = R"rawliteral(
 // Replaces placeholder with button section in your web page
 String processor(const String &var)
 {
-	// Serial.println(var);
-	if (var == "SLIDERVALUERED")
-	{
-		return "red " + sliderValueRed;
-	}
-	else if (var == "SLIDERVALUEGREEN")
-	{
-		return "green " + sliderValueGreen;
-	}
-	else if (var == "SLIDERVALUEBLUE")
-	{
-		return "blue " + sliderValueBlue;
-	}
-	return String();
+    // Serial.println(var);
+    if (var == "SLIDERVALUERED")
+    {
+        return "red " + sliderValueRed;
+    }
+    else if (var == "SLIDERVALUEGREEN")
+    {
+        return "green " + sliderValueGreen;
+    }
+    else if (var == "SLIDERVALUEBLUE")
+    {
+        return "blue " + sliderValueBlue;
+    }
+    return String();
 }
 
 void setup()
 {
-	// Serial port for debugging purposes
-	Serial.begin(115200);
+    // Serial port for debugging purposes
+    Serial.begin(115200);
 
-	// color
-	// configuring led for color
-	pinMode(redOutput, OUTPUT);
-	pinMode(greenOutput, OUTPUT);
-	pinMode(blueOutput, OUTPUT);
+    // color
+    // configuring led for color
+    pinMode(redOutput, OUTPUT);
+    pinMode(greenOutput, OUTPUT);
+    pinMode(blueOutput, OUTPUT);
 
-	// color selection
-	analogWrite(redOutput, sliderValueRed.toInt());
-	analogWrite(greenOutput, sliderValueGreen.toInt());
-	analogWrite(blueOutput, sliderValueBlue.toInt());
+    // color selection
+    analogWrite(redOutput, sliderValueRed.toInt());
+    analogWrite(greenOutput, sliderValueGreen.toInt());
+    analogWrite(blueOutput, sliderValueBlue.toInt());
 
-	// Connect to Wi-Fi
-	WiFi.begin(ssid, password);
-	while (WiFi.status() != WL_CONNECTED)
-	{
-		delay(1000);
-		Serial.println("Connecting to WiFi..");
-	}
+    // Connect to Wi-Fi
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        delay(1000);
+        Serial.println("Connecting to WiFi..");
+    }
 
-	// Print ESP Local IP Address
-	Serial.println(WiFi.localIP());
+    // Print ESP Local IP Address
+    Serial.println(WiFi.localIP());
 
-	// controls and fetches sliders
-	// Route for root / web page
-	server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-			  { request->send_P(200, "text/html", index_html, processor); });
+    // controls and fetches sliders
+    // Route for root / web page
+    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+              { request->send_P(200, "text/html", index_html, processor); });
 
-	// Send a GET request to <ESP_IP>/slider?value=<inputMessage>
-	server.on("/slider", HTTP_GET, [](AsyncWebServerRequest *request)
-			  {
+    // Send a GET request to <ESP_IP>/slider?value=<inputMessage>
+    server.on("/slider", HTTP_GET, [](AsyncWebServerRequest *request)
+              {
     if (request->hasParam("red")) {
         sliderValueRed = request->getParam("red")->value();
 		Serial.println("Red Value: " + sliderValueRed);
@@ -308,23 +326,23 @@ void setup()
     }
     if (request->hasParam("green")) {
         sliderValueGreen = request->getParam("green")->value();
-		Serial.println("green Value: " + sliderValueRed);
+		Serial.println("Green Value: " + sliderValueGreen);
         analogWrite(greenOutput, sliderValueGreen.toInt());
     }
     if (request->hasParam("blue")) {
         sliderValueBlue = request->getParam("blue")->value();
-		Serial.println("blue Value: " + sliderValueRed);
+		Serial.println("Blue Value: " + sliderValueBlue);
         analogWrite(blueOutput, sliderValueBlue.toInt());
     }
     request->send(200, "text/plain", "OK"); });
 
-	// toggles on off
-	// New endpoint to execute a command
-	server.on("/toggleOnOff", HTTP_GET, [](AsyncWebServerRequest *request)
-			  {
+    // toggles on off
+    // New endpoint to execute a command
+    server.on("/toggleOnOff", HTTP_GET, [](AsyncWebServerRequest *request)
+              {
     // Retrieve the 'state' query parameter from the request
-    String toggleState = "off"; // Default value if not present
-    if (request->hasParam("state"))
+    if (request->hasParam("state"));
+	String toggleState = "off"; // Default value if not present
     {
         toggleState = request->getParam("state")->value();
     }
@@ -353,14 +371,14 @@ void setup()
     // Send a response to the client
     request->send(200, "text/plain", "Command Executed"); });
 
-	// -----------------------------------------------------------
-	// -----------------------------------------------------------
-	// -----------------------------------------------------------
-	// set colors
-	// New endpoint to execute a command
+    // -----------------------------------------------------------
+    // -----------------------------------------------------------
+    // -----------------------------------------------------------
+    // set colors
+    // New endpoint to execute a command
 
-	server.on("/colorLED", HTTP_GET, [](AsyncWebServerRequest *request)
-			  {
+    server.on("/colorLED", HTTP_GET, [](AsyncWebServerRequest *request)
+              {
     // Retrieve the 'color' query parameter from the request
     String colorLED = "default"; // Default value if not present
     if (request->hasParam("colorLED"))
@@ -405,8 +423,8 @@ void setup()
     // Send a response to the client
     request->send(200, "text/plain", "Command Executed"); });
 
-	// Start server
-	server.begin();
+    // Start server
+    server.begin();
 }
 
 void loop()
