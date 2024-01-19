@@ -1,5 +1,14 @@
 {
 	"files.associations": {
 		"string": "cpp"
-	}
+	},
+	"cSpell.words": [
+		"onchange",
+		"onclick",
+		"PROGMEM",
+		"rawliteral",
+		"SLIDERVALUEBLUE",
+		"SLIDERVALUEGREEN",
+		"SLIDERVALUERED"
+	]
 }
