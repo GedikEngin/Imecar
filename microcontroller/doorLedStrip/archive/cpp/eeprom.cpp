@@ -11,12 +11,12 @@
 void writeDataToEEPROM()
 {
     // Write data to EEPROM at address 0
-    int valueToWrite = 42;
+    int valueToWrite = 29;
     EEPROM.write(0, valueToWrite);
 
     // Commit the data to flash
     EEPROM.commit();
-
+    delay(3000);
     Serial.println("Data written to EEPROM.");
 }
 
@@ -26,6 +26,7 @@ void readDataFromEEPROM()
     int readValue = EEPROM.read(0);
 
     Serial.print("Read data from EEPROM: ");
+    delay(3000);
     Serial.println(readValue);
 }
 
