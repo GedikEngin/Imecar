@@ -13,9 +13,15 @@ function submitForm(button) {
 
 	// Extract data from the form
 	const ledID = form.querySelector("input[name='ledID']").value;
+
+	// Calculate the starting address based on the given formula
+	const fooID = form.getAttribute("data-fooID");
+	const startAddress = 42 * fooID + ledID * 7;
+
 	const values = [
+		startAddress,
 		ledID,
-		form.getAttribute("data-fooID"),
+		fooID,
 		form.querySelector("input[name='fooMod']").value,
 		form.querySelector("input[name='hue']").value,
 		form.querySelector("input[name='saturation']").value,
