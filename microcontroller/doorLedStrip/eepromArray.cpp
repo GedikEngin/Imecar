@@ -6,8 +6,7 @@
 #include <initializer_list>
 #include <EEPROM.h>
 
-const int NUM_ELEMENTS = 6; // Adjust the number of elements based on your array size
-#define EEPROM_SIZE 512     // defining eeprom data
+#define EEPROM_SIZE 512 // defining eeprom data
 
 struct LedStruct
 {
