@@ -1,3 +1,4 @@
+#pragma region config
 /// @file    Blink.ino
 /// @brief   Blink the first LED of an LED strip
 /// @example Blink.ino
@@ -33,12 +34,13 @@ LedStruct expBlink1 = {49, 1, 1, 100, 51, 255, 255};
 LedStruct expBlink2 = {56, 2, 1, 100, 102, 255, 255};
 LedStruct expBlink3 = {63, 3, 1, 1000, 153, 255, 255};
 LedStruct expBlink4 = {70, 4, 1, 100, 204, 255, 255};
-LedStruct expBlink5 = {77, 6, 1, 100, 255, 255, 255};
+LedStruct expBlink5 = {77, 5, 1, 100, 255, 255, 255};
 
 // IMPORTANT
 // WHEN READING AND WRITING FROM ROM YOU RETRIEVE DATA AS A BYTE
 // YOU NEED TO CONVERT IT INTO AN INTEGER
 // AND SET MAX VALUES AS BYTE CAN ONLY REPRESENT 0-255 INTEGERS INCLUSIVE
+#pragma endregion config
 
 void blinkLed(const LedStruct &ledData)
 {
@@ -65,11 +67,6 @@ void setup()
     Serial.begin(115200);
     FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
     blinkLed(expBlink0);
-    blinkLed(expBlink1);
-    blinkLed(expBlink2);
-    blinkLed(expBlink3);
-    blinkLed(expBlink4);
-    blinkLed(expBlink5);
 }
 
 void loop()

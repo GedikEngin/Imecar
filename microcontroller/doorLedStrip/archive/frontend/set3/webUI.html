@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>RGB LED Controller</title>
+		<link id="style-link" rel="stylesheet" href="combined-styles.css" />
+	</head>
+	<body>
+		<h1 id="title">RGB LED Controller</h1>
+		<div class="toggle-container">
+			<input
+				type="checkbox"
+				id="dark-mode-toggle"
+				class="toggle-switch"
+				onclick="toggleDarkMode()"
+			/>
+			<label for="dark-mode-toggle" class="toggle-label">Dark Mode</label>
+		</div>
+
+		<!-- blink -->
+
+		<div id="form-container" class="light-mode">
+			<h2>Blink</h2>
+			<form>
+				<label for="startAddress" class="light-mode">Start Address:</label>
+				<input
+					type="number"
+					id="startAddress"
+					name="startAddress"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="ledID" class="light-mode">LED ID:</label>
+				<input
+					type="number"
+					id="ledID"
+					name="ledID"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="fooID" class="light-mode">Foo ID:</label>
+				<input
+					type="number"
+					id="fooID"
+					name="fooID"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="fooMod" class="light-mode">Foo Modifier:</label>
+				<input
+					type="number"
+					id="fooMod"
+					name="fooMod"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="hue" class="light-mode">Hue:</label>
+				<input
+					type="number"
+					id="hue"
+					name="hue"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="saturation" class="light-mode">Saturation:</label>
+				<input
+					type="number"
+					id="saturation"
+					name="saturation"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="brightness" class="light-mode">Brightness:</label>
+				<input
+					type="number"
+					id="brightness"
+					name="brightness"
+					class="light-mode"
+					required
+				/><br />
+
+				<button type="button" onclick="submitForm()">Submit</button>
+			</form>
+		</div>
+
+		<!-- breathing -->
+
+		<div id="form-container" class="light-mode">
+			<h2>Breathing</h2>
+			<form>
+				<label for="startAddress" class="light-mode">Start Address:</label>
+				<input
+					type="number"
+					id="startAddress"
+					name="startAddress"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="ledID" class="light-mode">LED ID:</label>
+				<input
+					type="number"
+					id="ledID"
+					name="ledID"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="fooID" class="light-mode">Foo ID:</label>
+				<input
+					type="number"
+					id="fooID"
+					name="fooID"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="fooMod" class="light-mode">Foo Modifier:</label>
+				<input
+					type="number"
+					id="fooMod"
+					name="fooMod"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="hue" class="light-mode">Hue:</label>
+				<input
+					type="number"
+					id="hue"
+					name="hue"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="saturation" class="light-mode">Saturation:</label>
+				<input
+					type="number"
+					id="saturation"
+					name="saturation"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="brightness" class="light-mode">Brightness:</label>
+				<input
+					type="number"
+					id="brightness"
+					name="brightness"
+					class="light-mode"
+					required
+				/><br />
+
+				<button type="button" onclick="submitForm()">Submit</button>
+			</form>
+		</div>
+
+		<!-- time out -->
+
+		<div id="form-container" class="light-mode">
+			<h2>Time Out</h2>
+			<form>
+				<label for="startAddress" class="light-mode">Start Address:</label>
+				<input
+					type="number"
+					id="startAddress"
+					name="startAddress"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="ledID" class="light-mode">LED ID:</label>
+				<input
+					type="number"
+					id="ledID"
+					name="ledID"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="fooID" class="light-mode">Foo ID:</label>
+				<input
+					type="number"
+					id="fooID"
+					name="fooID"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="fooMod" class="light-mode">Foo Modifier:</label>
+				<input
+					type="number"
+					id="fooMod"
+					name="fooMod"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="hue" class="light-mode">Hue:</label>
+				<input
+					type="number"
+					id="hue"
+					name="hue"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="saturation" class="light-mode">Saturation:</label>
+				<input
+					type="number"
+					id="saturation"
+					name="saturation"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="brightness" class="light-mode">Brightness:</label>
+				<input
+					type="number"
+					id="brightness"
+					name="brightness"
+					class="light-mode"
+					required
+				/><br />
+
+				<button type="button" onclick="submitForm()">Submit</button>
+			</form>
+		</div>
+
+		<!-- Solid -->
+
+		<div id="form-container" class="light-mode">
+			<h2>Solid</h2>
+			<form>
+				<label for="startAddress" class="light-mode">Start Address:</label>
+				<input
+					type="number"
+					id="startAddress"
+					name="startAddress"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="ledID" class="light-mode">LED ID:</label>
+				<input
+					type="number"
+					id="ledID"
+					name="ledID"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="fooID" class="light-mode">Foo ID:</label>
+				<input
+					type="number"
+					id="fooID"
+					name="fooID"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="fooMod" class="light-mode">Foo Modifier:</label>
+				<input
+					type="number"
+					id="fooMod"
+					name="fooMod"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="hue" class="light-mode">Hue:</label>
+				<input
+					type="number"
+					id="hue"
+					name="hue"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="saturation" class="light-mode">Saturation:</label>
+				<input
+					type="number"
+					id="saturation"
+					name="saturation"
+					class="light-mode"
+					required
+				/><br />
+
+				<label for="brightness" class="light-mode">Brightness:</label>
+				<input
+					type="number"
+					id="brightness"
+					name="brightness"
+					class="light-mode"
+					required
+				/><br />
+
+				<button type="button" onclick="submitForm()">Submit</button>
+			</form>
+		</div>
+		<script src="webUI.js"></script>
+	</body>
+</html>

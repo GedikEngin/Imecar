@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>RGB LED Controller</title>
+		<link id="style-link" rel="stylesheet" href="webUI.css" />
+		<script src="webUI.js"></script>
+	</head>
+	<body>
+		<div id="body-div" class="light">
+			<div class="top-bar">
+				<h1 class="light">RGB LED Controller</h1>
+				<div class="toggle-container">
+					<label class="toggle-switch">
+						<input
+							type="checkbox"
+							id="dark-mode-toggle"
+							onclick="toggleDarkMode()"
+						/>
+						<span class="slider round"></span>
+					</label>
+					<span class="toggle-label light">Dark Mode</span>
+				</div>
+			</div>
+
+			<div class="main-body">
+				<div id="blink-container" class="input-container">
+					<form data-fooID="1" class="light">
+						<h2 class="light">Blink Function</h2>
+
+						<label for="blink-ledID" class="light">LED ID:</label>
+						<input
+							type="number"
+							id="blink-ledID"
+							name="ledID"
+							value="0"
+							min="0"
+							max="5"
+							required
+							class="light"
+						/>
+
+						<label for="blink-fooID" class="light">Foo ID:</label>
+						<input
+							type="number"
+							id="blink-fooID"
+							name="fooID"
+							value="1"
+							required
+							class="light"
+							readonly
+						/>
+
+						<label for="blink-fooMod" class="light">Foo Mod:</label>
+						<input
+							type="number"
+							id="blink-fooMod"
+							name="fooMod"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="blink-hue" class="light">Hue:</label>
+						<input
+							type="number"
+							id="blink-hue"
+							name="hue"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="blink-saturation" class="light">Saturation:</label>
+						<input
+							type="number"
+							id="blink-saturation"
+							name="saturation"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="blink-brightness" class="light">Brightness:</label>
+						<input
+							type="number"
+							id="blink-brightness"
+							name="brightness"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<button type="button" onclick="submitForm(this)" class="light">
+							Submit
+						</button>
+					</form>
+				</div>
+
+				<div id="breathing-container" class="input-container">
+					<form data-fooID="2" class="light">
+						<h2 class="light">Breathing Effect</h2>
+
+						<label for="breathing-ledID" class="light">LED ID:</label>
+						<input
+							type="number"
+							id="breathing-ledID"
+							name="ledID"
+							value="0"
+							min="0"
+							max="5"
+							required
+							class="light"
+						/>
+
+						<label for="breathing-fooID" class="light">Foo ID:</label>
+						<input
+							type="number"
+							id="breathing-fooID"
+							name="fooID"
+							value="2"
+							required
+							class="light"
+							readonly
+						/>
+
+						<label for="breathing-fooMod" class="light">Foo Mod:</label>
+						<input
+							type="number"
+							id="breathing-fooMod"
+							name="fooMod"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="breathing-hue" class="light">Hue:</label>
+						<input
+							type="number"
+							id="breathing-hue"
+							name="hue"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="breathing-saturation" class="light">Saturation:</label>
+						<input
+							type="number"
+							id="breathing-saturation"
+							name="saturation"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="breathing-brightness" class="light">Brightness:</label>
+						<input
+							type="number"
+							id="breathing-brightness"
+							name="brightness"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<button type="button" onclick="submitForm(this)" class="light">
+							Submit
+						</button>
+					</form>
+				</div>
+
+				<div id="solid-container" class="input-container">
+					<form data-fooID="3" class="light">
+						<h2 class="light">Solid Color</h2>
+
+						<label for="solid-ledID" class="light">LED ID:</label>
+						<input
+							type="number"
+							id="solid-ledID"
+							name="ledID"
+							value="0"
+							min="0"
+							max="5"
+							required
+							class="light"
+						/>
+
+						<label for="solid-fooID" class="light">Foo ID:</label>
+						<input
+							type="number"
+							id="solid-fooID"
+							name="fooID"
+							value="3"
+							required
+							class="light"
+							readonly
+						/>
+
+						<label for="solid-fooMod" class="light">Foo Mod:</label>
+						<input
+							type="number"
+							id="solid-fooMod"
+							name="fooMod"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="solid-hue" class="light">Hue:</label>
+						<input
+							type="number"
+							id="solid-hue"
+							name="hue"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="solid-saturation" class="light">Saturation:</label>
+						<input
+							type="number"
+							id="solid-saturation"
+							name="saturation"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="solid-brightness" class="light">Brightness:</label>
+						<input
+							type="number"
+							id="solid-brightness"
+							name="brightness"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<button type="button" onclick="submitForm(this)" class="light">
+							Submit
+						</button>
+					</form>
+				</div>
+
+				<div id="timeout-container" class="input-container">
+					<form data-fooID="4" class="light">
+						<h2 class="light">Time Out Function</h2>
+
+						<label for="timeout-ledID" class="light">LED ID:</label>
+						<input
+							type="number"
+							id="timeout-ledID"
+							name="ledID"
+							value="0"
+							min="0"
+							max="5"
+							required
+							class="light"
+						/>
+
+						<label for="timeout-fooID" class="light">Foo ID:</label>
+						<input
+							type="number"
+							id="timeout-fooID"
+							name="fooID"
+							value="4"
+							required
+							class="light"
+							readonly
+						/>
+
+						<label for="timeout-fooMod" class="light">Foo Mod:</label>
+						<input
+							type="number"
+							id="timeout-fooMod"
+							name="fooMod"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="timeout-hue" class="light">Hue:</label>
+						<input
+							type="number"
+							id="timeout-hue"
+							name="hue"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="timeout-saturation" class="light">Saturation:</label>
+						<input
+							type="number"
+							id="timeout-saturation"
+							name="saturation"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="timeout-brightness" class="light">Brightness:</label>
+						<input
+							type="number"
+							id="timeout-brightness"
+							name="brightness"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<button type="button" onclick="submitForm(this)" class="light">
+							Submit
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script src="webUI.js"></script>
+	</body>
+</html>

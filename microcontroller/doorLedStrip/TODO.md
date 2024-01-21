@@ -26,10 +26,17 @@
 - [ ] time out function
 - [ ] breathing function
 - [ ] solid color function
+- [ ] targeted toggle on/off func
+      <br>
+- [ ] multiple blink inputs
+- [ ] multiple time out inputs
+- [ ] multiple breathing effect inputs
+- [ ] multiple solid color inputs
+- [ ] entire strip toggle on/off func
+      <br>
 - [ ] buttons for prebuilt spectrum (example code)
 - [ ] error handling
 - [ ] router function
-- [ ] toggle on/off func
 
 #### API's
 
@@ -56,9 +63,10 @@
 
 ## Testing (in order)
 
-- [ ] testing back end before introducing api (no post requests)
-- [ ] testing api (no post requests)->backend before introducing
-- [ ] testing browser to api (no post requests) (seeing if data and 'instructions' are passed in js console)
-- [ ] testing if browser -> api (no post requests) -> backend works
-- [ ] testing if browser -> api (no post requests) -> backend can store data in eeprom
-- [ ] testing if backend -> api (yes post) -> browser works
+- [ ] testing if website can make changes to js log
+- [ ] testing if js backend can correctly parse/use data
+- [ ] testing if apis can receive and understand data
+- [ ] testing if backend can process and understand data from apis
+- [ ] testing if data can be sent to correct functions
+- [ ] testing if correct data is used on led
+- [ ] testing if leds work correctly
