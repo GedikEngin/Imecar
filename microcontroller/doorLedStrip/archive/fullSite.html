@@ -227,31 +227,22 @@
 							type="number"
 							id="blink-ledID"
 							name="ledID"
-							value="0"
+							placeholder="0 to 6"
 							min="0"
 							max="5"
 							required
 							class="light"
 						/>
 
-						<label for="blink-fooID" class="light">Foo ID:</label>
-						<input
-							type="number"
-							id="blink-fooID"
-							name="fooID"
-							value="1"
-							required
-							class="light"
-							readonly
-						/>
+						<input type="hidden" name="fooID" value="1" />
 
 						<label for="blink-fooMod" class="light">Foo Mod:</label>
 						<input
 							type="number"
 							id="blink-fooMod"
 							name="fooMod"
-							value="0"
-							min="0"
+							placeholder="increments in 10ms"
+							min="1"
 							max="255"
 							required
 							class="light"
@@ -308,23 +299,14 @@
 							type="number"
 							id="breathing-ledID"
 							name="ledID"
-							value="0"
+							placeholder="0 to 6"
 							min="0"
 							max="5"
 							required
 							class="light"
 						/>
 
-						<label for="breathing-fooID" class="light">Foo ID:</label>
-						<input
-							type="number"
-							id="breathing-fooID"
-							name="fooID"
-							value="2"
-							required
-							class="light"
-							readonly
-						/>
+						<input type="hidden" name="fooID" value="2" />
 
 						<label for="breathing-fooMod" class="light">Foo Mod:</label>
 						<input
@@ -396,16 +378,7 @@
 							class="light"
 						/>
 
-						<label for="solid-fooID" class="light">Foo ID:</label>
-						<input
-							type="number"
-							id="solid-fooID"
-							name="fooID"
-							value="3"
-							required
-							class="light"
-							readonly
-						/>
+						<input type="hidden" name="fooID" value="3" />
 
 						<label for="solid-fooMod" class="light">Foo Mod:</label>
 						<input
@@ -477,16 +450,7 @@
 							class="light"
 						/>
 
-						<label for="timeout-fooID" class="light">Foo ID:</label>
-						<input
-							type="number"
-							id="timeout-fooID"
-							name="fooID"
-							value="4"
-							required
-							class="light"
-							readonly
-						/>
+						<input type="hidden" name="fooID" value="4" />
 
 						<label for="timeout-fooMod" class="light">Foo Mod:</label>
 						<input
@@ -543,53 +507,6 @@
 				</div>
 			</div>
 		</div>
-		<script>
-			function toggleDarkMode() {
-				const bodyDiv = document.getElementById("body-div");
-				bodyDiv.classList.toggle("dark");
-				const elements = bodyDiv.querySelectorAll(".light");
-				elements.forEach((element) => {
-					element.classList.toggle("dark");
-				});
-			}
-
-			function validateInput(value, fieldName) {
-				// Check if the input contains leading zeros
-				if (/^0[0-9]+$/.test(value)) {
-					alert(fieldName + " cannot have leading zeros.");
-					return false;
-				}
-				return true;
-			}
-
-			function submitForm(button) {
-				// Get the parent form element of the clicked button
-				const form = button.closest("form");
-
-				// Extract data from the form
-				const ledID = form.querySelector("input[name='ledID']").value;
-
-				// Validate input before proceeding
-				if (!validateInput(ledID, "LED ID")) {
-					return; // Prevent form submission if validation fails
-				}
-
-				// Calculate the starting address based on the given formula
-				const fooID = form.getAttribute("data-fooID");
-				const startAddress = 42 * fooID + ledID * 7;
-
-				const values = [
-					startAddress,
-					ledID,
-					fooID,
-					form.querySelector("input[name='fooMod']").value,
-					form.querySelector("input[name='hue']").value,
-					form.querySelector("input[name='saturation']").value,
-					form.querySelector("input[name='brightness']").value,
-				];
-
-				console.log("Form data:", values);
-			}
-		</script>
+		<script src="fullSite.js"></script>
 	</body>
 </html>

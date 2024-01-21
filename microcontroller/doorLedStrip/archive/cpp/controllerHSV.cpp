@@ -29,12 +29,12 @@ struct LedStruct
     int brightness; // 0-255 range for brightness (normally 0-100, FastLed uses 8 bit 0-255)
 };
 
-LedStruct expBlink0 = {42, 0, 1, 1000, 0, 255, 255};
-LedStruct expBlink1 = {49, 1, 1, 100, 51, 255, 255};
-LedStruct expBlink2 = {56, 2, 1, 100, 102, 255, 255};
-LedStruct expBlink3 = {63, 3, 1, 1000, 153, 255, 255};
-LedStruct expBlink4 = {70, 4, 1, 100, 204, 255, 255};
-LedStruct expBlink5 = {77, 5, 1, 100, 255, 255, 255};
+LedStruct expBlink0 = {42, 0, 1, 400, 0, 255, 255};
+LedStruct expBlink1 = {49, 1, 1, 800, 51, 255, 255};
+LedStruct expBlink2 = {56, 2, 1, 1200, 102, 255, 255};
+LedStruct expBlink3 = {63, 3, 1, 1600, 153, 255, 255};
+LedStruct expBlink4 = {70, 4, 1, 2000, 204, 255, 255};
+LedStruct expBlink5 = {77, 5, 1, 2400, 255, 255, 255};
 
 // IMPORTANT
 // WHEN READING AND WRITING FROM ROM YOU RETRIEVE DATA AS A BYTE
@@ -44,21 +44,30 @@ LedStruct expBlink5 = {77, 5, 1, 100, 255, 255, 255};
 
 void blinkLed(const LedStruct &ledData)
 {
-    leds[ledData.ledID] = CHSV(0, 0, 0);
+    unsigned long previousMillis = 0; // will store the last time the LED was updated
 
-    // Led assignments
-
-    // Repeating loop
-    unsigned long timerMillis = 0;
-    while (millis() - timerMillis < int(ledData.fooMod))
+    // loop that runs forever
+    while (1)
     {
-        leds[ledData.ledID] = CHSV(ledData.hue, ledData.saturation, 0);
-        FastLED.show();
-        delay(ledData.fooMod);
-        leds[ledData.ledID] = CHSV(ledData.hue, ledData.saturation, ledData.brightness);
-        FastLED.show();
-        delay(ledData.fooMod);
-        timerMillis = millis();
+        unsigned long currentMillis = millis();
+
+        if (currentMillis - previousMillis >= ledData.fooMod)
+        {
+            // save the last time the LED was toggled
+            previousMillis = currentMillis;
+
+            // if the LED is off turn it on and vice versa
+            if (leds[ledData.ledID] == CHSV(ledData.hue, ledData.saturation, 0))
+            {
+                leds[ledData.ledID] = CHSV(ledData.hue, ledData.saturation, ledData.brightness);
+            }
+            else
+            {
+                leds[ledData.ledID] = CHSV(ledData.hue, ledData.saturation, 0);
+            }
+
+            FastLED.show();
+        }
     }
 }
 
@@ -67,6 +76,7 @@ void setup()
     Serial.begin(115200);
     FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
     blinkLed(expBlink0);
+    blinkLed(expBlink1);
 }
 
 void loop()

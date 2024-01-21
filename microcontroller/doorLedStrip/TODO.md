@@ -16,8 +16,8 @@
 - [ ] saving button
 - [ ] ui to do basic functions
 - [ ] dynamic ui elements (sliders, color wheel etc)
-- [ ] sending data to api
-- [ ] retrieving data from api
+- [x] sending data to api
+- [x] retrieving data from api
 
 #### CPP
 
@@ -28,7 +28,7 @@
 - [ ] solid color function
 - [ ] targeted toggle on/off func
       <br>
-- [ ] multiple blink inputs
+- [x] multiple blink inputs
 - [ ] multiple time out inputs
 - [ ] multiple breathing effect inputs
 - [ ] multiple solid color inputs
@@ -40,7 +40,7 @@
 
 #### API's
 
-- [ ] get request for blink
+- [x] get request for blink
 - [ ] get request for time out
 - [ ] get request for breathing
 - [ ] get request for solid
@@ -61,7 +61,7 @@
 - [x] Copy paste hue spectrum
 - [ ] Turn it into a library?
 
-## Testing (in order)
+## Testing (in order & at the end)
 
 - [ ] testing if website can make changes to js log
 - [ ] testing if js backend can correctly parse/use data

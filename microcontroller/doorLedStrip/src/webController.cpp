@@ -641,12 +641,45 @@ const char index_html[] PROGMEM = R"rawliteral(
 
 #pragma endregion website
 
-void ledBlink(const LedStruct &ledData)
+void ledBlink(void *parameter)
+{
+	LedStruct *ledData = (LedStruct *)parameter;
+	unsigned long previousMillis = 0; // will store the last time the LED was updated
+
+	// loop that runs forever
+	while (1)
+	{
+		unsigned long currentMillis = millis();
+
+		if (currentMillis - previousMillis >= ledData->fooMod)
+		{
+			// save the last time the LED was toggled
+			previousMillis = currentMillis;
+
+			// if the LED is off turn it on and vice versa
+			if (leds[ledData->ledID] == CHSV(ledData->hue, ledData->saturation, 0))
+			{
+				leds[ledData->ledID] = CHSV(ledData->hue, ledData->saturation, ledData->brightness);
+			}
+			else
+			{
+				leds[ledData->ledID] = CHSV(ledData->hue, ledData->saturation, 0);
+			}
+
+			FastLED.show();
+		}
+		vTaskDelay(1); // Yield to other tasks
+	}
+
+	delete ledData; // Free the memory when done
+}
+
+void ledBreath(const LedStruct *ledData)
 {
 	Serial.print("LED Data: ");
 
-	// Get a pointer to the start of the struct
-	const int *ptr = &ledData.startAddress;
+	// Get the start address directly
+	const int *ptr = &ledData->startAddress;
 
 	// Get the number of members in the struct
 	const size_t numMembers = sizeof(LedStruct) / sizeof(int);
@@ -664,12 +697,12 @@ void ledBlink(const LedStruct &ledData)
 	Serial.println();
 }
 
-void ledBreath(const LedStruct &ledData)
+void ledSolid(const LedStruct *ledData)
 {
 	Serial.print("LED Data: ");
 
 	// Get a pointer to the start of the struct
-	const int *ptr = &ledData.startAddress;
+	const int *ptr = &ledData->startAddress;
 
 	// Get the number of members in the struct
 	const size_t numMembers = sizeof(LedStruct) / sizeof(int);
@@ -687,35 +720,12 @@ void ledBreath(const LedStruct &ledData)
 	Serial.println();
 }
 
-void ledSolid(const LedStruct &ledData)
+void ledTimeout(const LedStruct *ledData)
 {
 	Serial.print("LED Data: ");
 
 	// Get a pointer to the start of the struct
-	const int *ptr = &ledData.startAddress;
-
-	// Get the number of members in the struct
-	const size_t numMembers = sizeof(LedStruct) / sizeof(int);
-
-	// Print each member
-	for (size_t i = 0; i < numMembers; ++i)
-	{
-		Serial.print(*ptr++);
-		if (i < numMembers - 1)
-		{
-			Serial.print(", ");
-		}
-	}
-
-	Serial.println();
-}
-
-void ledTimeout(const LedStruct &ledData)
-{
-	Serial.print("LED Data: ");
-
-	// Get a pointer to the start of the struct
-	const int *ptr = &ledData.startAddress;
+	const int *ptr = &ledData->startAddress;
 
 	// Get the number of members in the struct
 	const size_t numMembers = sizeof(LedStruct) / sizeof(int);
@@ -752,7 +762,7 @@ void handleFormSubmit(AsyncWebServerRequest *request)
 	int brightnessInt = brightness.toInt();
 
 	// Create a LedStruct instance with the received data
-	LedStruct ledData = {
+	LedStruct *ledData = new LedStruct{
 		.startAddress = 42 * fooIDInt + ledIDInt * 7,
 		.ledID = ledIDInt,
 		.fooID = fooIDInt,
@@ -764,7 +774,8 @@ void handleFormSubmit(AsyncWebServerRequest *request)
 	// Call the appropriate function based on fooID
 	if (fooIDInt == 1)
 	{
-		ledBlink(ledData);
+		// Create a new task for the LED
+		xTaskCreate(ledBlink, "BlinkTask", 2048, ledData, 1, NULL);
 	}
 	else if (fooIDInt == 2)
 	{
@@ -788,6 +799,9 @@ void setup()
 	// Serial port for debugging purposes
 	Serial.begin(115200);
 
+	// defining led type
+	FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
+
 	// Connect to Wi-Fi
 	WiFi.begin(ssid, password);
 	while (WiFi.status() != WL_CONNECTED)
@@ -809,9 +823,6 @@ void setup()
 
 	// Begin server
 	server.begin();
-
-	// Add a short delay after server.begin()
-	delay(1000);
 }
 
 void loop()
