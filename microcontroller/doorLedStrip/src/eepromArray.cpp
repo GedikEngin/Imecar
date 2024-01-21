@@ -6,66 +6,72 @@
 #include <initializer_list>
 #include <EEPROM.h>
 
-const int EEPROM_START_ADDRESS = 0; // Adjust the starting address based on your needs
-const int NUM_ELEMENTS = 6;         // Adjust the number of elements based on your array size
+const int NUM_ELEMENTS = 6; // Adjust the number of elements based on your array size
+#define EEPROM_SIZE 512     // defining eeprom data
 
 struct LedStruct
 {
-    int ledID;
-    int fooID;
-    int red;
-    int green;
-    int blue;
-    int brightness;
-    int fooMod; // modifier for blink interval, auto shutdown time, breathe speed
+    int startAddress; // address to store in eeprom, makes it easier to navigate and build on later
+    int ledID;        // 0-5 led ID
+    int fooID;        // 0-4 function to be routed to
+
+    int fooMod;     // modifier for blink interval, auto shutdown time, breathe speed
+    int hue;        // 0-255 range for hue (normally 0-360 for degrees, FastLed uses 8bit 0-255)
+    int saturation; // 0-255 range for saturation (universal)
+    int brightness; // 0-255 range for brightness (normally 0-100, FastLed uses 8 bit 0-255)
 };
 
-LedStruct ledData1 = {0, 1, 255, 0, 0, 100, 5}; // LED 0, Foo 1
-LedStruct ledData2 = {1, 2, 0, 255, 0, 50, 10}; // LED 1, Foo 2
-LedStruct ledData3 = {2, 3, 0, 0, 255, 75, 7};  // LED 2, Foo 3
+LedStruct expLed1 = {42, 0, 0, 100, 0, 255, 255};
+LedStruct expLed2 = {49, 0, 0, 100, 96, 255, 255};
+LedStruct expLed3 = {56, 0, 0, 100, 160, 255, 255};
 
-void writeLedStructToEEPROM(const LedStruct &data)
+void writeLedStructToEEPROM(const LedStruct &ledData)
 {
-    int startAddress = EEPROM_START_ADDRESS + data.ledID * 7; // 7 variables per LedStruct
-    EEPROM.write(startAddress, data.ledID);
-    EEPROM.write(startAddress + 1, data.fooID);
-    EEPROM.write(startAddress + 2, data.red);
-    EEPROM.write(startAddress + 3, data.green);
-    EEPROM.write(startAddress + 4, data.blue);
-    EEPROM.write(startAddress + 5, data.brightness);
-    EEPROM.write(startAddress + 6, data.fooMod);
-    Serial.println("Write data to EEPROM at address:" + startAddress);
+    int startAddress = ledData.startAddress; // Use the provided startAddress
+    EEPROM.write(startAddress, ledData.ledID);
+    EEPROM.write(startAddress + 1, ledData.fooID);
+    EEPROM.write(startAddress + 2, ledData.fooMod);
+    EEPROM.write(startAddress + 3, ledData.hue);
+    EEPROM.write(startAddress + 4, ledData.saturation);
+    EEPROM.write(startAddress + 5, ledData.brightness);
+    EEPROM.commit();
+    Serial.println("Write data to EEPROM at address: " + String(startAddress));
 }
 
-void readLedStructFromEEPROM(LedStruct &data)
+void readLedStructFromEEPROM(LedStruct &ledData)
 {
-    int startAddress = EEPROM_START_ADDRESS + data.ledID * 7; // 7 variables per LedStruct
-    data.ledID = EEPROM.read(startAddress);
-    data.fooID = EEPROM.read(startAddress + 1);
-    data.red = EEPROM.read(startAddress + 2);
-    data.green = EEPROM.read(startAddress + 3);
-    data.blue = EEPROM.read(startAddress + 4);
-    data.brightness = EEPROM.read(startAddress + 5);
-    data.fooMod = EEPROM.read(startAddress + 6);
-    Serial.println("Read data from EEPROM at address:" + startAddress);
-}
-
-void printEEPROMContent()
-{
-    Serial.println("EEPROM Content:");
-
-    for (int i = 0; i < EEPROM.length(); ++i)
-    {
-        Serial.print("index" + i + EEPROM.read(i));
-        Serial.print(" ");
-    }
-
-    Serial.println();
+    int startAddress = ledData.startAddress; // Use the provided startAddress
+    Serial.println("Read data from EEPROM at address:" + String(startAddress));
+    Serial.println(static_cast<int>(EEPROM.read(startAddress)));
+    Serial.println(static_cast<int>(EEPROM.read(startAddress + 1)));
+    Serial.println(static_cast<int>(EEPROM.read(startAddress + 2)));
+    Serial.println(static_cast<int>(EEPROM.read(startAddress + 3)));
+    Serial.println(static_cast<int>(EEPROM.read(startAddress + 4)));
+    Serial.println(static_cast<int>(EEPROM.read(startAddress + 5)));
+    // static cast converts one data type to another, i.e. converts byte data from eeprom to int
 }
 
 void setup()
 {
     Serial.begin(115200);
+    EEPROM.begin(EEPROM_SIZE);
+
+    delay(2500);
+    Serial.println("starting write");
+
+    writeLedStructToEEPROM(expLed1);
+    delay(2500);
+    writeLedStructToEEPROM(expLed2);
+    delay(2500);
+    writeLedStructToEEPROM(expLed3);
+    delay(2500);
+
+    readLedStructFromEEPROM(expLed1);
+    delay(2500);
+    readLedStructFromEEPROM(expLed2);
+    delay(2500);
+    readLedStructFromEEPROM(expLed3);
+    delay(2500);
 }
 
 void loop()
