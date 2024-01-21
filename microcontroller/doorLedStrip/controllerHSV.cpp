@@ -28,9 +28,12 @@ struct LedStruct
     int brightness; // 0-255 range for brightness (normally 0-100, FastLed uses 8 bit 0-255)
 };
 
-LedStruct expLed1 = {42, 0, 0, 1000, 0, 255, 255};
-LedStruct expLed2 = {49, 0, 0, 100, 96, 255, 255};
-LedStruct expLed3 = {56, 0, 0, 100, 160, 255, 255};
+LedStruct expBlink0 = {42, 0, 1, 1000, 0, 255, 255};
+LedStruct expBlink1 = {49, 1, 1, 100, 51, 255, 255};
+LedStruct expBlink2 = {56, 2, 1, 100, 102, 255, 255};
+LedStruct expBlink3 = {63, 3, 1, 1000, 153, 255, 255};
+LedStruct expBlink4 = {70, 4, 1, 100, 204, 255, 255};
+LedStruct expBlink5 = {77, 6, 1, 100, 255, 255, 255};
 
 // IMPORTANT
 // WHEN READING AND WRITING FROM ROM YOU RETRIEVE DATA AS A BYTE
@@ -61,7 +64,12 @@ void setup()
 {
     Serial.begin(115200);
     FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
-    blinkLed(expLed1);
+    blinkLed(expBlink0);
+    blinkLed(expBlink1);
+    blinkLed(expBlink2);
+    blinkLed(expBlink3);
+    blinkLed(expBlink4);
+    blinkLed(expBlink5);
 }
 
 void loop()
