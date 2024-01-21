@@ -4,11 +4,11 @@
 
 #### EEPROM
 
-- [ ] read single data
-- [ ] write single data
-- [ ] be able to break down a class and write it
-- [ ] be able to retrieve data from written class
-- [ ] parse data that is read from eeprom
+- [x] read single data
+- [x] write single data
+- [x] be able to break down a class and write it
+- [x] be able to retrieve data from written class
+- [x] parse data that is read from eeprom
 
 #### WebUI
 
@@ -21,8 +21,8 @@
 
 #### CPP
 
-- [ ] led data format
-- [ ] blink function
+- [x] led data format
+- [x] blink function
 - [ ] time out function
 - [ ] breathing function
 - [ ] solid color function
@@ -41,10 +41,17 @@
 - [ ] get request for prebuilt spectrum (example code)
 - [ ] post for data being read from eeprom
 
+#### Design & manufacturing
+
+- [x] finalize design inspiration
+- [x] design 'case' in cad
+- [ ] revise the design
+- [ ] manufacture
+
 ## General
 
-- [ ] Documentation for addresses
-- [ ] Copy paste hue spectrum
+- [x] Documentation for addresses
+- [x] Copy paste hue spectrum
 - [ ] Turn it into a library?
 
 ## Testing (in order)
