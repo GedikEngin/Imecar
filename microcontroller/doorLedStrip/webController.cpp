@@ -49,7 +49,6 @@ const char index_html[] PROGMEM = R"rawliteral(
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>RGB LED Controller</title>
 		<style>
-			/* Common Styles */
 			body {
 				font-family: Arial, sans-serif;
 				margin: 0;
@@ -67,7 +66,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 				justify-content: space-between;
 				align-items: center;
 				max-width: 50%;
-				margin: 0 auto; /* Center the top-bar */
+				margin: 0 auto;
 			}
 
 			#body-div h1 {
@@ -177,7 +176,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 			#body-div .main-body {
 				display: grid;
 				grid-template-columns: repeat(2, 1fr);
-				grid-gap: 25px; /* Adjust the gap between the containers as needed */
+				grid-gap: 25px;
 				max-width: 50%;
 				margin: 0 auto;
 			}
@@ -242,6 +241,50 @@ const char index_html[] PROGMEM = R"rawliteral(
 			#body-div .slider.round:before {
 				border-radius: 50%;
 			}
+
+			#body-div .main-body #button-container .controller-button {
+				width: 100%;
+				margin-top: 16.5%; /* Adjust the vertical space between buttons */
+			}
+
+			#body-div .main-body button:hover {
+				background-color: rgba(0, 0, 0, 0.2);
+			}
+
+			#body-div .main-body #button-container #toggleLed[data-state="on"] {
+				background-color: #4caf50;
+			}
+
+			#body-div .main-body #button-container #toggleLed[data-state="off"] {
+				background-color: red;
+			}
+
+			#body-div .main-body #button-container #resetLed {
+				background-color: darkorange;
+			}
+			#body-div .main-body #button-container #writeData {
+				background-color: purple;
+			}
+			#body-div .main-body #button-container #readData {
+				background-color: rgb(0, 0, 255);
+			}
+
+			#body-div .main-body #button-container .controller-button:hover {
+				background-color: rgba(0, 0, 0, 0.2);
+			}
+
+			#body-div .main-body #button-container #toggleLed:hover {
+				background-color: rgba(0, 0, 0, 0.2);
+			}
+			#body-div .main-body #button-container #resetLed:hover {
+				background-color: rgba(0, 0, 0, 0.2);
+			}
+			#body-div .main-body #button-container #writeData:hover {
+				background-color: rgba(0, 0, 0, 0.2);
+			}
+			#body-div .main-body #button-container #readData:hover {
+				background-color: rgba(0, 0, 0, 0.2);
+			}
 		</style>
 	</head>
 	<body>
@@ -271,37 +314,28 @@ const char index_html[] PROGMEM = R"rawliteral(
 							type="number"
 							id="blink-ledID"
 							name="ledID"
-							value="0"
+							placeholder="0 to 5"
 							min="0"
 							max="5"
 							required
 							class="light"
 						/>
 
-						<label for="blink-fooID" class="light">Foo ID:</label>
-						<input
-							type="number"
-							id="blink-fooID"
-							name="fooID"
-							value="1"
-							required
-							class="light"
-							readonly
-						/>
+						<input type="hidden" name="fooID" value="1" />
 
-						<label for="blink-fooMod" class="light">Foo Mod:</label>
+						<label for="blink-fooMod" class="light">Time Between Blinks:</label>
 						<input
 							type="number"
 							id="blink-fooMod"
 							name="fooMod"
-							value="0"
-							min="0"
+							placeholder="Increments in 10ms"
+							min="1"
 							max="255"
 							required
 							class="light"
 						/>
 
-						<label for="blink-hue" class="light">Hue:</label>
+						<label for="blink-hue" class="light">Hue 0-255 :</label>
 						<input
 							type="number"
 							id="blink-hue"
@@ -313,24 +347,28 @@ const char index_html[] PROGMEM = R"rawliteral(
 							class="light"
 						/>
 
-						<label for="blink-saturation" class="light">Saturation:</label>
+						<label for="blink-saturation" class="light"
+							>Saturation 0-255 :</label
+						>
 						<input
 							type="number"
 							id="blink-saturation"
 							name="saturation"
-							value="0"
+							value="255"
 							min="0"
 							max="255"
 							required
 							class="light"
 						/>
 
-						<label for="blink-brightness" class="light">Brightness:</label>
+						<label for="blink-brightness" class="light"
+							>Brightness 0-255 :</label
+						>
 						<input
 							type="number"
 							id="blink-brightness"
 							name="brightness"
-							value="0"
+							value="255"
 							min="0"
 							max="255"
 							required
@@ -352,37 +390,30 @@ const char index_html[] PROGMEM = R"rawliteral(
 							type="number"
 							id="breathing-ledID"
 							name="ledID"
-							value="0"
+							placeholder="0 to 5"
 							min="0"
 							max="5"
 							required
 							class="light"
 						/>
 
-						<label for="breathing-fooID" class="light">Foo ID:</label>
-						<input
-							type="number"
-							id="breathing-fooID"
-							name="fooID"
-							value="2"
-							required
-							class="light"
-							readonly
-						/>
+						<input type="hidden" name="fooID" value="2" />
 
-						<label for="breathing-fooMod" class="light">Foo Mod:</label>
+						<label for="breathing-fooMod" class="light"
+							>Time For One Cycle:</label
+						>
 						<input
 							type="number"
 							id="breathing-fooMod"
 							name="fooMod"
-							value="0"
+							placeholder="Increments of 10ms"
 							min="0"
 							max="255"
 							required
 							class="light"
 						/>
 
-						<label for="breathing-hue" class="light">Hue:</label>
+						<label for="breathing-hue" class="light">Hue 0-255 :</label>
 						<input
 							type="number"
 							id="breathing-hue"
@@ -394,24 +425,28 @@ const char index_html[] PROGMEM = R"rawliteral(
 							class="light"
 						/>
 
-						<label for="breathing-saturation" class="light">Saturation:</label>
+						<label for="breathing-saturation" class="light"
+							>Saturation 0-255 :</label
+						>
 						<input
 							type="number"
 							id="breathing-saturation"
 							name="saturation"
-							value="0"
+							value="255"
 							min="0"
 							max="255"
 							required
 							class="light"
 						/>
 
-						<label for="breathing-brightness" class="light">Brightness:</label>
+						<label for="breathing-brightness" class="light"
+							>Brightness 0-255 :</label
+						>
 						<input
 							type="number"
 							id="breathing-brightness"
 							name="brightness"
-							value="0"
+							value="255"
 							min="0"
 							max="255"
 							required
@@ -433,37 +468,30 @@ const char index_html[] PROGMEM = R"rawliteral(
 							type="number"
 							id="solid-ledID"
 							name="ledID"
-							value="0"
+							placeholder="0 to 5"
 							min="0"
 							max="5"
 							required
 							class="light"
 						/>
 
-						<label for="solid-fooID" class="light">Foo ID:</label>
-						<input
-							type="number"
-							id="solid-fooID"
-							name="fooID"
-							value="3"
-							required
-							class="light"
-							readonly
-						/>
+						<input type="hidden" name="fooID" value="3" />
 
-						<label for="solid-fooMod" class="light">Foo Mod:</label>
+						<label for="solid-fooMod" class="light"
+							>Time Until Auto Shutdown 0-255 :</label
+						>
 						<input
 							type="number"
 							id="solid-fooMod"
 							name="fooMod"
-							value="0"
+							placeholder="Increments of 1 minute, 0 for always on"
 							min="0"
 							max="255"
 							required
 							class="light"
 						/>
 
-						<label for="solid-hue" class="light">Hue:</label>
+						<label for="solid-hue" class="light">Hue 0-255 :</label>
 						<input
 							type="number"
 							id="solid-hue"
@@ -475,24 +503,28 @@ const char index_html[] PROGMEM = R"rawliteral(
 							class="light"
 						/>
 
-						<label for="solid-saturation" class="light">Saturation:</label>
+						<label for="solid-saturation" class="light"
+							>Saturation 0-255 :</label
+						>
 						<input
 							type="number"
 							id="solid-saturation"
 							name="saturation"
-							value="0"
+							value="255"
 							min="0"
 							max="255"
 							required
 							class="light"
 						/>
 
-						<label for="solid-brightness" class="light">Brightness:</label>
+						<label for="solid-brightness" class="light"
+							>Brightness 0-255 :</label
+						>
 						<input
 							type="number"
 							id="solid-brightness"
 							name="brightness"
-							value="0"
+							value="255"
 							min="0"
 							max="255"
 							required
@@ -505,89 +537,53 @@ const char index_html[] PROGMEM = R"rawliteral(
 					</form>
 				</div>
 
-				<div id="timeout-container" class="input-container">
+				<div id="button-container" class="input-container">
 					<form data-fooID="4" class="light">
-						<h2 class="light">Time Out Function</h2>
+						<h2 class="light">Button Container</h2>
 
-						<label for="timeout-ledID" class="light">LED ID:</label>
-						<input
-							type="number"
-							id="timeout-ledID"
-							name="ledID"
-							value="0"
-							min="0"
-							max="5"
-							required
-							class="light"
-						/>
+						<button
+							type="button"
+							onclick="ledButtons(this)"
+							class="controller-button light"
+							data-state="On"
+							id="toggleLed"
+						>
+							On
+						</button>
 
-						<label for="timeout-fooID" class="light">Foo ID:</label>
-						<input
-							type="number"
-							id="timeout-fooID"
-							name="fooID"
-							value="4"
-							required
-							class="light"
-							readonly
-						/>
+						<button
+							type="button"
+							onclick="ledButtons(this)"
+							id="resetLed"
+							class="controller-button light"
+						>
+							Reset
+						</button>
 
-						<label for="timeout-fooMod" class="light">Foo Mod:</label>
-						<input
-							type="number"
-							id="timeout-fooMod"
-							name="fooMod"
-							value="0"
-							min="0"
-							max="255"
-							required
-							class="light"
-						/>
+						<button
+							type="button"
+							onclick="ledButtons(this)"
+							id="writeData"
+							class="controller-button light"
+						>
+							Write to EEPROM
+						</button>
 
-						<label for="timeout-hue" class="light">Hue:</label>
-						<input
-							type="number"
-							id="timeout-hue"
-							name="hue"
-							value="0"
-							min="0"
-							max="255"
-							required
-							class="light"
-						/>
-
-						<label for="timeout-saturation" class="light">Saturation:</label>
-						<input
-							type="number"
-							id="timeout-saturation"
-							name="saturation"
-							value="0"
-							min="0"
-							max="255"
-							required
-							class="light"
-						/>
-
-						<label for="timeout-brightness" class="light">Brightness:</label>
-						<input
-							type="number"
-							id="timeout-brightness"
-							name="brightness"
-							value="0"
-							min="0"
-							max="255"
-							required
-							class="light"
-						/>
-
-						<button type="button" onclick="submitForm(this)" class="light">
-							Submit
+						<button
+							type="button"
+							onclick="ledButtons(this)"
+							id="readData"
+							class="controller-button light"
+						>
+							Read from EEPROM
 						</button>
 					</form>
 				</div>
 			</div>
 		</div>
 		<script>
+			console.log("Script loaded!");
+
 			function toggleDarkMode() {
 				const bodyDiv = document.getElementById("body-div");
 				bodyDiv.classList.toggle("dark");
@@ -597,45 +593,144 @@ const char index_html[] PROGMEM = R"rawliteral(
 				});
 			}
 
-			function validateInput(value, fieldName) {
-				// Check if the input contains leading zeros
+			function validateInput(value, fieldName, min, max) {
+				// Convert the value to a number
+				const numericValue = parseFloat(value);
+
+				// checks if the value starts with 0
 				if (/^0[0-9]+$/.test(value)) {
 					alert(fieldName + " cannot have leading zeros.");
 					return false;
 				}
+
+				// Check if the value is a valid number
+				if (isNaN(numericValue)) {
+					alert(fieldName + " must be a valid number.");
+					return false;
+				}
+
+				// Check if the value is below the min
+				if (min !== undefined && numericValue < min) {
+					alert(fieldName + " must be greater than or equal to " + min + ".");
+					return false;
+				}
+
+				// Check if the value is above the max
+				if (max !== undefined && numericValue > max) {
+					alert(fieldName + " must be less than or equal to " + max + ".");
+					return false;
+				}
+
+				// Validation passed
 				return true;
 			}
 
+			function ledButtons(button) {
+				if (button.id === "toggleLed") {
+					toggleLeds();
+				} else if (button.id === "resetLed") {
+					resetLed();
+				} else if (button.id === "writeData") {
+					writeData();
+				} else if (button.id === "readData") {
+					readData();
+				}
+			}
 
-            function submitForm(button) {
-                // Get the parent form element of the clicked button
-                const form = button.closest("form");
+			function toggleLeds() {
+				var button = document.getElementById("toggleLed");
+				var toggleState;
 
-                // Extract data from the form
-                const formData = new FormData(form);
+				if (button.getAttribute("data-state") === "off") {
+					button.setAttribute("data-state", "on");
+					button.innerHTML = "On";
+					toggleState = "on";
+				} else {
+					button.setAttribute("data-state", "off");
+					button.innerHTML = "Off";
+					toggleState = "off";
+				}
+			}
 
-                // Make an AJAX request to the server
-                fetch('/submit', {
-						method: 'POST',
-						body: formData
+			function resetLed() {
+				console.log("reset led func");
+			}
+
+			function writeData() {
+				console.log("write data func");
+			}
+
+			function readData() {
+				console.log("read data func");
+			}
+
+			function submitForm(button) {
+				const form = button.closest("form");
+
+				// Validate input before submitting
+				const inputs = form.querySelectorAll("input");
+				let isValid = true;
+
+				inputs.forEach((input) => {
+					const value = input.value;
+					const fieldName = input.name;
+
+					// Example: Validate the "fooMod" field with min=1 and max=255
+					if (fieldName === "fooMod") {
+						isValid = validateInput(value, fieldName, 1, 255);
+						if (!isValid) {
+							return; // Stop processing if validation fails
+						}
+					}
+					if (
+						fieldName === "hue" ||
+						fieldName === "saturation" ||
+						fieldName === "brightness"
+					) {
+						isValid = validateInput(value, fieldName);
+						if (!isValid) {
+							return; // Stop processing if validation fails
+						}
+					}
+
+					// more validation for other fields if needed
+				});
+
+				// If validation passed, proceed with form submission
+				if (isValid) {
+					const formData = new FormData(form);
+
+					// Set the value of fooID dynamically
+					const fooID = form.getAttribute("data-fooID");
+					formData.set("fooID", fooID);
+
+					// Log the final data before sending it to the server
+					console.log("Final Form Data:", Object.fromEntries(formData));
+
+					fetch("/submit", {
+						method: "POST",
+						body: formData,
 					})
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    console.log(data);
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                });
-            }
-        </script>
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.text();
+						})
+						.then((data) => {
+							console.log(data);
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
+				}
+			}
+		</script>
 	</body>
 </html>
-
 
 )rawliteral";
 
@@ -651,7 +746,7 @@ void ledBlink(void *parameter)
 	{
 		unsigned long currentMillis = millis();
 
-		if (currentMillis - previousMillis >= ledData->fooMod)
+		if (currentMillis - previousMillis >= ledData->fooMod * 10)
 		{
 			// save the last time the LED was toggled
 			previousMillis = currentMillis;
@@ -674,73 +769,37 @@ void ledBlink(void *parameter)
 	delete ledData; // Free the memory when done
 }
 
-void ledBreath(const LedStruct *ledData)
+void ledBreath(void *parameter)
 {
-	Serial.print("LED Data: ");
+	LedStruct *ledData = (LedStruct *)parameter;
+	static uint8_t hue = 0;
 
-	// Get the start address directly
-	const int *ptr = &ledData->startAddress;
-
-	// Get the number of members in the struct
-	const size_t numMembers = sizeof(LedStruct) / sizeof(int);
-
-	// Print each member
-	for (size_t i = 0; i < numMembers; ++i)
+	for (int i = 0; i < NUM_LEDS; ++i)
 	{
-		Serial.print(*ptr++);
-		if (i < numMembers - 1)
-		{
-			Serial.print(", ");
-		}
+		// Set each LED to a color based on the current hue
+		leds[i] = CHSV(hue, 255, 255);
+		FastLED.show();
+		delay(50);
+		hue += 10; // Increment the hue for the next LED
 	}
 
-	Serial.println();
+	FastLED.clear();
+	delay(250); // Pause between cycles
+				// rest of the code...
 }
 
-void ledSolid(const LedStruct *ledData)
+void ledSolid(void *parameter)
 {
-	Serial.print("LED Data: ");
+	LedStruct *ledData = (LedStruct *)parameter;
 
-	// Get a pointer to the start of the struct
-	const int *ptr = &ledData->startAddress;
-
-	// Get the number of members in the struct
-	const size_t numMembers = sizeof(LedStruct) / sizeof(int);
-
-	// Print each member
-	for (size_t i = 0; i < numMembers; ++i)
-	{
-		Serial.print(*ptr++);
-		if (i < numMembers - 1)
-		{
-			Serial.print(", ");
-		}
-	}
-
-	Serial.println();
+	// rest of the code...
 }
 
-void ledTimeout(const LedStruct *ledData)
+void ledTimeout(void *parameter)
 {
-	Serial.print("LED Data: ");
+	LedStruct *ledData = (LedStruct *)parameter;
 
-	// Get a pointer to the start of the struct
-	const int *ptr = &ledData->startAddress;
-
-	// Get the number of members in the struct
-	const size_t numMembers = sizeof(LedStruct) / sizeof(int);
-
-	// Print each member
-	for (size_t i = 0; i < numMembers; ++i)
-	{
-		Serial.print(*ptr++);
-		if (i < numMembers - 1)
-		{
-			Serial.print(", ");
-		}
-	}
-
-	Serial.println();
+	// rest of the code...
 }
 
 void handleFormSubmit(AsyncWebServerRequest *request)
@@ -775,7 +834,7 @@ void handleFormSubmit(AsyncWebServerRequest *request)
 	if (fooIDInt == 1)
 	{
 		// Create a new task for the LED
-		xTaskCreate(ledBlink, "BlinkTask", 2048, ledData, 1, NULL);
+		xTaskCreate(ledBlink, "BlinkTask", 2048, ledData, 2, NULL);
 	}
 	else if (fooIDInt == 2)
 	{
