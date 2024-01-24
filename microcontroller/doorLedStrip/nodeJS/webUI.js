@@ -1,3 +1,17 @@
+const express = require("express");
+const app = express();
+const port = 3007; // You can use any port you prefer
+
+app.use(express.static("site"));
+
+app.get("/", (req, res) => {
+	res.sendFile(__dirname + "/site/index.html");
+});
+
+app.listen(port, () => {
+	console.log(`Server running on http://localhost:${port}`);
+});
+
 function toggleDarkMode() {
 	const body = document.body;
 	const darkModeToggle = document.getElementById("dark-mode-toggle");
@@ -150,4 +164,27 @@ function sendForm(button) {
 				console.error("There was a problem with the fetch operation:", error);
 			});
 	}
+}
+
+function triggerESP() {
+	console.log("Sending request to ESP32");
+
+	// Replace with the actual IP address and port of your ESP32 server
+	const esp32Url = "http://192.168.1.88:80/triggerESP32";
+
+	fetch(esp32Url, {
+		method: "GET",
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error("Network response was not ok");
+			}
+			return response.text();
+		})
+		.then((data) => {
+			console.log("Response from ESP32:", data);
+		})
+		.catch((error) => {
+			console.error("There was a problem with the fetch operation:", error);
+		});
 }
