@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>RGB LED Controller</title>
+		<link id="style-link" rel="stylesheet" href="fullSite.css" />
+	</head>
+	<body>
+		<div id="body-div" class="light">
+			<div class="top-bar">
+				<h1 class="light">RGB LED Controller</h1>
+				<div class="toggle-container">
+					<label class="toggle-switch">
+						<input
+							type="checkbox"
+							id="dark-mode-toggle"
+							onclick="toggleDarkMode()"
+						/>
+						<span class="slider round"></span>
+					</label>
+					<span class="toggle-label light">Dark Mode</span>
+				</div>
+			</div>
+
+			<div class="main-body">
+				<div id="blink-container" class="input-container">
+					<form data-fooID="1" class="light">
+						<h2 class="light">Blink Function</h2>
+
+						<label for="blink-ledID" class="light">LED ID:</label>
+						<input
+							type="number"
+							id="blink-ledID"
+							name="ledID"
+							placeholder="0 to 5"
+							min="0"
+							max="5"
+							required
+							class="light"
+						/>
+
+						<input type="hidden" name="fooID" value="1" />
+
+						<label for="blink-fooMod" class="light">Time Between Blinks:</label>
+						<input
+							type="number"
+							id="blink-fooMod"
+							name="fooMod"
+							placeholder="Increments in 10ms"
+							min="1"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="blink-hue" class="light">Hue 0-255 :</label>
+						<input
+							type="number"
+							id="blink-hue"
+							name="hue"
+							value="0"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="blink-saturation" class="light"
+							>Saturation 0-255 :</label
+						>
+						<input
+							type="number"
+							id="blink-saturation"
+							name="saturation"
+							value="255"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<label for="blink-brightness" class="light"
+							>Brightness 0-255 :</label
+						>
+						<input
+							type="number"
+							id="blink-brightness"
+							name="brightness"
+							value="255"
+							min="0"
+							max="255"
+							required
+							class="light"
+						/>
+
+						<button type="button" onclick="submitForm(this)" class="light">
+							Submit
+						</button>
+						<button
+							type="button"
+							onclick="ledButtons(this)"
+							class="controller-button light"
+							data-state="On"
+							id="toggleLed"
+						>
+							On
+						</button>
+
+						<button
+							type="button"
+							onclick="ledButtons(this)"
+							id="resetLed"
+							class="controller-button light"
+						>
+							Reset
+						</button>
+
+						<button
+							type="button"
+							onclick="ledButtons(this)"
+							id="writeData"
+							class="controller-button light"
+						>
+							Write to EEPROM
+						</button>
+
+						<button
+							type="button"
+							onclick="ledButtons(this)"
+							id="readData"
+							class="controller-button light"
+						>
+							Read from EEPROM
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script src="fullSite.js"></script>
+	</body>
+</html>

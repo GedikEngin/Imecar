@@ -1,0 +1,234 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+#body-div {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+#body-div .top-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	max-width: 50%;
+	margin: 0 auto;
+}
+
+#body-div h1 {
+	color: #000;
+}
+
+#body-div form {
+	max-width: 100%;
+	margin: 0 auto;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+}
+
+#body-div label {
+	display: block;
+	margin-bottom: 8px;
+}
+
+#body-div input {
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 12px;
+	border: 1px solid #888;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#body-div button {
+	background-color: #4caf50;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#body-div button:hover {
+	background-color: #45a049;
+}
+
+#body-div .toggle-label {
+	margin-left: 10px;
+	color: #333;
+}
+
+/* Light Theme */
+#body-div.light {
+	background-color: #fff;
+	color: #333;
+}
+
+#body-div h1.light {
+	color: #000;
+}
+
+#body-div form.light {
+	background-color: #eee;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#body-div label.light {
+	color: #333;
+}
+
+#body-div input.light {
+	background-color: #fff;
+	color: #333;
+}
+
+#body-div button.light {
+	background-color: #4caf50;
+}
+
+/* Dark Theme */
+#body-div.dark {
+	background-color: #333;
+	color: #fff;
+}
+
+#body-div h1.dark {
+	color: #ffcc00;
+}
+
+#body-div form.dark {
+	background-color: #444;
+	box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+#body-div label.dark {
+	color: #fff;
+}
+
+#body-div input.dark {
+	background-color: #555;
+	color: #fff;
+}
+
+#body-div button.dark {
+	background-color: #4caf50;
+}
+
+#body-div .main-body {
+	display: grid;
+	grid-gap: 25px;
+	max-width: 40%;
+	margin: 0 auto;
+}
+
+#body-div .toggle-container {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+#body-div .toggle-switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+#body-div .toggle-switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+#body-div .slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	transition: 0.4s;
+}
+
+#body-div .slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	transition: 0.4s;
+}
+
+#body-div input:checked + .slider {
+	background-color: #2196f3;
+}
+
+#body-div input:focus + .slider {
+	box-shadow: 0 0 1px #2196f3;
+}
+
+#body-div input:checked + .slider:before {
+	transform: translateX(26px);
+}
+
+#body-div .slider.round {
+	border-radius: 34px;
+}
+
+#body-div .slider.round:before {
+	border-radius: 50%;
+}
+
+#body-div .main-body #button-container .controller-button {
+	width: 100%;
+	margin-top: 16.5%; /* Adjust the vertical space between buttons */
+}
+
+#body-div .main-body button:hover {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+#body-div .main-body #button-container #toggleLed[data-state="on"] {
+	background-color: #4caf50;
+}
+
+#body-div .main-body #button-container #toggleLed[data-state="off"] {
+	background-color: red;
+}
+
+#body-div .main-body #button-container #resetLed {
+	background-color: darkorange;
+}
+#body-div .main-body #button-container #writeData {
+	background-color: purple;
+}
+#body-div .main-body #button-container #readData {
+	background-color: rgb(0, 0, 255);
+}
+
+#body-div .main-body #button-container .controller-button:hover {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+#body-div .main-body #button-container #toggleLed:hover {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+#body-div .main-body #button-container #resetLed:hover {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+#body-div .main-body #button-container #writeData:hover {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+#body-div .main-body #button-container #readData:hover {
+	background-color: rgba(0, 0, 0, 0.2);
+}
