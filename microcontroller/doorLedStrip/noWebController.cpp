@@ -13,7 +13,6 @@
 #include <iostream>
 
 // led init
-// #define NUM_LEDS 60  // Symbolic constant for the number of LEDs
 #define NUM_LEDS 72  // Symbolic constant for the number of LEDs
 #define DATA_PIN 3   // Symbolic constant for the data pin (GPIO03)
 CRGB leds[NUM_LEDS]; // Array to store color information for each LED
