@@ -8,9 +8,10 @@
 #include <ESPAsyncWebServer.h>
 #include <FastLED.h>
 #include <iostream>
+#include <HTTPClient.h>
 
 // number of leds in a strip
-#define NUM_LEDS 71
+#define NUM_LEDS 72
 
 #define DATA_PIN 3 // GPIO03
 
@@ -34,7 +35,7 @@ void setup()
 //         FastLED.show();
 //         delay(50);
 //         hue += 10; // Increment the hue for the next LED
-//     }
+//     }w
 
 //     FastLED.clear();
 //     delay(250); // Pause between cycles

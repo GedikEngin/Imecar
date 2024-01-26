@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>RGB LED Controller</title>
+		<link id="style-link" rel="stylesheet" href="light-mode.css" />
+	</head>
+	<body>
+		<div class="main-body">
+			<div class="top-bar">
+				<h1>RGB LED Controller</h1>
+				<div class="toggle-container">
+					<label class="toggle-switch">
+						<input
+							type="checkbox"
+							id="dark-mode-toggle"
+							onclick="toggleDarkMode()"
+						/>
+						<span class="slider round"></span>
+					</label>
+					<span class="toggle-label">Dark Mode</span>
+				</div>
+			</div>
+			<form>
+				<label for="ledID">LedID</label>
+				<div class="led-ids">
+					<!-- Compulsory input -->
+					<input
+						type="number"
+						id="compulsoryInput"
+						name="compulsoryInput"
+						placeholder="Select LedID 0-71"
+						min="0"
+						max="71"
+						required
+					/>
+
+					<!-- Optional input -->
+					<input
+						type="number"
+						id="optionalInput"
+						name="optionalInput"
+						placeholder="Chose end LedID to target all"
+					/>
+				</div>
+				<br />
+
+				<label for="fooDropdown">Foo ID:</label>
+				<select id="fooDropdown" name="fooDropdown" required>
+					<option value="default" selected>Select an option</option>
+					<option value="blink">Blink</option>
+					<option value="breath">Breath</option>
+					<option value="solid">Solid</option></select
+				><br />
+
+				<label for="fooMod">Foo Modifier:</label>
+				<input
+					type="number"
+					placeholder="x10ms blink breath // x10 seconds for solid (0 for no auto shutoff)"
+					id="fooMod"
+					name="fooMod"
+					min="0"
+					max="255"
+					required
+				/><br />
+
+				<label for="hue">Hue:</label>
+				<input
+					type="number"
+					placeholder="0-255: 0 red, 96 green, 160 blue"
+					id="hue"
+					name="hue"
+					min="0"
+					max="255"
+					required
+				/><br />
+
+				<label for="saturation">Saturation:</label>
+				<input
+					type="number"
+					placeholder="0-255 // intensity of hue"
+					id="saturation"
+					name="saturation"
+					required
+					min="0"
+					max="255"
+				/><br />
+
+				<label for="brightness">Brightness:</label>
+				<input
+					type="number"
+					placeholder="0-255 // brightness amount"
+					id="brightness"
+					name="brightness"
+					required
+					min="0"
+					max="255"
+				/><br />
+
+				<div class="buttonBox">
+					<button
+						type="button"
+						onclick="sendForm(this)"
+						class="light"
+						id="submitForm"
+					>
+						Submit
+					</button>
+
+					<button
+						type="button"
+						onclick="ledButtons(this)"
+						class="light"
+						data-state="On"
+						id="toggleLed"
+					>
+						On
+					</button>
+
+					<button
+						type="button"
+						onclick="ledButtons(this)"
+						id="resetLed"
+						class="light toggleLedGreen"
+					>
+						Reset
+					</button>
+					<button
+						type="button"
+						onclick="ledButtons(this)"
+						id="spectrum"
+						class="light"
+					>
+						Spectrum
+					</button>
+					<button
+						type="button"
+						onclick="ledButtons(this)"
+						id="writeData"
+						class="light"
+					>
+						Write to EEPROM
+					</button>
+
+					<button
+						type="button"
+						onclick="ledButtons(this)"
+						id="readData"
+						class="light"
+					>
+						Read from EEPROM
+					</button>
+				</div>
+			</form>
+		</div>
+		<script src="webUI.js"></script>
+	</body>
+</html>
