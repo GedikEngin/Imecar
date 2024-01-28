@@ -51,7 +51,7 @@ void loop()
         // Set each LED to a color based on the current hue
         leds[i] = CHSV(hue, 255, 255);
         FastLED.show();
-        delay(50);
+        delay(30);
         hue += 10; // Increment the hue for the next LED
     }
 
@@ -62,6 +62,6 @@ void loop()
     {
         leds[i] = CRGB::Black;
         FastLED.show();
-        delay(50);
+        delay(30);
     }
 }
