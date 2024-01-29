@@ -219,7 +219,29 @@ As mentioned, being lightweight is one of its key standouts. The communication p
 
 ## Object-Relational Mapping (ORM)
 
-In the traditional sense, it is a programming technique that allows developers to interact with databases with relations to each other using OOP
+ORM is a programming technique that allows developers to interact with relational databases using OOP paradigms. Traditional databases utilize the data that is within tables, using them as foreign, composite and primary keys to define relations.
+
+An ORM system has a higher level interface that allows developers to directly work with their choice of programming language as opposed to having to write SQL queries manually. ORM automatically takes care of the translation of objects and instructions.
+
+Key concepts:
+
+#### Object-Relational Mapping
+
+The process of mapping objects and tables to one another within a relational database
+
+#### Entities
+
+In context of ORM's, they are the records within a databases tables
+
+#### Mapping
+
+Defining how objects and tables will be related "mapped" to one another
+
+#### CRUD Operations
+
+#### Relationships
+
+#### Lazy Loading
 
 ##
 
@@ -239,7 +261,7 @@ _Document Object Model (DOM): A structure representation of the HTML elements wi
 
 _Real DOM: A type of Document Object Model that requires a full re-render of all elements within the DOM when there is any update of any component. It can be resource-intensive if there are a large number of elements to rerender_
 
-_Virtual DOM: A lightweight version of Real DOM. It is a virtual representation of the real DOM without the ability to change the layout of a document directly. _
+_Virtual DOM: A lightweight version of Real DOM. It is a virtual representation of the real DOM without the ability to change the layout of a document directly._
 
 _Extensible Markup Language (XML): It is a markup language and file format that allows for storing, transmitting and reconstructing data. It has a format that is both human/machine-readable._
 
@@ -247,8 +269,7 @@ _JavaScript XML (JSX): JSX is an extension of JavaScript that allows you to dire
 
 _Props: The data type object where attributes about a tag are stored. Usually read-only components._
 
-_Functional component: A JavaScript function that returns a React element. Takes in props as data entry, and are more refined way to define components vs class components. \
-_
+_Functional component: A JavaScript function that returns a React element. Takes in props as data entry, and are more refined way to define components vs class components._
 
 _Class components: The older method of rendering and defining components. It is now treated as boilerplate code._
 
