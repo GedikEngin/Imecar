@@ -1,0 +1,80 @@
+body {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #f0f0f0;
+	margin: 20px;
+}
+
+form {
+	background-color: #ffffff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	max-width: 500px;
+	padding: 20px;
+	width: 100%;
+}
+
+label {
+	display: block;
+	margin-bottom: 8px;
+	color: #333;
+}
+
+input,
+textarea,
+.dropbox {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 15px;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background-color: #f8f8f8;
+	color: #555;
+}
+
+select {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 15px;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background-color: #f8f8f8;
+	color: #555;
+	appearance: none;
+	cursor: pointer;
+}
+
+textarea {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 15px;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background-color: #f8f8f8;
+	color: #555;
+	resize: none; /* Prevent resizing */
+}
+
+button {
+	background-color: #4caf50;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+button:hover {
+	background-color: #45a049;
+}
+
+.navButton {
+	background-color: orange;
+}
+
+.navButton:hover {
+	background-color: darkgoldenrod;
+}

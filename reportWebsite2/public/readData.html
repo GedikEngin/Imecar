@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Read Data</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<form id="readDataForm">
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" required />
+
+			<label for="startOfWeek">Start of Week:</label>
+			<input type="date" id="startOfWeek" name="startOfWeek" required />
+
+			<label for="readType">Read Type:</label>
+			<select id="readType" name="readType" class="dropbox" required>
+				<option value="reports">Reports</option>
+				<option value="tasks">Tasks</option>
+			</select>
+			<br />
+			<br />
+
+			<button type="button" onclick="retrieveData()">Retrieve Data</button>
+
+			<br />
+			<br />
+
+			<div class="data-box">
+				<label for="monday">Monday:</label>
+				<input type="text" id="monday" name="monday" readonly />
+			</div>
+			<div class="data-box">
+				<label for="tuesday">Tuesday:</label>
+				<input type="text" id="tuesday" name="tuesday" readonly />
+			</div>
+			<div class="data-box">
+				<label for="Wednesday">Wednesday:</label>
+				<input type="text" id="Wednesday" name="Wednesday" readonly />
+			</div>
+			<div class="data-box">
+				<label for="thursday">Thursday:</label>
+				<input type="text" id="thursday" name="thursday" readonly />
+			</div>
+			<div class="data-box">
+				<label for="friday">Friday:</label>
+				<input type="text" id="friday" name="friday" readonly />
+			</div>
+			<div class="data-box">
+				<label for="saturday">Saturday:</label>
+				<input type="text" id="saturday" name="saturday" readonly />
+			</div>
+			<div class="data-box">
+				<label for="sunday">Sunday:</label>
+				<input type="text" id="sunday" name="sunday" readonly />
+			</div>
+
+			<a href="submitReport.html"
+				><button type="button" class="navButton">Submit Report</button></a
+			>
+			<a href="submitTask.html"
+				><button type="button" class="navButton">Submit Task</button></a
+			>
+		</form>
+
+		<script src="script.js"></script>
+	</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Submit Task</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<form id="taskForm">
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" required />
+
+			<label for="startOfWeek">Start of Week:</label>
+			<input type="date" id="startOfWeek" name="startOfWeek" required />
+
+			<label for="mondayTasks">Monday Tasks:</label>
+			<textarea
+				id="mondayTasks"
+				name="mondayTasks"
+				rows="4"
+				required
+			></textarea>
+			<label for="tuesdayTasks">Tuesday Tasks:</label>
+			<textarea
+				id="tuesdayTasks"
+				name="tuesdayTasks"
+				rows="4"
+				required
+			></textarea>
+			<label for="wednesdayTasks">Wednesday Tasks:</label>
+			<textarea
+				id="wednesdayTasks"
+				name="wednesdayTasks"
+				rows="4"
+				required
+			></textarea>
+			<label for="thursdayTasks">Thursday Tasks:</label>
+			<textarea
+				id="thursdayTasks"
+				name="thursdayTasks"
+				rows="4"
+				required
+			></textarea>
+			<label for="fridayTasks">Friday Tasks:</label>
+			<textarea
+				id="fridayTasks"
+				name="fridayTasks"
+				rows="4"
+				required
+			></textarea>
+			<label for="saturdayTasks">Saturday Tasks:</label>
+			<textarea
+				id="saturdayTasks"
+				name="saturdayTasks"
+				rows="4"
+				required
+			></textarea>
+			<label for="sundayTasks">Sunday Tasks:</label>
+			<textarea
+				id="sundayTasks"
+				name="sundayTasks"
+				rows="4"
+				required
+			></textarea>
+
+			<button type="button" onclick="submitTasks()">Submit Tasks</button>
+			<a href="submitReport.html"
+				><button type="button" class="navButton">Submit Report</button></a
+			>
+			<a href="readData.html"
+				><button type="button" class="navButton">Read Data</button></a
+			>
+		</form>
+
+		<script src="script.js"></script>
+	</body>
+</html>
