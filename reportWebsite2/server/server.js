@@ -1,80 +1,113 @@
 const express = require("express");
 const path = require("path");
-const sqlite3 = require("sqlite3").verbose();
+const db = require("./db");
 
 const app = express();
-const port = process.env.PORT || 3000; // Use the specified port or default to 3000
+const port = process.env.PORT || 3000;
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, "..", "public")));
-
-// Database setup
-const db = new sqlite3.Database("reportDB.sqlite");
-
-// Express middleware for parsing JSON requests
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
 
-// Define routes
 app.get("/", (req, res) => {
-	res.sendFile(path.join(__dirname, "..", "public", "submitReport.html"));
+	res.sendFile(path.join(__dirname, "public", "submitReport.html"));
 });
 
-// Add more routes as needed, e.g., for other HTML pages
+function isMonday(dateString) {
+	const date = new Date(dateString);
+	return date.getDay() === 1; // 1 for Monday
+}
 
-// API to submit a report
-app.post("/submitReport", async (req, res) => {
-	try {
-		// Extract data from the request body
-		const { name, startOfWeek, dayOfWeek, comments } = req.body;
+// Endpoint to submit a report
+app.post("/submitReport", (req, res) => {
+	const { name, startOfWeek, dayOfWeek, comments } = req.body;
 
-		// Perform database operations (insert into 'dailyReports' table)
-		await insertReport(name, startOfWeek, dayOfWeek, comments);
-
-		res.json({ message: "Report submitted successfully" });
-	} catch (error) {
-		console.error("Error submitting report:", error.message);
-		res.status(500).json({ error: "Internal server error" });
+	if (!isMonday(startOfWeek)) {
+		return res
+			.status(400)
+			.json({ error: "The start of the week must be a Monday." });
 	}
+
+	const insertReportSql = `
+        INSERT INTO dailyReports (employeeName, startOfWeek, dayOfWeek, reports)
+        VALUES (?, ?, ?, ?)
+    `;
+	const reportParams = [name, startOfWeek, dayOfWeek, comments];
+
+	db.run(insertReportSql, reportParams, function (err) {
+		if (err) {
+			console.error("Error submitting report:", err.message);
+			res.status(500).json({ error: "Internal server error" });
+		} else {
+			res.json({
+				message: "Report submitted successfully",
+				reportId: this.lastID,
+			});
+		}
+	});
 });
 
-// API to submit tasks
-app.post("/submitTask", async (req, res) => {
-	try {
-		// Extract data from the request body
-		const { name, startOfWeek, tasks } = req.body;
+// Endpoint to submit tasks
+app.post("/submitTask", (req, res) => {
+	const { name, startOfWeek, tasks } = req.body;
 
-		// Perform database operations (insert into 'dailyTasks' table)
-		await insertTasks(name, startOfWeek, tasks);
-
-		res.json({ message: "Tasks submitted successfully" });
-	} catch (error) {
-		console.error("Error submitting tasks:", error.message);
-		res.status(500).json({ error: "Internal server error" });
+	if (!isMonday(startOfWeek)) {
+		return res
+			.status(400)
+			.json({ error: "The start of the week must be a Monday." });
 	}
+
+	tasks.forEach((task) => {
+		const insertTaskSql = `
+            INSERT INTO dailyTasks (employeeName, startOfWeek, dayOfWeek, tasks)
+            VALUES (?, ?, ?, ?)
+        `;
+		const taskParams = [name, startOfWeek, task.dayOfWeek, task.description];
+
+		db.run(insertTaskSql, taskParams, function (err) {
+			if (err) {
+				console.error("Error submitting task:", err.message);
+				// This should really be handled differently as this will try to send multiple responses
+				res.status(500).json({ error: "Internal server error" });
+				return;
+			}
+		});
+	});
+
+	// Send response after all tasks have been processed
+	res.json({ message: "Tasks submitted successfully" });
 });
 
-// API to read data
-app.get("/readData", async (req, res) => {
-	try {
-		// Extract data from the request query
-		const { name, startOfWeek, readType } = req.query;
-
-		// Perform database operations (retrieve data based on readType)
-		const data = await readData(name, startOfWeek, readType);
-
-		res.json({ data });
-	} catch (error) {
-		console.error("Error reading data:", error.message);
-		res.status(500).json({ error: "Internal server error" });
+// Endpoint to read data
+// Endpoint to read data
+app.get("/readData", (req, res) => {
+	const { name, startOfWeek, readType } = req.query;
+	if (!name || !startOfWeek || !readType) {
+		return res.status(400).json({ error: "Missing required fields." });
 	}
+
+	const tableName = readType === "reports" ? "dailyReports" : "dailyTasks";
+	const sql = `
+        SELECT dayOfWeek, ${readType} AS data
+        FROM ${tableName}
+        WHERE employeeName = ? AND startOfWeek = ?
+        ORDER BY dayOfWeek
+    `;
+	const params = [name, startOfWeek];
+
+	db.all(sql, params, (err, rows) => {
+		if (err) {
+			console.error("Error reading data:", err.message);
+			res.status(500).json({ error: "Internal server error" });
+		} else {
+			res.json({ data: rows });
+		}
+	});
 });
 
-// Start the server
 const server = app.listen(port, () => {
 	console.log(`Server is running on http://localhost:${port}`);
 });
 
-// Close the database connection when the server is shutting down
 process.on("SIGINT", () => {
 	db.close((err) => {
 		if (err) {
@@ -89,79 +122,4 @@ process.on("SIGINT", () => {
 	});
 });
 
-// Helper function to insert a report into the 'dailyReports' table
-function insertReport(name, startOfWeek, dayOfWeek, comments) {
-	return new Promise((resolve, reject) => {
-		db.run(
-			`
-      INSERT INTO dailyReports (weekId, dayOfWeek, reports)
-      VALUES ((SELECT id FROM weekOverview WHERE employeeName = ? AND startOfWeek = ?), ?, ?)
-    `,
-			[name, startOfWeek, dayOfWeek, comments],
-			function (err) {
-				if (err) {
-					reject(err);
-				} else {
-					resolve();
-				}
-			}
-		);
-	});
-}
-
-// Helper function to insert tasks into the 'dailyTasks' table
-function insertTasks(name, startOfWeek, tasks) {
-	return new Promise((resolve, reject) => {
-		db.run(
-			`
-      INSERT INTO dailyTasks (weekId, dayOfWeek, tasks)
-      VALUES ((SELECT id FROM weekOverview WHERE employeeName = ? AND startOfWeek = ?), ?, ?)
-    `,
-			[name, startOfWeek, tasks],
-			function (err) {
-				if (err) {
-					reject(err);
-				} else {
-					resolve();
-				}
-			}
-		);
-	});
-}
-
-// Helper function to read data from the database
-function readData(name, startOfWeek, readType) {
-	return new Promise((resolve, reject) => {
-		// Check readType and construct SQL query accordingly
-		let query = "";
-		let params = [name, startOfWeek];
-
-		if (readType === "reports") {
-			// Query 'dailyReports' table
-			query = `
-		  SELECT dayOfWeek, reports
-		  FROM dailyReports
-		  WHERE weekId IN (SELECT id FROM weekOverview WHERE employeeName = ? AND startOfWeek = ?)
-		`;
-		} else if (readType === "tasks") {
-			// Query 'dailyTasks' table
-			query = `
-		  SELECT dayOfWeek, tasks
-		  FROM dailyTasks
-		  WHERE weekId IN (SELECT id FROM weekOverview WHERE employeeName = ? AND startOfWeek = ?)
-		`;
-		} else {
-			reject(new Error("Invalid readType"));
-			return;
-		}
-
-		// Execute the constructed query
-		db.all(query, params, (err, rows) => {
-			if (err) {
-				reject(err);
-			} else {
-				resolve(rows);
-			}
-		});
-	});
-}
+// Removed the module.exports = app; it's not necessary unless you're doing integration testing
