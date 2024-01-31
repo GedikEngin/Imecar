@@ -1,0 +1,63 @@
+{
+	"version": 1,
+	"author": "Engin Gedik",
+	"editor": "wokwi",
+	"parts": [
+		{
+			"type": "board-esp32-devkit-c-v4",
+			"id": "esp",
+			"top": 38.4,
+			"left": -100.76,
+			"attrs": {}
+		},
+		{
+			"type": "wokwi-neopixel-canvas",
+			"id": "neopixels2",
+			"top": -80.6,
+			"left": -442.7,
+			"attrs": { "rows": "1", "cols": "50", "matrixBrightness": "10" }
+		},
+		{
+			"type": "wokwi-vcc",
+			"id": "vcc1",
+			"top": -37.64,
+			"left": 96,
+			"attrs": {}
+		},
+		{
+			"type": "wokwi-pushbutton",
+			"id": "btn1",
+			"top": 111.8,
+			"left": 96,
+			"attrs": { "color": "red", "key": "1" }
+		},
+		{
+			"type": "wokwi-pushbutton",
+			"id": "btn3",
+			"top": 111.8,
+			"left": 307.2,
+			"attrs": { "color": "blue", "key": "3" }
+		},
+		{
+			"type": "wokwi-pushbutton",
+			"id": "btn2",
+			"top": 111.8,
+			"left": 201.6,
+			"attrs": { "color": "green", "key": "2" }
+		}
+	],
+	"connections": [
+		["esp:TX", "$serialMonitor:RX", "", []],
+		["esp:RX", "$serialMonitor:TX", "", []],
+		["esp:GND.2", "neopixels2:VSS", "black", ["v-67.2", "h134.8"]],
+		["neopixels2:VDD", "vcc1:VCC", "red", ["v0"]],
+		["esp:23", "neopixels2:DIN", "green", ["h9.6", "v-67.2", "h134.4"]],
+		["btn1:1.r", "btn2:1.l", "black", ["v0"]],
+		["btn2:1.r", "btn3:1.l", "black", ["v0"]],
+		["esp:GND.3", "btn1:1.l", "black", ["h0"]],
+		["esp:19", "btn1:2.l", "violet", ["h0"]],
+		["esp:18", "btn2:2.l", "violet", ["h86.4", "v19.2", "h115.2"]],
+		["esp:5", "btn3:2.l", "violet", ["h76.8", "v19.2", "h230.4"]]
+	],
+	"dependencies": {}
+}

@@ -15,21 +15,21 @@
 			"id": "btn1",
 			"top": 15.8,
 			"left": 153.6,
-			"attrs": { "color": "red" }
+			"attrs": { "color": "red", "key": "1" }
 		},
 		{
 			"type": "wokwi-pushbutton",
 			"id": "btn2",
 			"top": 15.8,
 			"left": 230.4,
-			"attrs": { "color": "green" }
+			"attrs": { "color": "green", "key": "2" }
 		},
 		{
 			"type": "wokwi-pushbutton",
 			"id": "btn3",
 			"top": 15.8,
 			"left": 307.2,
-			"attrs": { "color": "blue" }
+			"attrs": { "color": "blue", "key": "3" }
 		},
 		{
 			"type": "wokwi-rgb-led",
