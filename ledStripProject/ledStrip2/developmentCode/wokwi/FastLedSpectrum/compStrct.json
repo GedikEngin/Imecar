@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"author": "Engin Gedik",
+	"editor": "wokwi",
+	"parts": [
+		{
+			"type": "board-esp32-devkit-c-v4",
+			"id": "esp",
+			"top": 38.4,
+			"left": -100.76,
+			"attrs": {}
+		},
+		{
+			"type": "wokwi-neopixel-canvas",
+			"id": "neopixels2",
+			"top": -80.6,
+			"left": -442.7,
+			"attrs": { "rows": "1", "cols": "50", "matrixBrightness": "10" }
+		},
+		{
+			"type": "wokwi-vcc",
+			"id": "vcc1",
+			"top": -37.64,
+			"left": 96,
+			"attrs": {}
+		}
+	],
+	"connections": [
+		["esp:TX", "$serialMonitor:RX", "", []],
+		["esp:RX", "$serialMonitor:TX", "", []],
+		["esp:RX", "neopixels2:DIN", "green", ["h0"]],
+		["esp:GND.2", "neopixels2:VSS", "black", ["h38.4", "v-48", "h0.4"]],
+		["neopixels2:VDD", "vcc1:VCC", "red", ["v0"]]
+	],
+	"dependencies": {}
+}

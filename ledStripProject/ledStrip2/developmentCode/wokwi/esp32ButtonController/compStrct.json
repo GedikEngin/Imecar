@@ -1,0 +1,62 @@
+{
+	"version": 1,
+	"author": "Engin Gedik",
+	"editor": "wokwi",
+	"parts": [
+		{
+			"type": "board-esp32-devkit-c-v4",
+			"id": "esp",
+			"top": 0,
+			"left": 0,
+			"attrs": {}
+		},
+		{
+			"type": "wokwi-pushbutton",
+			"id": "btn1",
+			"top": 15.8,
+			"left": 153.6,
+			"attrs": { "color": "red" }
+		},
+		{
+			"type": "wokwi-pushbutton",
+			"id": "btn2",
+			"top": 15.8,
+			"left": 230.4,
+			"attrs": { "color": "green" }
+		},
+		{
+			"type": "wokwi-pushbutton",
+			"id": "btn3",
+			"top": 15.8,
+			"left": 307.2,
+			"attrs": { "color": "blue" }
+		},
+		{
+			"type": "wokwi-rgb-led",
+			"id": "rgb1",
+			"top": 109.6,
+			"left": 193.1,
+			"attrs": { "common": "cathode" }
+		}
+	],
+	"connections": [
+		["esp:TX", "$serialMonitor:RX", "", []],
+		["esp:RX", "$serialMonitor:TX", "", []],
+		["esp:GND.2", "btn1:1.l", "black", ["v0"]],
+		["btn1:1.r", "btn2:1.l", "black", ["v0"]],
+		["btn2:1.r", "btn3:1.l", "black", ["v0"]],
+		["btn3:2.l", "esp:21", "violet", ["h0", "v29"]],
+		["btn2:2.r", "esp:22", "violet", ["h0.2", "v19.4", "h-182.4", "v-19.2"]],
+		["esp:23", "btn1:2.l", "violet", ["h24.04", "v9.6", "h9.6"]],
+		["esp:19", "rgb1:G", "green", ["h148.84", "v67.2", "h-30.1"]],
+		["rgb1:B", "esp:18", "green", ["h11.2", "v-48"]],
+		["esp:5", "rgb1:R", "green", ["h91.24", "v57.6"]],
+		[
+			"esp:GND.3",
+			"rgb1:COM",
+			"black",
+			["h158.44", "v76.8", "h0", "v9.6", "h-48"]
+		]
+	],
+	"dependencies": {}
+}
