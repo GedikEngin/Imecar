@@ -4,6 +4,7 @@
 #include <ESPAsyncWebServer.h>
 #include <FastLED.h>
 #include <iostream>
+#include <HTTPClient.h>
 
 void setup()
 {
