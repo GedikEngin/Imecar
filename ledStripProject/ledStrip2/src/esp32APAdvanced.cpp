@@ -11,7 +11,6 @@ const int buttonPin = 19; // GPIO pin where the button is connected
 const int switchPin = 23; // GPIO pin where the switch is connected
 
 bool switchState = false;
-bool buttonPressed = false;
 
 void handleButtonPress();
 
@@ -23,6 +22,7 @@ void setup()
 
     // Connect to Wi-Fi network with SSID and password
     Serial.print("Setting AP (Access Point)...");
+    // Remove the password parameter if you want the Access Point to be open
     WiFi.softAP(ssid, password);
 
     IPAddress IP = WiFi.softAPIP();
@@ -77,25 +77,11 @@ void loop()
             Serial.println(httpResponseCode);
         }
     }
-
-    // Reset the buttonPressed flag after a delay
-    if (buttonPressed)
-    {
-        delay(100); // Adjust the delay based on your needs
-        buttonPressed = false;
-    }
-
-    // Reset the buttonPressed flag after a delay
-    if (buttonPressed)
-    {
-        delay(100); // Adjust the delay based on your needs
-        buttonPressed = false;
-    }
 }
 
 void handleButtonPress()
 {
-    if (switchState && !buttonPressed)
+    if (switchState)
     {
         Serial.println("Button pressed, sending request to change LED color...");
 
@@ -116,8 +102,5 @@ void handleButtonPress()
         }
 
         http.end();
-
-        // Set the buttonPressed flag to true
-        buttonPressed = true;
     }
 }
