@@ -13,9 +13,9 @@ const int switchPin = 23; // GPIO pin where the switch is connected
 bool switchState = false;
 bool buttonActive = false; // Flag to indicate if the button is active
 
-void handleButtonPress();
-
 AsyncWebServer server(80);
+
+void handleButtonPress();
 
 void setup()
 {
@@ -47,14 +47,6 @@ void setup()
 
 void loop()
 {
-    // Check for button press
-    if (digitalRead(buttonPin) == LOW)
-    {
-        // Button is pressed
-        handleButtonPress();
-        delay(1000); // Debounce delay
-    }
-
     // Check switch state
     bool newSwitchState = digitalRead(switchPin) == HIGH;
 
@@ -67,7 +59,7 @@ void loop()
         Serial.println(switchState);
 
         // Turn off LEDs and stop sending requests if the switch is off
-        if (!switchState && !buttonActive)
+        if (!switchState)
         {
             HTTPClient http;
             http.begin("http://192.168.4.2/setcolor?hue=0&saturation=0&value=0"); // Turn off LEDs
@@ -76,6 +68,18 @@ void loop()
 
             Serial.print("HTTP Response code: ");
             Serial.println(httpResponseCode);
+        }
+    }
+
+    // Check for button press only if the switch is in the "on" position
+    if (switchState)
+    {
+        // Check for button press
+        if (digitalRead(buttonPin) == LOW)
+        {
+            // Button is pressed
+            handleButtonPress();
+            delay(1000); // Debounce delay
         }
     }
 
@@ -88,27 +92,24 @@ void loop()
 
 void handleButtonPress()
 {
-    if (switchState)
+    buttonActive = true; // Set the flag when the button is pressed
+    Serial.println("Button pressed, sending request to change LED color...");
+
+    // Send a request to ESP2 to change the LED color to blue
+    HTTPClient http;
+    http.begin("http://192.168.4.2/setcolor?hue=170&saturation=255&value=255"); // Blue color in HSV
+    int httpResponseCode = http.GET();
+
+    if (httpResponseCode > 0)
     {
-        buttonActive = true; // Set the flag when the button is pressed
-        Serial.println("Button pressed, sending request to change LED color...");
-
-        // Send a request to ESP2 to change the LED color to blue
-        HTTPClient http;
-        http.begin("http://192.168.4.2/setcolor?hue=170&saturation=255&value=255"); // Blue color in HSV
-        int httpResponseCode = http.GET();
-
-        if (httpResponseCode > 0)
-        {
-            Serial.print("HTTP Response code: ");
-            Serial.println(httpResponseCode);
-        }
-        else
-        {
-            Serial.print("Error on HTTP request. Code: ");
-            Serial.println(httpResponseCode);
-        }
-
-        http.end();
+        Serial.print("HTTP Response code: ");
+        Serial.println(httpResponseCode);
     }
+    else
+    {
+        Serial.print("Error on HTTP request. Code: ");
+        Serial.println(httpResponseCode);
+    }
+
+    http.end();
 }
