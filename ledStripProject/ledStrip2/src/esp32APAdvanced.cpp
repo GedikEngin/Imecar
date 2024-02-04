@@ -11,6 +11,7 @@ const int buttonPin = 19; // GPIO pin where the button is connected
 const int switchPin = 23; // GPIO pin where the switch is connected
 
 bool switchState = false;
+bool buttonActive = false; // Flag to indicate if the button is active
 
 void handleButtonPress();
 
@@ -66,7 +67,7 @@ void loop()
         Serial.println(switchState);
 
         // Turn off LEDs and stop sending requests if the switch is off
-        if (!switchState)
+        if (!switchState && !buttonActive)
         {
             HTTPClient http;
             http.begin("http://192.168.4.2/setcolor?hue=0&saturation=0&value=0"); // Turn off LEDs
@@ -77,12 +78,19 @@ void loop()
             Serial.println(httpResponseCode);
         }
     }
+
+    // Check if button is still pressed to deactivate the flag
+    if (digitalRead(buttonPin) == HIGH && buttonActive)
+    {
+        buttonActive = false;
+    }
 }
 
 void handleButtonPress()
 {
     if (switchState)
     {
+        buttonActive = true; // Set the flag when the button is pressed
         Serial.println("Button pressed, sending request to change LED color...");
 
         // Send a request to ESP2 to change the LED color to blue
