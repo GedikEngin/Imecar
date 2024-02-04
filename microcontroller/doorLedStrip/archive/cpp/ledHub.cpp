@@ -3,10 +3,11 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <FastLED.h>
+#include <HTTPClient.h>
 
 // Replace with your network credentials
-const char *ssid = "MW42V_A8CA";
-const char *password = "91014264";
+const char *ssid = "EnginAW";
+const char *password = "5439148075";
 
 String sliderValueRed = "0";
 String sliderValueGreen = "0";
@@ -304,7 +305,7 @@ void setup()
 	WiFi.begin(ssid, password);
 	while (WiFi.status() != WL_CONNECTED)
 	{
-		delay(1000);
+		delay(10);
 		Serial.println("Connecting to WiFi..");
 	}
 
