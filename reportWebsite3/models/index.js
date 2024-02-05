@@ -29,3 +29,17 @@ sequelize
 	});
 
 const db = {};
+
+db.Sequelize = Sequelize; // the constructor that is being constructed
+db.sequelize = sequelize;
+
+db.products = require(`./productModel.js`)(sequelize, DataTypes); // matches the sequelize new
+db.reviews = require(`./reviewModel.js`)(sequelize, DataTypes);
+
+db.sequelize
+	.sync({ force: false }) // prevents forced syncing, avoids syncing empty tables etc, create if not exist type of logic
+	.then(() => {
+		console.log(`resync successful`);
+	});
+
+module.exports = db;
