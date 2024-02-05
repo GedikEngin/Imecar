@@ -223,13 +223,13 @@ ORM is a programming technique that allows developers to interact with relationa
 
 An ORM system has a higher level interface that allows developers to directly work with their choice of programming language as opposed to having to write SQL queries manually. ORM automatically takes care of the translation of objects and instructions.
 
-Key concepts:
+#### Key concepts:
 
-#### Object-Relational Mapping
+##### Object-Relational Mapping
 
 The process of mapping objects and tables to one another within a relational database
 
-#### Entities
+##### Entities
 
 In context of ORM's, they are the records within a databases tables
 
@@ -237,11 +237,55 @@ In context of ORM's, they are the records within a databases tables
 
 Defining how objects and tables will be related "mapped" to one another
 
-#### CRUD Operations
+##### CRUD Operations
 
-#### Relationships
+Create Read Update Delete operations, similar to basic/standard SQL
 
-#### Lazy Loading
+##### Relationships
+
+Defining and managing relations between objects, one to many, many to one, many to many, one to one etc
+
+##### Lazy Loading
+
+ORM systems have some optimizations in place such as lazy loading - only loading data when explicitly requested
+
+### About Sequelize
+
+Iti s a popular ORM library for Node.JS and it is powerful and able to interact with multiple db types such as MySQL, PostgreSQL, SQLite, MSSQL. Simplifies db operations by allowing devs to work directly with JS objects and methods as opposed to using raw SQL queries
+
+#### Key features:
+
+##### Multiple DB Support
+
+Sequelize supports multiple relational databases making it versatile and suitable for different projects and environments
+
+##### Models and Migrations
+
+Sequelize lets you define data models within the app, which represent tables in the db. Migrations aid in db schema changes over time
+
+##### CRUD Operations
+
+Sequelize provides methods for creating, reading, updating and deleting data records within the db using JS syntax
+
+##### Associations
+
+Has support for different types of relations between models, including one-one, many-one, one-many, many-many. MThis makes it easier to navigate and manipulate related data
+
+##### Querying
+
+Sequelize has a flexible and powerful querying API. Developers cam use methods to filter, sort, aggregate data without writing raw sql, but using JS syntax directly
+
+##### Hooks
+
+Sequelize allows you to define hooks, which are functions that are executed before or after certain events, such as creating or updating a record, this allows devs to customize how the system operates and responds. Hooks are functions to use in Sequelize, but similar to subscription methods and pipelines which is a broader version of it.
+
+##### Transactions
+
+Sequelize has support for transactions, allows you to group multiple database operations into a single transactions which allows database to be consistent and ensures atomicity
+
+##### Validation
+
+Allows for rules to be defined to validate the data and the database. Allows you to enforce constraints and adherence to them before committing them into the DB.
 
 ##
 
@@ -276,3 +320,17 @@ _Class components: The older method of rendering and defining components. It is 
 _Programmatic navigation: Redirection and/or dynamic routing based on prior interactions. Such as a login vs sign up action._
 
 _Internet of Things (IoT): The network and communications between physical devices. Such as vehicles, appliances and other objects that have sensors or data to transmit. It uses the internet to achieve this. Summarized to 'smart' devices communicating without direct human involvement._
+
+_Aggregating Data: Combining individual data to create a data that is a composition of the other types._
+
+_Atomicity: A property of transactions in database systems, referred to via ACID acronym._
+
+_ACID: Atomicity/All-or-nothing, consistency, isolation, durability_
+
+_All-or-nothing: If a transaction has multiple steps and operations, they are all executed as one unit. If there is an error within any of the steps, i.e. transaction is unsuccessful, the entire transaction is rolled back and the database remains unchanged ensuring consistency through out the system._
+
+_Consistency: Regardless of consistency provided by Atomicity/all-or-nothing, the database still needs to have consistency that allows it to transition from one consistent state to another at the end of a transaction._
+
+_Isolation: This property allows transactions to be independent of one another. This prevents interference between multiple transactions to one another. Each transaction should be able to do its own thing without being dependent or influenced by another transaction._
+
+_Durability: After a transaction is complete, the changes should be permanent and not be influenced by crashes or system failures. The state after transactions should not be volatile._
