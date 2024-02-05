@@ -14,6 +14,11 @@ app.use(express.json()); // using express json as thats how we are getting all d
 
 app.use(express.urlencoded({ extended: true })); // returns middler that parses url encoded bodies and only looks at the requests that match the content type header
 
+// routers
+
+const router = require(`./routes/productRouter.js`); // imports router
+app.use(`/api/products`, router);
+
 // testing api
 
 app.get("/", (req, res) => {
