@@ -29,6 +29,8 @@ void toggleLed(bool turnOn);
 void setup()
 {
     Serial.begin(115200);
+
+    // Connect to Wi-Fi network with SSID and password
     Serial.print("Setting AP (Access Point)...");
     WiFi.softAP(ssid, password);
 
@@ -37,75 +39,81 @@ void setup()
     Serial.print("AP IP address: ");
     Serial.println(IP);
 
+    // Setup pins
     pinMode(buttonPin, INPUT_PULLUP);
     pinMode(switchPin, INPUT_PULLUP);
     pinMode(blinkStartButtonPin, INPUT_PULLUP);
     pinMode(blinkStopButtonPin, INPUT_PULLUP);
 
+    // Route for root / web page
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(200, "text/plain", "Hello, switch and button!"); });
 
+    // Start server
     server.begin();
 }
 
 void loop()
 {
+    // Check switch state
     bool newSwitchState = digitalRead(switchPin) == HIGH;
     if (newSwitchState != switchState)
     {
         switchState = newSwitchState;
         Serial.print("Switch state changed: ");
         Serial.println(switchState);
-        if (!switchState)
-        {
-            // If the switch is turned off, turn off the LED and disable blinking
-            ledBlinking = false;
-            toggleLed(false); // Turn off the LED
-        }
     }
 
+    // Check for button press only if the switch is in the "on" position
     if (switchState)
-    { // Only allow button and LED operations if the switch is on
+    {
+        // Check for button press
         if (digitalRead(buttonPin) == LOW && !buttonActive)
         {
             handleButtonPress();
             delay(100); // Debounce delay
         }
 
+        // Start blinking if button at GPIO 17 is pressed
         if (digitalRead(blinkStartButtonPin) == LOW)
         {
             ledBlinking = true;
             delay(100); // Debounce delay
         }
 
+        // Stop blinking if button at GPIO 16 is pressed
         if (digitalRead(blinkStopButtonPin) == LOW)
         {
             ledBlinking = false;
-            toggleLed(true); // Keep the LED on in the current color
+            toggleLed(true); // Ensure LED stays on after stopping the blink
             delay(100);      // Debounce delay
         }
+    }
 
-        static bool ledState = false;
-        if (ledBlinking)
+    // Handle LED blinking
+    static bool ledState = false; // Tracks the current on/off state of the LED
+    if (ledBlinking)
+    {
+        unsigned long currentMillis = millis();
+        if (currentMillis - previousMillis >= interval)
         {
-            unsigned long currentMillis = millis();
-            if (currentMillis - previousMillis >= interval)
-            {
-                previousMillis = currentMillis;
-                ledState = !ledState;
-                toggleLed(ledState);
-            }
+            previousMillis = currentMillis;
+            ledState = !ledState; // Toggle the state
+            toggleLed(ledState);  // Turn the LED on or off based on the state
         }
     }
 }
 
 void handleButtonPress()
 {
-    buttonActive = true;
+    buttonActive = true; // Set the flag when the button is pressed
     Serial.println("Button pressed, changing LED state...");
+
+    // Toggle LED color between green and red
     ledGreen = !ledGreen;
-    toggleLed(true); // Ensure the LED is on with the new color
-    buttonActive = false;
+    toggleLed(true); // Turn on the LED with the new color
+
+    buttonActive = false; // Reset the flag after handling the button press
 }
 
 void toggleLed(bool turnOn)
@@ -113,17 +121,20 @@ void toggleLed(bool turnOn)
     int hue, saturation, value;
     if (turnOn)
     {
-        hue = ledGreen ? 85 : 0;
+        // Set the hue based on the current color
+        hue = ledGreen ? 85 : 0; // Green or Red
         saturation = 255;
         value = 255;
     }
     else
     {
+        // Turn off the LED
         hue = 0;
         saturation = 0;
         value = 0;
     }
 
+    // Send a request to change the LED color or turn it off
     HTTPClient http;
     String url = "http://192.168.4.2/setcolor?hue=" + String(hue) + "&saturation=" + String(saturation) + "&value=" + String(value);
     http.begin(url);
