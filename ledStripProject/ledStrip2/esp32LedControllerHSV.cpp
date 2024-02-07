@@ -9,7 +9,7 @@ void turnOffLED();
 const char *ssid = "ESP32-Access-Point";
 const char *password = "123456789";
 
-#define DATA_PIN 3	// Set the pin connected to the LED
+#define DATA_PIN 3  // Set the pin connected to the LED
 #define NUM_LEDS 72 // Number of LEDs in your strip
 
 CRGB leds[NUM_LEDS];
@@ -154,29 +154,32 @@ AsyncWebServer server(80);
 
 void setup()
 {
-	// Initialize serial port
-	Serial.begin(115200);
-	Serial.println("Serial initialized...");
+  // Initialize serial port
+  Serial.begin(115200);
+  Serial.println("Serial initialized...");
 
-	// Connect to Wi-Fi
-	WiFi.begin(ssid, password);
-	while (WiFi.status() != WL_CONNECTED)
-	{
-		delay(1000);
-		Serial.println("Connecting to WiFi...");
-	}
-	Serial.println("Connected to WiFi");
+  // Connect to Wi-Fi
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+  Serial.println("Connected to WiFi");
 
-	// Setup FastLED
-	FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
 
-	// Route for root / web page
-	server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-			  { request->send(200, "text/html", htmlContent); });
+  // Setup FastLED
+  FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
 
-	// Route to set the LED color using HSV
-	server.on("/setcolor", HTTP_GET, [](AsyncWebServerRequest *request)
-			  {
+  // Route for root / web page
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+            { request->send(200, "text/html", htmlContent); });
+
+  // Route to set the LED color using HSV
+  server.on("/setcolor", HTTP_GET, [](AsyncWebServerRequest *request)
+            {
               String hueValue = "0";
               String saturationValue = "0";
               String valueValue = "0";
@@ -203,9 +206,9 @@ void setup()
               Serial.println("LED color set...");
               request->send(200, "text/plain", "LED color set"); });
 
-	// Route to toggle the spectrum effect
-	server.on("/togglespectrum", HTTP_GET, [](AsyncWebServerRequest *request)
-			  {
+  // Route to toggle the spectrum effect
+  server.on("/togglespectrum", HTTP_GET, [](AsyncWebServerRequest *request)
+            {
               isSpectrumRunning = !isSpectrumRunning;
 
               if (isSpectrumRunning)
@@ -223,71 +226,71 @@ void setup()
 
               request->send(200, "text/plain", isSpectrumRunning ? "Spectrum effect started" : "Spectrum effect stopped"); });
 
-	// Route to turn off the LEDs
-	server.on("/turnoffled", HTTP_GET, [](AsyncWebServerRequest *request)
-			  {
+  // Route to turn off the LEDs
+  server.on("/turnoffled", HTTP_GET, [](AsyncWebServerRequest *request)
+            {
               isSpectrumRunning = false; // Stop the spectrum effect
               turnOffLED();
               request->send(200, "text/plain", "LEDs turned off"); });
 
-	// Do not print "Connecting to WiFi..." if already connected
-	if (WiFi.status() == WL_CONNECTED)
-	{
-		Serial.println("Already connected to WiFi");
-	}
+  // Do not print "Connecting to WiFi..." if already connected
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    Serial.println("Already connected to WiFi");
+  }
 
-	// Start server
-	server.begin();
+  // Start server
+  server.begin();
 }
 
 void loop()
 {
-	// Your main loop code here
+  // Your main loop code here
 }
 
 void spectrumEffectTask(void *parameter)
 {
-	// Set the hue value (0-255) for the gradient
-	static uint8_t hue = 0;
+  // Set the hue value (0-255) for the gradient
+  static uint8_t hue = 0;
 
-	while (isSpectrumRunning)
-	{
-		for (int i = 0; i < NUM_LEDS; ++i)
-		{
-			// Set each LED to a color based on the current hue
-			leds[i] = CHSV(hue, 255, 255);
-			FastLED.show();
-			delay(30);
-			hue += 10; // Increment the hue for the next LED
-		}
+  while (isSpectrumRunning)
+  {
+    for (int i = 0; i < NUM_LEDS; ++i)
+    {
+      // Set each LED to a color based on the current hue
+      leds[i] = CHSV(hue, 255, 255);
+      FastLED.show();
+      delay(30);
+      hue += 10; // Increment the hue for the next LED
+    }
 
-		delay(100);
-		FastLED.show();
+    delay(100);
+    FastLED.show();
 
-		// starts cycling back in black
-		for (int i = NUM_LEDS - 1; i >= 0; --i)
-		{
-			leds[i] = CRGB::Black;
-			FastLED.show();
-			delay(30);
-		}
-	}
+    // starts cycling back in black
+    for (int i = NUM_LEDS - 1; i >= 0; --i)
+    {
+      leds[i] = CRGB::Black;
+      FastLED.show();
+      delay(30);
+    }
+  }
 
-	// Clear the LEDs when the spectrum effect stops
-	for (int i = 0; i < NUM_LEDS; ++i)
-	{
-		leds[i] = CRGB::Black;
-	}
-	FastLED.show();
+  // Clear the LEDs when the spectrum effect stops
+  for (int i = 0; i < NUM_LEDS; ++i)
+  {
+    leds[i] = CRGB::Black;
+  }
+  FastLED.show();
 
-	vTaskDelete(NULL); // Delete the task
+  vTaskDelete(NULL); // Delete the task
 }
 
 void turnOffLED()
 {
-	for (int i = 0; i < NUM_LEDS; ++i)
-	{
-		leds[i] = CRGB::Black;
-	}
-	FastLED.show();
+  for (int i = 0; i < NUM_LEDS; ++i)
+  {
+    leds[i] = CRGB::Black;
+  }
+  FastLED.show();
 }

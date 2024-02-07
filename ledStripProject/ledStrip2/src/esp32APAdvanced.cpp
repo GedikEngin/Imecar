@@ -7,8 +7,8 @@
 const char *ssid = "ESP32-Access-Point";
 const char *password = "123456789";
 
-const int buttonPin = 19; // GPIO pin where the button is connected
-const int switchPin = 23; // GPIO pin where the switch is connected
+const int buttonPin = 21; // GPIO pin where the button is connected
+const int switchPin = 26; // GPIO pin where the switch is connected
 
 bool switchState = false;
 bool buttonActive = false; // Flag to indicate if the button is active
