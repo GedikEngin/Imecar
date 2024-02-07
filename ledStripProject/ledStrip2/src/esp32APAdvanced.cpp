@@ -13,6 +13,8 @@ const int switchPin = 26; // GPIO pin where the switch is connected
 bool switchState = false;
 bool buttonActive = false; // Flag to indicate if the button is active
 
+bool ledGreen = false; // Flag to track LED color
+
 AsyncWebServer server(80);
 
 void handleButtonPress();
@@ -95,9 +97,27 @@ void handleButtonPress()
     buttonActive = true; // Set the flag when the button is pressed
     Serial.println("Button pressed, sending request to change LED color...");
 
-    // Send a request to ESP2 to change the LED color to blue
+    // Determine LED color based on current state
+    int hue, saturation, value;
+    if (ledGreen)
+    {
+        hue = 0; // Red
+        saturation = 255;
+        value = 255;
+        ledGreen = false;
+    }
+    else
+    {
+        hue = 85; // Green
+        saturation = 255;
+        value = 255;
+        ledGreen = true;
+    }
+
+    // Send a request to ESP2 to change the LED color
     HTTPClient http;
-    http.begin("http://192.168.4.2/setcolor?hue=170&saturation=255&value=255"); // Blue color in HSV
+    String url = "http://192.168.4.2/setcolor?hue=" + String(hue) + "&saturation=" + String(saturation) + "&value=" + String(value);
+    http.begin(url);
     int httpResponseCode = http.GET();
 
     if (httpResponseCode > 0)
