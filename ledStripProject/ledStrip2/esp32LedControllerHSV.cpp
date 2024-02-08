@@ -10,7 +10,7 @@ const char *ssid = "ESP32-Access-Point";
 const char *password = "123456789";
 
 #define DATA_PIN 3  // Set the pin connected to the LED
-#define NUM_LEDS 72 // Number of LEDs in your strip
+#define NUM_LEDS 42 // Number of LEDs in your strip
 
 CRGB leds[NUM_LEDS];
 
