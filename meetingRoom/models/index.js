@@ -34,8 +34,8 @@ const db = {};
 db.Sequelize = Sequelize; // the constructor that is being constructed
 db.sequelize = sequelize;
 
-db.meetings = require(`./meetingList.js`)(sequelize, DataTypes); // matches the sequelize new
-db.users = require(`./userData.js`)(sequelize, DataTypes); // for later if auth needed
+db.meetings = require(`./meetingModel.js`)(sequelize, DataTypes); // matches the sequelize new
+// db.users = require(`./usersModel.js`)(sequelize, DataTypes); // for later if auth needed, create
 
 db.sequelize
 	.sync({ force: false }) // prevents forced syncing, avoids syncing empty tables etc, create if not exist type of logic

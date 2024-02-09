@@ -60,7 +60,7 @@ const getMeetingsUserID = async (req, res) => {
 };
 
 // gets meetings based on roomID (param/url) and the specified time frame (body)
-const getMeetingsRoom = async (req, res) => {
+const getMeetingsRoomID = async (req, res) => {
 	roomID = req.params.roomID;
 
 	queryDateStart = req.body.queryDateStart;
@@ -68,17 +68,35 @@ const getMeetingsRoom = async (req, res) => {
 
 	const meetings = await Meeting.findAll({
 		where: {
-			meetingDate: { [Op.between]: [queryDateStart, queryDateEnd] },
 			roomID: roomID,
+			meetingDate: { [Op.between]: [queryDateStart, queryDateEnd] },
 		},
 	});
 	res.status(200).send(meetings);
 	console.log(meetings);
 };
 
+const updateMeeting = async (req, res) => {
+	let userID = req.params.userID;
+	let roomID = req.params.roomID;
+	let meetingDate = req.params.meetingDate;
+	let meetingStart = req.params.meetingDate;
+
+	const meeting = await Meeting.update(req.body, {
+		where: {
+			userID: userID,
+			roomID: roomID,
+			meetingDate: meetingDate,
+			meetingStart: meetingStart,
+			meetingEnd: meetingEnd,
+		},
+	});
+	res.status(200).send(meeting);
+};
+
 const deleteMeeting = async (req, res) => {
-	let userID = req.body.userID;
-	let roomID = req.body.roomID;
+	let userID = req.params.userID;
+	let roomID = req.params.roomID;
 	let meetingDate = req.body.meetingDate;
 	let meetingStart = req.body.meetingStart;
 
@@ -93,18 +111,12 @@ const deleteMeeting = async (req, res) => {
 	res.status(200).send(`meeting deleted`);
 };
 
-const updateMeeting = async (req, res) => {
-	let userID = req.params.userID;
-	let roomID = req.params.roomID;
-	let meetingDate = req.params.meetingDate;
-	let meetingStart = req.params.meetingDate;
-
-	const meeting = await Meeting.update(req.body, {
-		where: {
-			roomID: roomID,
-			meetingDate: meetingDate,
-			meetingStart: meetingStart,
-			meetingEnd: meetingEnd,
-		},
-	});
+module.exports = {
+	createMeeting,
+	getAllMeetings,
+	getAllMeetingsBetween,
+	getMeetingsUserID,
+	getMeetingsRoomID,
+	updateMeeting,
+	deleteMeeting,
 };
