@@ -1,19 +1,22 @@
 module.exports = (sequelize, DataTypes) => {
 	const Meeting = sequelize.define(`meeting`, {
-		title: {
-			type: DataTypes.STRING,
-			allowNull: false,
-		},
 		userID: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
+		roomID: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
+		meetingDate: {
+			type: DataTypes.DATEONLY,
+		},
 		meetingStart: {
-			type: DataTypes.DATE,
+			type: DataTypes.TIME,
 			allowNull: false,
 		},
 		meetingEnd: {
-			type: DataTypes.DATE,
+			type: DataTypes.TIME,
 			allowNull: false,
 		},
 	});

@@ -15,6 +15,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 		acquire: dbConfig.pool.acquire,
 		idle: dbConfig.pool.idle,
 	},
+	logging: true,
 });
 
 // authentication
@@ -33,8 +34,8 @@ const db = {};
 db.Sequelize = Sequelize; // the constructor that is being constructed
 db.sequelize = sequelize;
 
-db.products = require(`./meetingList.js`)(sequelize, DataTypes); // matches the sequelize new
-db.reviews = require(`./userData.js`)(sequelize, DataTypes); // for later if auth needed
+db.meetings = require(`./meetingList.js`)(sequelize, DataTypes); // matches the sequelize new
+db.users = require(`./userData.js`)(sequelize, DataTypes); // for later if auth needed
 
 db.sequelize
 	.sync({ force: false }) // prevents forced syncing, avoids syncing empty tables etc, create if not exist type of logic
