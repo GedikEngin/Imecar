@@ -7,7 +7,7 @@ var corOptions = {
 	origin: `https://localhost:8081`, // setting url, third party api origin target
 };
 
-// middlers
+// middler
 app.use(cors(corOptions)); // middler that is being used
 
 app.use(express.json()); // using express json as that is how we are getting all data from api and website

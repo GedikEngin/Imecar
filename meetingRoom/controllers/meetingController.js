@@ -46,7 +46,7 @@ const getAllMeetingsBetween = async (req, res) => {
 
 // gets all meetings based on userID in param (url) and specified dates (body)
 const getMeetingsUserID = async (req, res) => {
-	userID = req.params.userID;
+	userID = req.query.userID;
 
 	queryDateStart = req.body.queryDateStart;
 	queryDateEnd = req.body.queryDateEnd;
@@ -63,7 +63,7 @@ const getMeetingsUserID = async (req, res) => {
 
 // gets meetings based on roomID (param/url) and the specified time frame (body)
 const getMeetingsRoomID = async (req, res) => {
-	roomID = req.params.roomID;
+	roomID = req.query.roomID;
 
 	queryDateStart = req.body.queryDateStart;
 	queryDateEnd = req.body.queryDateEnd;
@@ -79,26 +79,42 @@ const getMeetingsRoomID = async (req, res) => {
 };
 
 const updateMeeting = async (req, res) => {
-	let userID = req.params.userID;
-	let roomID = req.params.roomID;
-	let meetingDate = req.body.meetingDate;
-	let meetingStart = req.body.meetingDate;
+	console.log("inside update meeting");
+	console.log(req.query);
+	console.log(req.body);
 
-	const meeting = await Meeting.update(req.body, {
-		where: {
-			userID: userID,
-			roomID: roomID,
-			meetingDate: meetingDate,
-			meetingStart: meetingStart,
-			meetingEnd: meetingEnd,
+	let userID = req.query.userID;
+	let roomID = req.query.roomID;
+
+	let meetingDate = req.body.meetingDate;
+	let meetingStart = req.body.meetingStart;
+
+	// let roomIDNew = req.body.roomIDNew;
+	// let meetingDateNew = req.body.meetingDateNew;
+	// let meetingStartNew = req.body.meetingStartNew;
+
+	const meeting = await Meeting.update(
+		{
+			roomID: req.body.roomIDNew,
+			meetingDate: req.body.meetingDateNew,
+			meetingStart: req.body.meetingStartNew,
+			meetingEnd: req.body.meetingEndNew,
 		},
-	});
-	res.status(200).send(meeting);
+		{
+			where: {
+				userID: userID,
+				roomID: roomID,
+				meetingDate: meetingDate,
+				meetingStart: meetingStart,
+			},
+		}
+	);
+	res.status(200).send("updated meeting");
 };
 
 const deleteMeeting = async (req, res) => {
-	let userID = req.params.userID;
-	let roomID = req.params.roomID;
+	let userID = req.query.userID;
+	let roomID = req.query.roomID;
 	let meetingDate = req.body.meetingDate;
 	let meetingStart = req.body.meetingStart;
 

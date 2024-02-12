@@ -5,11 +5,11 @@ router.post(`/createMeeting`, meetingController.createMeeting);
 
 router.get(`/getAllMeetings`, meetingController.getAllMeetings);
 router.get(`/getAllMeetingsBetween`, meetingController.getAllMeetingsBetween);
-router.get(`/getMeetingUserID/:userID`, meetingController.getMeetingsUserID);
-router.get(`/getMeetingRoomID/:roomID`, meetingController.getMeetingsRoomID);
+router.get(`/getMeetingUserID/`, meetingController.getMeetingsUserID);
+router.get(`/getMeetingRoomID/`, meetingController.getMeetingsRoomID);
 
-router.put(`/:userID&:roomID`, meetingController.updateMeeting);
+router.delete(`/deleteMeeting/`, meetingController.deleteMeeting);
 
-router.delete(`/:userID&:roomID`, meetingController.deleteMeeting);
+router.put(`/updateMeeting/`, meetingController.updateMeeting);
 
 module.exports = router;
