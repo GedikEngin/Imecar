@@ -81,8 +81,8 @@ const getMeetingsRoomID = async (req, res) => {
 const updateMeeting = async (req, res) => {
 	let userID = req.params.userID;
 	let roomID = req.params.roomID;
-	let meetingDate = req.params.meetingDate;
-	let meetingStart = req.params.meetingDate;
+	let meetingDate = req.body.meetingDate;
+	let meetingStart = req.body.meetingDate;
 
 	const meeting = await Meeting.update(req.body, {
 		where: {
