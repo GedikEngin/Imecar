@@ -1,5 +1,7 @@
 const { where } = require("sequelize");
 const db = require(`../models`); // importing models file
+// import { Op } from "@sequelize/core";
+const { Op } = require("sequelize"); // imports op for comparisons
 
 // creating main model
 
