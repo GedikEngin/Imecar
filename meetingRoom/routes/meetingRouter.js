@@ -5,8 +5,8 @@ router.post(`/createMeeting`, meetingController.createMeeting);
 
 router.get(`/getAllMeetings`, meetingController.getAllMeetings);
 router.get(`/getAllMeetingsBetween`, meetingController.getAllMeetingsBetween);
-router.get(`/getMeetingUserID`, meetingController.getMeetingsUserID);
-router.get(`/getMeetingRoomID`, meetingController.getMeetingsRoomID);
+router.get(`/getMeetingUserID/:userID`, meetingController.getMeetingsUserID);
+router.get(`/getMeetingRoomID/:roomID`, meetingController.getMeetingsRoomID);
 
 router.put(`/:userID&:roomID`, meetingController.updateMeeting);
 
