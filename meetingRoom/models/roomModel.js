@@ -2,7 +2,8 @@ module.exports = (sequelize, DataTypes) => {
 	const Meeting = sequelize.define(`room`, {
 		roomID: {
 			type: DataTypes.INTEGER,
-			allowNull: false,
+			primaryKey: true, // This specifies id as the primary key
+			autoIncrement: true, // Assuming it's an auto-incrementing field
 		},
 		minPermission: {
 			// access level
