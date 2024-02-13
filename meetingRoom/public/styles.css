@@ -20,6 +20,10 @@ body {
 	flex-wrap: wrap;
 }
 
+#calender:hover {
+	background-color: #0056b3;
+}
+
 .day {
 	flex-basis: calc(100% / 8);
 	border: 1px solid #ccc;
@@ -46,7 +50,12 @@ button {
 	transition: background-color 0.3s;
 }
 
+input[type="date"]:hover {
+	background-color: #0056b3;
+}
+
 input[type="date"]:focus {
+	background-color: #007bff;
 	outline: none;
 }
 
@@ -66,9 +75,9 @@ select {
 }
 
 select:hover {
-	background-color: #e0e0e0;
+	background-color: #0056b3;
 }
 
 select:focus {
-	background-color: #d3d3d3;
+	background-color: #0056b3;
 }

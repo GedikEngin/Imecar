@@ -1,10 +1,14 @@
 window.onload = function () {
-	// Set the start date input field to the current Monday
+	// Get the current date
 	const currentDate = new Date();
-	const dayOfWeek = currentDate.getDay() || 7; // Sunday is 0, so use 7 for Monday
+	// Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
+	const dayOfWeek = currentDate.getDay();
+	// Calculate the number of days to subtract to get to the previous Monday
+	const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+	// Create a new date object representing the start of the week
 	const startOfWeek = new Date(currentDate);
-	startOfWeek.setDate(currentDate.getDate() - dayOfWeek + 1);
-
+	startOfWeek.setDate(currentDate.getDate() - daysToMonday + 1);
+	// Set the start date input field to the nearest past Monday
 	document.getElementById("startDate").value = startOfWeek
 		.toISOString()
 		.split("T")[0];
