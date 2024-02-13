@@ -1,3 +1,18 @@
+window.onload = function () {
+	// Set the start date input field to the current Monday
+	const currentDate = new Date();
+	const dayOfWeek = currentDate.getDay() || 7; // Sunday is 0, so use 7 for Monday
+	const startOfWeek = new Date(currentDate);
+	startOfWeek.setDate(currentDate.getDate() - dayOfWeek + 1);
+
+	document.getElementById("startDate").value = startOfWeek
+		.toISOString()
+		.split("T")[0];
+
+	// Load the calendar with the current week's meetings
+	loadCalendar();
+};
+
 async function loadCalendar() {
 	const roomID = document.getElementById("roomSelect").value;
 	const startDate = document.getElementById("startDate").value;
@@ -84,3 +99,25 @@ function addDays(dateString, days) {
 	date.setDate(date.getDate() + days);
 	return date.toISOString().split("T")[0];
 }
+
+// Function to validate the selected date and allow only Mondays
+function validateDate() {
+	const selectedDate = new Date(document.getElementById("startDate").value);
+	const dayOfWeek = selectedDate.getDay();
+
+	if (dayOfWeek !== 1) {
+		// 1 represents Monday
+		alert("Please select a Monday.");
+		// Reset the input field value to the previous Monday
+		const currentDate = new Date();
+		const dayDiff = (currentDate.getDay() - 1 + 7) % 7;
+		const lastMonday = new Date(currentDate);
+		lastMonday.setDate(currentDate.getDate() - dayDiff);
+		document.getElementById("startDate").value = lastMonday
+			.toISOString()
+			.split("T")[0];
+	}
+}
+
+// Add event listener to the start date input field for validation
+document.getElementById("startDate").addEventListener("change", validateDate);
