@@ -1,3 +1,6 @@
+const roomModel = require("./roomModel");
+const userModel = require("./userModel");
+
 module.exports = (sequelize, DataTypes) => {
 	const Meeting = sequelize.define(`meeting`, {
 		meetingID: {
@@ -15,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		meetingDate: {
 			type: DataTypes.DATEONLY,
+			allowNull: false,
 		},
 		meetingStart: {
 			type: DataTypes.TIME,

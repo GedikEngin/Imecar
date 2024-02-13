@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const Meeting = sequelize.define(`room`, {
+	const Room = sequelize.define(`room`, {
 		roomID: {
 			type: DataTypes.INTEGER,
 			primaryKey: true, // This specifies id as the primary key
@@ -16,5 +16,5 @@ module.exports = (sequelize, DataTypes) => {
 		},
 	});
 
-	return Meeting;
+	return Room;
 };

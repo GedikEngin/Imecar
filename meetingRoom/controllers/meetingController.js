@@ -7,6 +7,7 @@ const { Op } = require("sequelize"); // imports op for comparisons
 
 const Meeting = db.meetings;
 const User = db.users;
+const Room = db.rooms;
 
 // creates a meeting
 const createMeeting = async (req, res) => {
@@ -106,10 +107,6 @@ const updateMeeting = async (req, res) => {
 	let meetingDate = req.body.meetingDate;
 	let meetingStart = req.body.meetingStart;
 
-	// let roomIDNew = req.body.roomIDNew;
-	// let meetingDateNew = req.body.meetingDateNew;
-	// let meetingStartNew = req.body.meetingStartNew;
-
 	const meeting = await Meeting.update(
 		{
 			roomID: req.body.roomIDNew,
@@ -126,7 +123,7 @@ const updateMeeting = async (req, res) => {
 			},
 		}
 	);
-	res.status(200).send("updated meeting");
+	res.status(200).send("updated meeting", meeting);
 };
 
 const deleteMeeting = async (req, res) => {
