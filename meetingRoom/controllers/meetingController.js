@@ -101,13 +101,9 @@ const updateMeeting = async (req, res) => {
 	console.log(req.query);
 	console.log(req.body);
 
-	let userID = req.query.userID;
-	let roomID = req.query.roomID;
+	let meetingID = req.query.meetingID;
 
-	let meetingDate = req.body.meetingDate;
-	let meetingStart = req.body.meetingStart;
-
-	const meeting = await Meeting.update(
+	await Meeting.update(
 		{
 			roomID: req.body.roomIDNew,
 			meetingDate: req.body.meetingDateNew,
@@ -116,28 +112,19 @@ const updateMeeting = async (req, res) => {
 		},
 		{
 			where: {
-				userID: userID,
-				roomID: roomID,
-				meetingDate: meetingDate,
-				meetingStart: meetingStart,
+				meetingID: meetingID,
 			},
 		}
 	);
-	res.status(200).send("updated meeting", meeting);
+	res.status(200).send("updated meeting");
 };
 
 const deleteMeeting = async (req, res) => {
-	let userID = req.query.userID;
-	let roomID = req.query.roomID;
-	let meetingDate = req.body.meetingDate;
-	let meetingStart = req.body.meetingStart;
+	let meetingID = req.query.meetingID;
 
 	await Meeting.destroy({
 		where: {
-			userID: userID,
-			roomID: roomID,
-			meetingDate: meetingDate,
-			meetingStart: meetingStart,
+			meetingID: meetingID,
 		},
 	});
 	res.status(200).send(`meeting deleted`);
