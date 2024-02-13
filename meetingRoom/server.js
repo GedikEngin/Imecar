@@ -1,5 +1,6 @@
 const express = require(`express`); // importing express
 const cors = require(`cors`); // importing cors
+const path = require("path");
 
 const app = express(); // instantiating express app
 
@@ -13,6 +14,14 @@ app.use(cors(corOptions)); // middler that is being used
 app.use(express.json()); // using express json as that is how we are getting all data from api and website
 
 app.use(express.urlencoded({ extended: true })); // returns middler that parses url encoded bodies and only looks at the requests that match the content type header
+
+app.use(express.static(path.join(__dirname, "public"))); // Serve static files from the public directory middler for the site
+
+// error catching middler
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500).send("Something went wrong!");
+});
 
 // routers
 

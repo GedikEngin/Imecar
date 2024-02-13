@@ -7,6 +7,7 @@ router.get(`/getAllMeetings`, meetingController.getAllMeetings);
 router.get(`/getAllMeetingsBetween`, meetingController.getAllMeetingsBetween);
 router.get(`/getMeetingUserID/`, meetingController.getMeetingsUserID);
 router.get(`/getMeetingRoomID/`, meetingController.getMeetingsRoomID);
+router.post(`/getMeetingRoomIDPost/`, meetingController.getMeetingsRoomIDPost); // for calender
 
 router.delete(`/deleteMeeting/`, meetingController.deleteMeeting);
 

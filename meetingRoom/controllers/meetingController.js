@@ -78,6 +78,23 @@ const getMeetingsRoomID = async (req, res) => {
 	console.log(meetings);
 };
 
+// gets meetings based on roomID (param/url) and the specified time frame (body)
+const getMeetingsRoomIDPost = async (req, res) => {
+	roomID = req.query.roomID;
+
+	queryDateStart = req.body.queryDateStart;
+	queryDateEnd = req.body.queryDateEnd;
+
+	const meetings = await Meeting.findAll({
+		where: {
+			roomID: roomID,
+			meetingDate: { [Op.between]: [queryDateStart, queryDateEnd] },
+		},
+	});
+	res.status(200).send(meetings);
+	console.log(meetings);
+};
+
 const updateMeeting = async (req, res) => {
 	console.log("inside update meeting");
 	console.log(req.query);
@@ -137,4 +154,5 @@ module.exports = {
 	getMeetingsRoomID,
 	updateMeeting,
 	deleteMeeting,
+	getMeetingsRoomIDPost,
 };
