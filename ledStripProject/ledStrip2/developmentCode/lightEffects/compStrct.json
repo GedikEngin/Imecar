@@ -20,8 +20,8 @@
 		{
 			"type": "wokwi-vcc",
 			"id": "vcc1",
-			"top": -37.64,
-			"left": 96,
+			"top": -95.24,
+			"left": 153.6,
 			"attrs": {}
 		},
 		{
@@ -44,6 +44,13 @@
 			"top": 111.8,
 			"left": 201.6,
 			"attrs": { "color": "green", "key": "2", "bounce": "1" }
+		},
+		{
+			"type": "wokwi-neopixel-canvas",
+			"id": "neopixels1",
+			"top": -243.8,
+			"left": -394.7,
+			"attrs": { "rows": "1", "cols": "50", "matrixBrightness": "0" }
 		}
 	],
 	"connections": [
@@ -60,7 +67,10 @@
 		["neopixels:VSS", "esp:GND.2", "black", ["v0"]],
 		["neopixels:DIN", "esp:23", "green", ["v182.4", "h-5.4"]],
 		["btn3:1.l", "esp:GND.3", "black", ["h0", "v-28.8", "h-278.4", "v28.8"]],
-		["btn2:1.r", "esp:GND.3", "black", ["v-28.8", "h-239.8", "v28.8"]]
+		["btn2:1.r", "esp:GND.3", "black", ["v-28.8", "h-239.8", "v28.8"]],
+		["neopixels2:VSS", "neopixels1:VSS", "black", ["v0"]],
+		["neopixels2:DIN", "neopixels1:DIN", "green", ["v0"]],
+		["neopixels2:VDD", "neopixels1:VDD", "red", ["v0"]]
 	],
 	"dependencies": {}
 }
