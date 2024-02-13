@@ -35,9 +35,9 @@ db.Sequelize = Sequelize; // the constructor that is being constructed
 db.sequelize = sequelize;
 
 db.meetings = require(`./meetingModel.js`)(sequelize, DataTypes); // matches the sequelize new
-db.meetings = require(`./newStructure/meetingModel.js`)(sequelize, DataTypes); // brings in meeting model new
-db.meetings = require(`./newStructure/roomModel.js`)(sequelize, DataTypes); // new room model
-db.meetings = require(`./newStructure/userModel.js`)(sequelize, DataTypes); // new user model
+db.meetings = require(`./meetingModel.js`)(sequelize, DataTypes); // brings in meeting model new
+db.meetings = require(`./roomModel.js`)(sequelize, DataTypes); // new room model
+db.meetings = require(`./userModel.js`)(sequelize, DataTypes); // new user model
 
 db.sequelize
 	.sync({ force: false }) // prevents forced syncing, avoids syncing empty tables etc, create if not exist type of logic
