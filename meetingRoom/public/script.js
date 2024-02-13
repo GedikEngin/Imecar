@@ -52,9 +52,6 @@ async function loadCalendar() {
 		meetings.forEach((meeting) => {
 			const meetingDate = new Date(meeting.meetingDate);
 			if (meetingDate.toDateString() === currentDate.toDateString()) {
-				const meetingStart = new Date(`2000-01-01T${meeting.meetingStart}`);
-				const meetingEnd = new Date(`2000-01-01T${meeting.meetingEnd}`);
-
 				const meetingDiv = document.createElement("div");
 				meetingDiv.classList.add("meeting");
 				meetingDiv.textContent = `${meeting.meetingStart} - ${meeting.meetingEnd}`;
