@@ -64,7 +64,21 @@ async function loadCalendar() {
 	}
 }
 
-// Function to add days to a date to auto calc end date
+function prevWeek() {
+	const startDate = document.getElementById("startDate").value;
+	const newStartDate = addDays(startDate, -7); // Subtract 7 days to go to previous week
+	document.getElementById("startDate").value = newStartDate;
+	loadCalendar();
+}
+
+function nextWeek() {
+	const startDate = document.getElementById("startDate").value;
+	const newStartDate = addDays(startDate, 7); // Add 7 days to go to next week
+	document.getElementById("startDate").value = newStartDate;
+	loadCalendar();
+}
+
+// Function to add days to a date
 function addDays(dateString, days) {
 	const date = new Date(dateString);
 	date.setDate(date.getDate() + days);
