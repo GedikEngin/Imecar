@@ -1,3 +1,5 @@
+// calendarScript.js
+
 window.onload = function () {
 	// Check if the user is authenticated
 	const isAuthenticated = checkAuthentication();
@@ -5,6 +7,7 @@ window.onload = function () {
 	// If not authenticated, disable calendar navigation and room select
 	if (!isAuthenticated) {
 		disableCalendarControls();
+		window.location.href = "index.html";
 	} else {
 		// Get the current date
 		const currentDate = new Date();
@@ -24,6 +27,7 @@ window.onload = function () {
 		loadCalendar();
 	}
 };
+
 async function loadCalendar() {
 	const isAuthenticated = checkAuthentication();
 	if (!isAuthenticated) {
@@ -33,7 +37,6 @@ async function loadCalendar() {
 	const startDate = document.getElementById("startDate").value;
 	// Calculate the end date by adding 6 days to the start date
 	const endDate = addDays(startDate, 6);
-
 	const response = await fetch(
 		`http://localhost:8080/api/meetings/getMeetingRoomIDPost?roomID=${roomID}`,
 		{
@@ -52,7 +55,6 @@ async function loadCalendar() {
 		console.error("Failed to fetch meetings:", response.statusText);
 		return;
 	}
-
 	const meetings = await response.json();
 
 	const calendar = document.getElementById("calendar");
@@ -91,13 +93,6 @@ async function loadCalendar() {
 
 		calendar.appendChild(dayDiv);
 	}
-}
-
-function checkAuthentication() {
-	// You can implement your authentication logic here.
-	// For example, you can check if there's a valid session or token.
-	// For simplicity, I'll just check if the user is logged in by checking a flag.
-	return localStorage.getItem("isLoggedIn") === "true"; // Assuming you set this flag upon successful login
 }
 
 // Function to disable calendar navigation and room select if user is not authenticated
@@ -149,3 +144,11 @@ function validateDate() {
 
 // Add event listener to the start date input field for validation
 document.getElementById("startDate").addEventListener("change", validateDate);
+
+// Function to check if the user is authenticated
+function checkAuthentication() {
+	// You can implement your authentication logic here.
+	// For example, you can check if there's a valid session or token.
+	// For simplicity, I'll just check if the user is logged in by checking a flag.
+	return localStorage.getItem("isLoggedIn") === "true"; // Assuming you set this flag upon successful login
+}
