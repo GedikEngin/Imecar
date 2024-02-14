@@ -125,27 +125,3 @@ function validateDate() {
 
 // Add event listener to the start date input field for validation
 document.getElementById("startDate").addEventListener("change", validateDate);
-
-// handling submission for jwt token
-
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-	e.preventDefault();
-
-	const username = document.getElementById("username").value;
-	const password = document.getElementById("password").value;
-
-	try {
-		const response = await fetch("/login", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ username, password }),
-		});
-
-		const data = await response.json();
-		console.log(data.token); // Use the token for further requests
-	} catch (error) {
-		console.error("Login error:", error);
-	}
-});
