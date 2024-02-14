@@ -1,6 +1,7 @@
 const express = require(`express`); // importing express
 const cors = require(`cors`); // importing cors
 const path = require("path");
+const dotenv = require("dotenv").config(); // needed to be able to access .env file containing token key
 
 const app = express(); // instantiating express app
 
@@ -42,4 +43,5 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
 	// returns which port the server is running on
 	console.log(`server is running on port ${PORT}`);
+	// console.log(process.env.TOKEN_SECRET); // to print TOKEN_KEY if needed on start
 });
