@@ -31,7 +31,6 @@ async function loadCalendar() {
 	}
 	const roomID = document.getElementById("roomSelect").value;
 	const startDate = document.getElementById("startDate").value;
-
 	// Calculate the end date by adding 6 days to the start date
 	const endDate = addDays(startDate, 6);
 

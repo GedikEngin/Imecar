@@ -2,7 +2,7 @@ const { where } = require("sequelize");
 const db = require(`../models`); // importing models file
 // import { Op } from "@sequelize/core";
 const { Op } = require("sequelize"); // imports op for comparisons
-const { verifyToken } = require("../authorization/auth");
+// const auth = require("../authorization/auth"); // imports module
 
 // creating main model
 
