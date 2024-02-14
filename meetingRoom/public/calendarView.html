@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Meeting Room Calendar</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div id="calendar-header">
+				<h2>Meeting Room Calendar</h2>
+				<div id="calendar-nav">
+					<button id="prev-week" onclick="prevWeek()">Previous Week</button>
+					<button id="next-week" onclick="nextWeek()">Next Week</button>
+					<select id="roomSelect">
+						<option value="1">Room 1</option>
+						<option value="2">Room 2</option>
+						<option value="3">Room 3</option>
+						<option value="4">Room 4</option>
+						<option value="5">Room 5</option>
+						<option value="6">Room 6</option>
+						<option value="7">Room 7</option>
+						<option value="8">Room 8</option>
+						<option value="9">Room 9</option>
+						<option value="10">Room 10</option>
+					</select>
+					<input type="date" id="startDate" />
+					<button onclick="loadCalendar()">Load Calendar</button>
+				</div>
+			</div>
+			<div id="calendar"></div>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
+</html>
