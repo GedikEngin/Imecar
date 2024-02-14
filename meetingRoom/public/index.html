@@ -31,6 +31,9 @@
 
 					// Check if the username and password are correct (replace with your authentication logic)
 					if (userName === "admin" && userPass === "password") {
+						// Set a flag indicating the user is logged in
+						localStorage.setItem("isLoggedIn", "true");
+
 						// Redirect the user to calendarView.html
 						window.location.href = "calendarView.html";
 					} else {
@@ -38,6 +41,15 @@
 						alert("Incorrect username or password. Please try again.");
 					}
 				});
+
+			// Check if the user is already authenticated
+			window.onload = function () {
+				const isAuthenticated = localStorage.getItem("isLoggedIn") === "true";
+				if (isAuthenticated) {
+					// Redirect the user to calendarView.html if already authenticated
+					window.location.href = "calendarView.html";
+				}
+			};
 		</script>
 	</body>
 </html>

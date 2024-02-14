@@ -1,23 +1,34 @@
 window.onload = function () {
-	// Get the current date
-	const currentDate = new Date();
-	// Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
-	const dayOfWeek = currentDate.getDay();
-	// Calculate the number of days to subtract to get to the previous Monday
-	const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-	// Create a new date object representing the start of the week
-	const startOfWeek = new Date(currentDate);
-	startOfWeek.setDate(currentDate.getDate() - daysToMonday);
-	// Set the start date input field to the nearest past Monday
-	document.getElementById("startDate").value = startOfWeek
-		.toISOString()
-		.split("T")[0];
+	// Check if the user is authenticated
+	const isAuthenticated = checkAuthentication();
 
-	// Load the calendar with the current week's meetings
-	loadCalendar();
+	// If not authenticated, disable calendar navigation and room select
+	if (!isAuthenticated) {
+		disableCalendarControls();
+	} else {
+		// Get the current date
+		const currentDate = new Date();
+		// Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
+		const dayOfWeek = currentDate.getDay();
+		// Calculate the number of days to subtract to get to the previous Monday
+		const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+		// Create a new date object representing the start of the week
+		const startOfWeek = new Date(currentDate);
+		startOfWeek.setDate(currentDate.getDate() - daysToMonday);
+		// Set the start date input field to the nearest past Monday
+		document.getElementById("startDate").value = startOfWeek
+			.toISOString()
+			.split("T")[0];
+
+		// Load the calendar with the current week's meetings
+		loadCalendar();
+	}
 };
-
 async function loadCalendar() {
+	const isAuthenticated = checkAuthentication();
+	if (!isAuthenticated) {
+		return;
+	}
 	const roomID = document.getElementById("roomSelect").value;
 	const startDate = document.getElementById("startDate").value;
 
@@ -81,6 +92,20 @@ async function loadCalendar() {
 
 		calendar.appendChild(dayDiv);
 	}
+}
+
+function checkAuthentication() {
+	// You can implement your authentication logic here.
+	// For example, you can check if there's a valid session or token.
+	// For simplicity, I'll just check if the user is logged in by checking a flag.
+	return localStorage.getItem("isLoggedIn") === "true"; // Assuming you set this flag upon successful login
+}
+
+// Function to disable calendar navigation and room select if user is not authenticated
+function disableCalendarControls() {
+	document.getElementById("prev-week").disabled = true;
+	document.getElementById("next-week").disabled = true;
+	document.getElementById("roomSelect").disabled = true;
 }
 
 function prevWeek() {

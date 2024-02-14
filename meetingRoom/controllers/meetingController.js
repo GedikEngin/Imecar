@@ -2,6 +2,7 @@ const { where } = require("sequelize");
 const db = require(`../models`); // importing models file
 // import { Op } from "@sequelize/core";
 const { Op } = require("sequelize"); // imports op for comparisons
+const { verifyToken } = require("../authorization/auth");
 
 // creating main model
 
@@ -52,7 +53,7 @@ const createMeeting = async (req, res) => {
 	}
 };
 
-// gets al meetings in db
+// gets all meetings in db
 const getAllMeetings = async (req, res) => {
 	let meetings = await Meeting.findAll({});
 	res.status(200).send(meetings);
