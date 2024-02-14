@@ -7,7 +7,7 @@ window.onload = function () {
 	const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
 	// Create a new date object representing the start of the week
 	const startOfWeek = new Date(currentDate);
-	startOfWeek.setDate(currentDate.getDate() - daysToMonday + 1);
+	startOfWeek.setDate(currentDate.getDate() - daysToMonday);
 	// Set the start date input field to the nearest past Monday
 	document.getElementById("startDate").value = startOfWeek
 		.toISOString()
