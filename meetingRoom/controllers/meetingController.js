@@ -6,21 +6,50 @@ const { Op } = require("sequelize"); // imports op for comparisons
 // creating main model
 
 const Meeting = db.meetings;
-const User = db.users;
-const Room = db.rooms;
 
 // creates a meeting
 const createMeeting = async (req, res) => {
-	let info = {
-		userID: req.body.userID,
-		roomID: req.body.roomID,
-		meetingDate: req.body.meetingDate,
-		meetingStart: req.body.meetingStart,
-		meetingEnd: req.body.meetingEnd,
-	};
-	const meeting = await Meeting.create(info);
-	res.status(200).send(meeting);
-	console.log(meeting);
+	try {
+		let info = {
+			userID: req.body.userID,
+			roomID: req.body.roomID,
+			meetingDate: req.body.meetingDate,
+			meetingStart: req.body.meetingStart,
+			meetingEnd: req.body.meetingEnd,
+		};
+
+		// Check for overlapping meetings
+		const overlappingMeeting = await Meeting.findOne({
+			where: {
+				roomID: info.roomID,
+				meetingDate: info.meetingDate,
+				[Op.or]: [
+					{
+						meetingStart: {
+							[Op.between]: [info.meetingStart, info.meetingEnd],
+						},
+					},
+					{
+						meetingEnd: {
+							[Op.between]: [info.meetingStart, info.meetingEnd],
+						},
+					},
+				],
+			},
+		});
+
+		if (overlappingMeeting) {
+			return res.status(400).send("Meeting overlaps with an existing meeting.");
+		}
+
+		// If no overlapping meeting found, create the new meeting
+		const meeting = await Meeting.create(info);
+		res.status(200).send(meeting);
+		console.log(meeting);
+	} catch (error) {
+		console.error("Error creating meeting:", error);
+		res.status(500).send("Error creating meeting.");
+	}
 };
 
 // gets al meetings in db
@@ -97,26 +126,66 @@ const getMeetingsRoomIDPost = async (req, res) => {
 };
 
 const updateMeeting = async (req, res) => {
-	console.log("inside update meeting");
-	console.log(req.query);
-	console.log(req.body);
+	try {
+		console.log("inside update meeting");
+		console.log(req.query);
+		console.log(req.body);
 
-	let meetingID = req.query.meetingID;
+		let meetingID = req.query.meetingID;
 
-	await Meeting.update(
-		{
-			roomID: req.body.roomIDNew,
-			meetingDate: req.body.meetingDateNew,
-			meetingStart: req.body.meetingStartNew,
-			meetingEnd: req.body.meetingEndNew,
-		},
-		{
+		// Get the existing meeting details
+		const existingMeeting = await Meeting.findByPk(meetingID);
+
+		// Check for overlapping meetings with the updated meeting
+		const overlappingMeeting = await Meeting.findOne({
 			where: {
-				meetingID: meetingID,
+				roomID: existingMeeting.roomID,
+				meetingDate: req.body.meetingDateNew,
+				[Op.or]: [
+					{
+						meetingStart: {
+							[Op.between]: [req.body.meetingStartNew, req.body.meetingEndNew],
+						},
+					},
+					{
+						meetingEnd: {
+							[Op.between]: [req.body.meetingStartNew, req.body.meetingEndNew],
+						},
+					},
+				],
+				meetingID: {
+					[Op.ne]: meetingID, // Exclude the current meeting from the check
+				},
 			},
+		});
+
+		if (overlappingMeeting && overlappingMeeting.meetingID != meetingID) {
+			return res
+				.status(400)
+				.send(
+					"Cannot update meeting. It overlaps with an existing meeting in the same room."
+				);
 		}
-	);
-	res.status(200).send("updated meeting");
+
+		// If no overlapping meeting found or it's the same meeting being updated, proceed with the update
+		await Meeting.update(
+			{
+				roomID: req.body.roomIDNew,
+				meetingDate: req.body.meetingDateNew,
+				meetingStart: req.body.meetingStartNew,
+				meetingEnd: req.body.meetingEndNew,
+			},
+			{
+				where: {
+					meetingID: meetingID,
+				},
+			}
+		);
+		res.status(200).send("Updated meeting");
+	} catch (error) {
+		console.error("Error updating meeting:", error);
+		res.status(500).send("Error updating meeting.");
+	}
 };
 
 const deleteMeeting = async (req, res) => {
