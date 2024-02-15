@@ -1,7 +1,7 @@
 const express = require(`express`); // importing express
 const cors = require(`cors`); // importing cors
 const path = require("path");
-const bcrypt = require(`bcrypt`); // importing bcrypt
+require(`bcrypt`); // importing bcrypt
 // const dotenv = require("dotenv").config(); // needed to be able to access .env file containing token key
 // ^^ not needed, use process.env.TOKEN_SECRET instead to refer to it
 
@@ -27,6 +27,12 @@ app.use((err, req, res, next) => {
 });
 
 // routers
+app.use((req, res, next) => {
+	console.log(`potential middleware`);
+
+	// verif goes here in theory -- use middleware folder
+	next();
+});
 
 const router = require(`./routes/meetingRouter.js`); // imports router
 app.use(`/api/meetings`, router);
