@@ -1,7 +1,9 @@
 const express = require(`express`); // importing express
 const cors = require(`cors`); // importing cors
 const path = require("path");
-const dotenv = require("dotenv").config(); // needed to be able to access .env file containing token key
+const bcrypt = require(`bcrypt`); // importing bcrypt
+// const dotenv = require("dotenv").config(); // needed to be able to access .env file containing token key
+// ^^ not needed, use process.env.TOKEN_SECRET instead to refer to it
 
 const app = express(); // instantiating express app
 
@@ -29,6 +31,9 @@ app.use((err, req, res, next) => {
 const router = require(`./routes/meetingRouter.js`); // imports router
 app.use(`/api/meetings`, router);
 
+const routerUser = require(`./routes/userRouter.js`);
+app.use(`/api/users`, routerUser);
+
 // testing api
 
 app.get("/", (req, res) => {
@@ -43,5 +48,4 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
 	// returns which port the server is running on
 	console.log(`server is running on port ${PORT}`);
-	// console.log(process.env.TOKEN_SECRET); // to print TOKEN_KEY if needed on start
 });

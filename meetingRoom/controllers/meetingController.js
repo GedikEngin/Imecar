@@ -1,8 +1,6 @@
-const { where } = require("sequelize");
+require("sequelize");
 const db = require(`../models`); // importing models file
-// import { Op } from "@sequelize/core";
 const { Op } = require("sequelize"); // imports op for comparisons
-// const auth = require("../authorization/auth"); // imports module
 
 // creating main model
 
@@ -46,7 +44,6 @@ const createMeeting = async (req, res) => {
 		// If no overlapping meeting found, create the new meeting
 		const meeting = await Meeting.create(info);
 		res.status(200).send(meeting);
-		console.log(meeting);
 	} catch (error) {
 		console.error("Error creating meeting:", error);
 		res.status(500).send("Error creating meeting.");
@@ -57,7 +54,6 @@ const createMeeting = async (req, res) => {
 const getAllMeetings = async (req, res) => {
 	let meetings = await Meeting.findAll({});
 	res.status(200).send(meetings);
-	console.log(meetings);
 };
 
 // gets all meetings in-between two dates, if you want to query one day
@@ -72,7 +68,6 @@ const getAllMeetingsBetween = async (req, res) => {
 		},
 	});
 	res.status(200).send(meetings);
-	console.log(meetings);
 };
 
 // gets all meetings based on userID in param (url) and specified dates (body)
@@ -89,7 +84,6 @@ const getMeetingsUserID = async (req, res) => {
 		},
 	});
 	res.status(200).send(meetings);
-	console.log(meetings);
 };
 
 // gets meetings based on roomID (param/url) and the specified time frame (body)
@@ -106,7 +100,6 @@ const getMeetingsRoomID = async (req, res) => {
 		},
 	});
 	res.status(200).send(meetings);
-	console.log(meetings);
 };
 
 // gets meetings based on roomID (param/url) and the specified time frame (body)
@@ -123,15 +116,10 @@ const getMeetingsRoomIDPost = async (req, res) => {
 		},
 	});
 	res.status(200).send(meetings);
-	console.log(meetings);
 };
 
 const updateMeeting = async (req, res) => {
 	try {
-		console.log("inside update meeting");
-		console.log(req.query);
-		console.log(req.body);
-
 		let meetingID = req.query.meetingID;
 
 		// Get the existing meeting details

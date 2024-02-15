@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
-		userName: {
+		username: {
 			type: DataTypes.TEXT,
 			allowNull: false,
 		},
-		userPass: {
+		password: {
 			type: DataTypes.TEXT,
 			allowNull: false,
 		},

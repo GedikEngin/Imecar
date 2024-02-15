@@ -1,6 +1,3 @@
-const roomModel = require("./roomModel");
-const userModel = require("./userModel");
-
 module.exports = (sequelize, DataTypes) => {
 	const Meeting = sequelize.define(`meeting`, {
 		meetingID: {

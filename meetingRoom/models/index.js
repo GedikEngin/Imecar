@@ -22,7 +22,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 sequelize
 	.authenticate()
 	.then(() => {
-		console.log(`connected..`);
+		console.log(`connected`);
 	})
 
 	.catch((err) => {

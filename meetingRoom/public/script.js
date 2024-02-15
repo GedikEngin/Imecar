@@ -1,36 +1,27 @@
 // calendarScript.js
 
 window.onload = function () {
-	// Check if the user is authenticated
-	const isAuthenticated = checkAuthentication();
-
-	// If not authenticated, disable calendar navigation and room select
-	if (!isAuthenticated) {
-		disableCalendarControls();
-		window.location.href = "index.html";
-	} else {
-		// Get the current date
+	if (getTokenStateFromCookie() === "true") {
+		console.log("test");
 		const currentDate = new Date();
-		// Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
 		const dayOfWeek = currentDate.getDay();
-		// Calculate the number of days to subtract to get to the previous Monday
 		const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-		// Create a new date object representing the start of the week
 		const startOfWeek = new Date(currentDate);
 		startOfWeek.setDate(currentDate.getDate() - daysToMonday);
-		// Set the start date input field to the nearest past Monday
 		document.getElementById("startDate").value = startOfWeek
 			.toISOString()
 			.split("T")[0];
 
-		// Load the calendar with the current week's meetings
 		loadCalendar();
+	} else {
+		console.log("yeet");
+		disableCalendarControls();
+		window.location.href = "index.html";
 	}
 };
 
 async function loadCalendar() {
-	const isAuthenticated = checkAuthentication();
-	if (!isAuthenticated) {
+	if (getTokenStateFromCookie() === "false") {
 		return;
 	}
 	const roomID = document.getElementById("roomSelect").value;
@@ -145,10 +136,14 @@ function validateDate() {
 // Add event listener to the start date input field for validation
 document.getElementById("startDate").addEventListener("change", validateDate);
 
-// Function to check if the user is authenticated
-function checkAuthentication() {
-	// You can implement your authentication logic here.
-	// For example, you can check if there's a valid session or token.
-	// For simplicity, I'll just check if the user is logged in by checking a flag.
-	return localStorage.getItem("isLoggedIn") === "true"; // Assuming you set this flag upon successful login
+// Function to extract token and check existence from the cookie
+function getTokenStateFromCookie() {
+	const cookies = document.cookie.split(";").map((cookie) => cookie.trim());
+	for (const cookie of cookies) {
+		const [name, value] = cookie.split("=");
+		if (name.trim() === "token") {
+			return "true";
+		}
+	}
+	return "false"; // Return null if token cookie is not found
 }

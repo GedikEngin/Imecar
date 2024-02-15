@@ -1,34 +1,53 @@
 // loginScript.js
 
-// Add event listener to the form for submission
+async function loginUser(credentials) {
+	try {
+		const response = await fetch("http://localhost:8080/api/users/login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(credentials),
+		});
+
+		if (!response.ok) {
+			throw new Error("Network error 1");
+		}
+
+		const token = await response.text();
+
+		return token;
+	} catch (error) {
+		console.error("Error:", error.message);
+		return null;
+	}
+}
+
 document
-	.getElementById("loginForm")
-	.addEventListener("submit", function (event) {
-		// Prevent the default form submission behavior
-		event.preventDefault();
+	.getElementById("myButton")
+	.addEventListener("click", async function (e) {
+		e.preventDefault();
+		const username = document.getElementById("username").value;
+		const password = document.getElementById("password").value;
+		if (!username || !password) {
+			console.log("Username or password is missing. ");
+			console.log("error login details missing");
+			return;
+		}
 
-		// Get the username and password from the form
-		const userName = document.getElementById("username").value;
-		const userPass = document.getElementById("password").value;
-
-		// Check if the username and password are correct (replace with your authentication logic)
-		if (userName === "admin" && userPass === "password") {
-			// Set a flag indicating the user is logged in
-			localStorage.setItem("isLoggedIn", "true");
-
-			// Redirect the user to calendarView.html
-			window.location.href = "calendarView.html";
-		} else {
-			// If incorrect, show an error message
-			alert("Incorrect username or password. Please try again.");
+		try {
+			const token = await loginUser({
+				username,
+				password,
+			});
+			if (token) {
+				window.location.href = "calendarView.html";
+			} else {
+				console.log("username/pass incorrect");
+			}
+		} catch (error) {
+			console.log("error logging in");
 		}
 	});
-
-// Check if the user is already authenticated
-window.onload = function () {
-	const isAuthenticated = localStorage.getItem("isLoggedIn") === "true";
-	if (isAuthenticated) {
-		// Redirect the user to calendarView.html if already authenticated
-		window.location.href = "calendarView.html";
-	}
-};
+//
+//
