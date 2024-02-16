@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true, // This specifies id as the primary key
 			autoIncrement: true, // Assuming it's an auto-incrementing field
 		},
+		roomName: {
+			type: DataTypes.TEXT,
+			allowNull: false,
+		},
 		minPermission: {
 			// access level
 			type: DataTypes.INTEGER,

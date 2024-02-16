@@ -68,6 +68,9 @@ app.use(`/api/meetings`, router);
 const routerUser = require(`./routes/userRouter.js`);
 app.use(`/api/users`, routerUser);
 
+const routerRoom = require(`./routes/roomRouter.js`);
+app.use(`/api/rooms`, routerRoom);
+
 // testing api
 
 app.get("/", (req, res) => {
