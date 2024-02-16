@@ -18,7 +18,25 @@
 				<!-- populate using dom manipulation via vanilla js in backend // createMeeting.js -->
 			</select>
 
-			<input type="date" id="startDate" />
+			<input type="date" id="meetingDate" />
+
+			<input
+				type="time"
+				id="meetingStart"
+				name="startTime"
+				min="08:30"
+				max="18:30"
+				required
+			/>
+			<input
+				type="time"
+				id="meetingEnd"
+				name="endTime"
+				min="08:30"
+				max="18:30"
+				required
+			/>
+
 			<button id="createMeeting">Create</button>
 		</form>
 		<script src="createMeeting.js"></script>

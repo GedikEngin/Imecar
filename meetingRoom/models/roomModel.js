@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
 	const Room = sequelize.define(`room`, {
 		roomID: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.UUID,
 			primaryKey: true, // This specifies id as the primary key
 			autoIncrement: true, // Assuming it's an auto-incrementing field
 		},

@@ -36,3 +36,33 @@ window.onload = async function () {
 		roomSelect.appendChild(option);
 	});
 };
+
+async function loadCalendar() {
+	if (getTokenStateFromCookie() === "false") {
+		return;
+	}
+	const roomID = document.getElementById("roomSelect").value;
+	const startDate = document.getElementById("startDate").value;
+	// Calculate the end date by adding 6 days to the start date
+	const endDate = addDays(startDate, 6);
+
+	const response = await fetch(
+		`http://localhost:8080/api/rooms/getAllRooms?roomID=${roomID}`, // compare with user perm
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				queryDateStart: startDate,
+				queryDateEnd: endDate, // Automatically calculated end date
+			}),
+		}
+	);
+
+	if (!response.ok) {
+		console.error("Failed to fetch meetings:", response.statusText);
+		return;
+	}
+	const meetings = await response.json();
+}

@@ -1,17 +1,28 @@
+const User = require("./userModel");
+const Room = require("./roomModel");
+
 module.exports = (sequelize, DataTypes) => {
 	const Meeting = sequelize.define(`meeting`, {
 		meetingID: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.UUID,
 			primaryKey: true, // This specifies id as the primary key
 			autoIncrement: true, // Assuming it's an auto-incrementing field
 		},
 		userID: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.UUID,
 			allowNull: false,
+			references: {
+				model: User,
+				key: "userID",
+			},
 		},
 		roomID: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.UUID,
 			allowNull: false,
+			references: {
+				model: Room,
+				key: "roomID",
+			},
 		},
 		meetingDate: {
 			type: DataTypes.DATEONLY,
