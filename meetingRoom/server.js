@@ -1,6 +1,7 @@
 const express = require(`express`); // importing express
 const cors = require(`cors`); // importing cors
 const path = require("path");
+const auth = require("./authorization/auth.js");
 require(`bcrypt`); // importing bcrypt
 // const dotenv = require("dotenv").config(); // needed to be able to access .env file containing token key
 // ^^ not needed, use process.env.TOKEN_SECRET instead to refer to it
@@ -27,12 +28,39 @@ app.use((err, req, res, next) => {
 });
 
 // routers
-app.use((req, res, next) => {
-	console.log(`potential middleware`);
 
-	// verif goes here in theory -- use middleware folder
-	next();
-});
+// middleware for verifying -- potential idea//for redoing
+// app.use((req, res, next) => {
+// 	console.log("1");
+// 	console.log(req.headers);
+
+// 	const authHeader = req.headers.cookie;
+// 	console.log("2");
+
+// 	if (!authHeader) {
+// 		console.log("3");
+// 		return res.status(401).json({ message: "Missing authorization header" });
+// 	}
+// 	console.log("4");
+// 	const token = authHeader.split("=")[1];
+// 	console.log("5");
+
+// 	console.log(token);
+// 	console.log("6");
+// 	try {
+// 		console.log("7");
+// 		const payload = auth.verifyToken(token);
+// 		console.log("8");
+// 		req.user = payload;
+// 		console.log("9");
+// 		next();
+// 		console.log("10");
+// 	} catch (err) {
+// 		console.log("11");
+// 		return res.status(401).json({ message: "Invalid token" });
+// 	}
+// 	console.log("12");
+// });
 
 const router = require(`./routes/meetingRouter.js`); // imports router
 app.use(`/api/meetings`, router);
