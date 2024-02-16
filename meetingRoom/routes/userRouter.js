@@ -8,4 +8,6 @@ const routerUser = require(`express`).Router();
 routerUser.post(`/login`, userController.login); // goes to userController.js and calls login function
 routerUser.post(`/register`, userController.register); // goes to userController.js and calls register function
 
+routerUser.get(`/getAllUsers`, userController.getAllUsers); // goes to userController.js and calls register function
+
 module.exports = routerUser;

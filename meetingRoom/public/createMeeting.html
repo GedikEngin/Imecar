@@ -1,0 +1,26 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Meeting Create Page</title>
+		<link rel="stylesheet" href="stylesCreateMeeting.css" />
+	</head>
+	<body>
+		<h2>Create Meeting</h2>
+		<form id="createMeeting">
+			<label for="username">User: </label>
+			<!-- immutable - only displays username fetched from db -->
+
+			<select id="roomSelect">
+				<!-- populate using dom manipulation via vanilla js in backend // createMeeting.js -->
+			</select>
+
+			<input type="date" id="startDate" />
+			<button id="createMeeting">Create</button>
+		</form>
+		<script src="createMeeting.js"></script>
+	</body>
+</html>
