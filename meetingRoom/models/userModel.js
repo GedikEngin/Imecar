@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
 	const User = sequelize.define(`user`, {
 		userID: {
-			type: DataTypes.UUID,
+			type: DataTypes.INTEGER,
 			primaryKey: true, // This specifies id as the primary key
 			autoIncrement: true, // Assuming it's an auto-incrementing field
 		},

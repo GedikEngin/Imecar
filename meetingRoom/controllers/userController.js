@@ -27,12 +27,11 @@ const register = async (req, res) => {
 			department: req.body.department,
 		};
 
-		// If no overlapping meeting found, create the new meeting
 		const user = await User.create(userData);
 		res.status(200).send(user);
 	} catch (error) {
 		console.error("Error creating user:", error);
-		res.status(500).send("Error user meeting.");
+		res.status(500).send("Error user register.");
 	}
 };
 
