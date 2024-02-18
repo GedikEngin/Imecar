@@ -8,8 +8,23 @@ const app = express();
 // port for the server grabbed from env or when running dev uses 7070
 const PORT = process.env.PORT || 7070;
 
+// middleware
+app.set("view engine", "ejs");
+
 // api outs -- url endpoints
-app.get(`/`, (req, res) => res.send({ message: `from /, hello` }));
+app.get(`/`, (req, res) => res.render("index"));
+
+app.get("/users/login", (req, res) => {
+	res.render("login");
+});
+
+app.get("/users/register", (req, res) => {
+	res.render("register");
+});
+
+app.get("/users/dashboard", (req, res) => {
+	res.render("dashboard", { username: "engin" });
+});
 
 app.listen(PORT, () => console.log(`server running ${PORT}`));
 
