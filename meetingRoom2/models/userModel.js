@@ -1,3 +1,4 @@
+const validator = require("validator");
 module.exports = (sequelize, DataTypes) => {
 	const User = sequelize.define(`user`, {
 		userID: {
@@ -13,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
 		username: {
 			type: DataTypes.TEXT,
 			allowNull: false,
+			validate: {
+				isIn: [[0, 1, 2, 3]],
+			},
 		},
 		password: {
 			type: DataTypes.TEXT,
@@ -21,6 +25,9 @@ module.exports = (sequelize, DataTypes) => {
 		department: {
 			type: DataTypes.TEXT,
 			allowNull: false,
+			validate: {
+				isIn: [["software", "engineering", "design", "owner"]],
+			},
 		},
 	});
 

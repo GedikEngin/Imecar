@@ -1,5 +1,8 @@
 // imports
 const express = require("express");
+const bcrypt = requrie("bcrypt");
+const { body, validationResult } = require("express-validator");
+
 require("dotenv").config();
 require("./config/dbConfig"); // Import to trigger the database connection and table creation
 
@@ -13,9 +16,17 @@ app.use(express.json()); // express' built-in JSON middleware
 // api outs -- url endpoints
 app.get(`/`, (req, res) => res.send({ message: `from /, hello` }));
 
-app.post(`/register`, (req, res) => )
-
-
+// data validation using express validator
+// can be done within the database fields,
+// app.post(`/register`, { additional parameters, i.e. middleware goes here } , (req, res) => )
+// app.post(
+// 	`/register`,
+// 	body("username").isString().isLength({ min: 3 }).not().isEmpty(),
+// 	body("permission").isInt({ min: 0, max: 3 }).not().isEmpty(),
+// 	body("password").isString().isLength({ min: 3 }).not().isEmpty(),
+// 	body("department").isString().isLength({ min: 3 }).not().isEmpty(),
+// 	(req, res) => {}
+// );
 
 // would not work as is, needs a middleware to format data before entering any request into api
 // works after adding it
