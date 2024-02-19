@@ -2,10 +2,13 @@
 const express = require("express");
 
 const { registerValidator } = require("./validators/registerValidator");
-const { userController } = require("./controllers/userController");
+const { publicController } = require("./controllers/publicController");
 const { loginValidator } = require("./validators/loginValidator");
 
+const userRouter = require(`./routes/userRouter`);
+
 require("dotenv").config();
+
 // instantiation
 const app = express();
 const port = process.env.PORT || 8080;
@@ -13,12 +16,14 @@ const port = process.env.PORT || 8080;
 // middlewares
 app.use(express.json()); // express' built-in JSON middleware
 
+app.use(`/user`, userRouter);
+
 // api outs -- url endpoints
 app.get(`/`, (req, res) => res.send({ message: `from /, hello` }));
 
-app.post(`/register`, registerValidator, userController.register);
+app.post(`/register`, registerValidator, publicController.register);
 
-app.post(`/login`, loginValidator, userController.login);
+app.post(`/login`, loginValidator, publicController.login);
 
 app.post(`/user`, (req, res) => {
 	// gets data from the body

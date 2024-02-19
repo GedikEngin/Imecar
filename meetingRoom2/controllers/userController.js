@@ -1,53 +1,28 @@
-const bcrypt = require("bcrypt");
 const { close, connect, User, Room, Meeting } = require("../config/dbConfig"); // Import to trigger the database connection and table creation, imports User, Room, Meeting
 
 exports.userController = {
-	async register(req, res) {
-		await connect();
+	async getUserByName(username) {
+		const user = await User.findOne({ where: { username: username } });
 
-		let user = await User.findOne({ where: { username: req.body.username } });
-
-		if (user) {
-			return res
-				.status(400)
-				.json({ errors: { message: "user already exists" } });
-		}
-
-		const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-
-		user = await User.create({
-			permission: req.body.permission,
-			username: req.body.username,
-			password: hashedPassword,
-			department: req.body.department,
-		});
-
-		close();
-
-		res.send(user);
+		return user;
 	},
 
-	async login(req, res) {
-		await connect();
-
-		let user = await User.findOne({ where: { username: req.body.username } });
+	async getUser(req, res) {
+		let user = await User.findByPk(req.params.userID);
 
 		if (!user) {
-			return res
-				.status(400)
-				.json({ errors: { message: "user does not exists" } });
-		}
+			res.status(404).json({ errors: { msg: "user not found" } });
+		} else res.send;
+	},
 
-		if (bcrypt.compareSync(req.body.password, user.password)) {
-			res.send({
-				userID: user.userID,
-				permission: user.permission,
-				department: user.department,
-			});
+	async deleteUser(req, res) {
+		let user = await User.findByPk(req.params.userID);
+
+		if (!user) {
+			res.status(404).json({ errors: { msg: "user not found" } });
 		} else {
-			return res
-				.status(400)
-				.json({ errors: { message: "user does not exists" } });
+			user.destroy;
+			res.send({ message: "user deleted" });
 		}
 	},
 };
