@@ -36,7 +36,7 @@ app.post(
 
 		await connect();
 
-		const user = await User.findOne({ where: { username: req.body.username } });
+		let user = await User.findOne({ where: { username: req.body.username } });
 
 		if (user) {
 			return res

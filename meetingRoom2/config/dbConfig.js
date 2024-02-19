@@ -23,18 +23,37 @@ const Room = roomModel(sequelize, Sequelize);
 const Meeting = meetingModel(sequelize, Sequelize);
 
 // Define associations
-Meeting.hasOne(User, { foreignKey: "userID" });
-Meeting.hasOne(Room, { foreignKey: "roomID" });
+User.hasMany(Meeting, { foreignKey: "userID" });
+Meeting.belongsTo(User, { foreignKey: "userID" });
 
-// Sync models with the database
-sequelize
-	.sync({ force: false }) // Set to true to force table creation on every app start
-	.then(() => {
-		console.log("Database & tables synced");
-	})
-	.catch((err) => {
-		console.error("Error syncing database & tables: ", err);
-	});
+Room.hasMany(Meeting, { foreignKey: "roomID" });
+Meeting.belongsTo(Room, { foreignKey: "roomID" });
+
+// Custom Sync function to ensure correct order of table creation
+async function customSync() {
+	try {
+		await sequelize.authenticate();
+		console.log("Connection has been established successfully.");
+
+		// Sync Users and Rooms first
+		await User.sync({ force: false });
+		console.log("Users table synced successfully.");
+
+		await Room.sync({ force: false });
+		console.log("Rooms table synced successfully.");
+
+		// Sync Meetings last to ensure foreign keys are available
+		await Meeting.sync({ force: false });
+		console.log("Meetings table synced successfully.");
+
+		console.log("All tables synced successfully.");
+	} catch (error) {
+		console.error("Error syncing tables: ", error);
+	}
+}
+
+// Call customSync to start the synchronization process
+customSync();
 
 // Connect function
 async function connect() {
