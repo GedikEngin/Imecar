@@ -36,4 +36,24 @@ sequelize
 		console.error("Error syncing database & tables: ", err);
 	});
 
-module.exports = sequelize;
+// Connect function
+async function connect() {
+	try {
+		await sequelize.authenticate();
+		console.log("Connection has been established successfully.");
+	} catch (error) {
+		console.error("Unable to connect to the database:", error);
+	}
+}
+
+// Close function
+async function close() {
+	try {
+		await sequelize.close();
+		console.log("Connection has been closed successfully.");
+	} catch (error) {
+		console.error("Unable to close the database connection:", error);
+	}
+}
+
+module.exports = { sequelize, User, Room, Meeting, connect, close };

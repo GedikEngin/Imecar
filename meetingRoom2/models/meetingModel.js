@@ -1,4 +1,6 @@
-const validator = require("validator");
+const { DataTypes } = require("sequelize");
+const { sequelise } = require("../config/dbConfig");
+
 module.exports = (sequelize, DataTypes) => {
 	const Meeting = sequelize.define(`meeting`, {
 		meetingID: {
@@ -8,19 +10,14 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		meetingDate: {
 			type: DataTypes.DATEONLY,
-			allowNull: false,
 		},
 		meetingStart: {
 			type: DataTypes.TIME,
-			allowNull: false,
 		},
 		meetingEnd: {
 			type: DataTypes.TIME,
-			allowNull: false,
 		},
 	});
-
-	// // Define associations
 
 	return Meeting;
 };

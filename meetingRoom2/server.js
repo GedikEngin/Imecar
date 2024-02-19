@@ -1,11 +1,11 @@
 // imports
 const express = require("express");
-const bcrypt = requrie("bcrypt");
+const bcrypt = require("bcrypt");
 const { body, validationResult } = require("express-validator");
 
-require("dotenv").config();
-require("./config/dbConfig"); // Import to trigger the database connection and table creation
+const { close, connect, User, Room, Meeting } = require("./config/dbConfig"); // Import to trigger the database connection and table creation, imports User, Room, Meeting
 
+require("dotenv").config();
 // instantiation
 const app = express();
 const port = process.env.PORT || 8080;
@@ -19,17 +19,43 @@ app.get(`/`, (req, res) => res.send({ message: `from /, hello` }));
 // data validation using express validator
 // can be done within the database fields,
 // app.post(`/register`, { additional parameters, i.e. middleware goes here } , (req, res) => )
-// app.post(
-// 	`/register`,
-// 	body("username").isString().isLength({ min: 3 }).not().isEmpty(),
-// 	body("permission").isInt({ min: 0, max: 3 }).not().isEmpty(),
-// 	body("password").isString().isLength({ min: 3 }).not().isEmpty(),
-// 	body("department").isString().isLength({ min: 3 }).not().isEmpty(),
-// 	(req, res) => {}
-// );
+app.post(
+	`/register`,
+	body("username").notEmpty().isString(),
+	body("password").notEmpty().isString(),
+	body("permission").notEmpty().isIn([0, 1, 2, 3]).toInt(),
+	body("department")
+		.notEmpty()
+		.isIn(["software", "engineering", "design", "owner"]),
+	async (req, res) => {
+		const errors = validationResult(req);
 
-// would not work as is, needs a middleware to format data before entering any request into api
-// works after adding it
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
+
+		await connect();
+
+		const user = await User.findOne({ where: { username: req.body.username } });
+
+		if (user) {
+			return res
+				.status(400)
+				.json({ errors: { message: "user already exists" } });
+		}
+
+		const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+
+		user = await User.create({
+			permission: req.body.permission,
+			username: req.body.username,
+			password: hashedPassword,
+			department: req.body.department,
+		});
+		res.send(user);
+	}
+);
+
 app.post(`/user`, (req, res) => {
 	// gets data from the body
 	const body = req.body;
