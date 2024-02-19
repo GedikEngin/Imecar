@@ -1,9 +1,9 @@
 // imports
 const express = require("express");
-const bcrypt = require("bcrypt");
-const { body, validationResult } = require("express-validator");
 
-const { close, connect, User, Room, Meeting } = require("./config/dbConfig"); // Import to trigger the database connection and table creation, imports User, Room, Meeting
+const { registerValidator } = require("./validators/registerValidator");
+const { userController } = require("./controllers/userController");
+const { loginValidator } = require("./validators/loginValidator");
 
 require("dotenv").config();
 // instantiation
@@ -16,45 +16,9 @@ app.use(express.json()); // express' built-in JSON middleware
 // api outs -- url endpoints
 app.get(`/`, (req, res) => res.send({ message: `from /, hello` }));
 
-// data validation using express validator
-// can be done within the database fields,
-// app.post(`/register`, { additional parameters, i.e. middleware goes here } , (req, res) => )
-app.post(
-	`/register`,
-	body("username").notEmpty().isString(),
-	body("password").notEmpty().isString(),
-	body("permission").notEmpty().isIn([0, 1, 2, 3]).toInt(),
-	body("department")
-		.notEmpty()
-		.isIn(["software", "engineering", "design", "owner"]),
-	async (req, res) => {
-		const errors = validationResult(req);
+app.post(`/register`, registerValidator, userController.register);
 
-		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
-		}
-
-		await connect();
-
-		let user = await User.findOne({ where: { username: req.body.username } });
-
-		if (user) {
-			return res
-				.status(400)
-				.json({ errors: { message: "user already exists" } });
-		}
-
-		const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-
-		user = await User.create({
-			permission: req.body.permission,
-			username: req.body.username,
-			password: hashedPassword,
-			department: req.body.department,
-		});
-		res.send(user);
-	}
-);
+app.post(`/login`, loginValidator, userController.login);
 
 app.post(`/user`, (req, res) => {
 	// gets data from the body
