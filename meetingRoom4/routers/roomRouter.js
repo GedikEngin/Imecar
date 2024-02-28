@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { roomController } = require("../controllers/roomController");
+const roomController = require("../controllers/roomController");
 const { createRoomValidator } = require("../validators/roomValidator");
 
 // Route to get all rooms
@@ -16,7 +16,7 @@ router.get("/rooms/:roomId", roomController.getRoomById);
 router.get("/rooms/name/:roomName", roomController.getRoomByName);
 
 // Route to delete a room by ID
-router.delete("/rooms/:roomId", roomController.deleteRoom);
+router.delete("/rooms/:roomId", roomController.deleteRoomById);
 
 // Route to delete a room by name
 router.delete("/rooms/name/:roomName", roomController.deleteRoomByName);

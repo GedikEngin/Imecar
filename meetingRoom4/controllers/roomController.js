@@ -1,7 +1,6 @@
-// roomController.js
-
 const { Room } = require("../models/roomModel");
 
+// Controller functions for room operations
 exports.createRoom = async (req, res) => {
 	try {
 		// Extract room data from request body
@@ -17,7 +16,7 @@ exports.createRoom = async (req, res) => {
 	}
 };
 
-exports.deleteRoom = async (req, res) => {
+exports.deleteRoomById = async (req, res) => {
 	try {
 		// Extract room ID from request parameters
 		const { roomId } = req.params;
@@ -32,6 +31,67 @@ exports.deleteRoom = async (req, res) => {
 		res.json({ message: "Room deleted successfully" });
 	} catch (error) {
 		console.error("Error deleting room:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
+
+exports.deleteRoomByName = async (req, res) => {
+	try {
+		// Extract room name from request parameters
+		const { roomName } = req.params;
+
+		// Find the room by name and delete it
+		const deletedRoom = await Room.destroy({ where: { roomName } });
+
+		if (!deletedRoom) {
+			return res.status(404).json({ message: "Room not found" });
+		}
+
+		res.json({ message: "Room deleted successfully" });
+	} catch (error) {
+		console.error("Error deleting room:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
+
+// Function to get all rooms
+exports.getAllRooms = async (req, res) => {
+	try {
+		// Retrieve all rooms from the database
+		const rooms = await Room.findAll();
+		res.json(rooms);
+	} catch (error) {
+		console.error("Error retrieving rooms:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
+
+// Controller function to get a room by ID
+exports.getRoomById = async (req, res) => {
+	try {
+		const { roomId } = req.params;
+		const room = await Room.findByPk(roomId);
+		if (!room) {
+			return res.status(404).json({ message: "Room not found" });
+		}
+		res.json(room);
+	} catch (error) {
+		console.error("Error retrieving room:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
+
+// Controller function to get a room by name
+exports.getRoomByName = async (req, res) => {
+	try {
+		const { roomName } = req.params;
+		const room = await Room.findOne({ where: { roomName } });
+		if (!room) {
+			return res.status(404).json({ message: "Room not found" });
+		}
+		res.json(room);
+	} catch (error) {
+		console.error("Error retrieving room:", error);
 		res.status(500).json({ message: "Internal server error" });
 	}
 };
