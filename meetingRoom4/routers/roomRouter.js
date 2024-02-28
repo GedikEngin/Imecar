@@ -10,13 +10,13 @@ router.get("/rooms", roomController.getAllRooms);
 router.post("/rooms", createRoomValidator, roomController.createRoom);
 
 // Route to get a room by ID
-router.get("/rooms/:roomId", roomController.getRoomById);
+router.get("/rooms/:roomID", roomController.getRoomByID);
 
 // Route to get a room by name
 router.get("/rooms/name/:roomName", roomController.getRoomByName);
 
 // Route to delete a room by ID
-router.delete("/rooms/:roomId", roomController.deleteRoomById);
+router.delete("/rooms/:roomID", roomController.deleteRoomByID);
 
 // Route to delete a room by name
 router.delete("/rooms/name/:roomName", roomController.deleteRoomByName);

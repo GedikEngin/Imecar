@@ -5,10 +5,10 @@ const { Room } = require("../models/roomModel");
 
 exports.createMeeting = async (req, res) => {
 	try {
-		const { userId, roomId, meetingDate, meetingStart, meetingEnd } = req.body;
+		const { userID, roomID, meetingDate, meetingStart, meetingEnd } = req.body;
 
 		// Check if the user has permission to create a meeting in the specified room
-		const room = await Room.findByPk(roomId);
+		const room = await Room.findByPk(roomID);
 		if (!room || req.user.clearance < room.minPermission) {
 			return res.status(403).json({
 				message: "Insufficient clearance to create a meeting in this room",
@@ -17,8 +17,8 @@ exports.createMeeting = async (req, res) => {
 
 		// Create the meeting
 		const meeting = await Meeting.create({
-			userId,
-			roomId,
+			userID,
+			roomID,
 			meetingDate,
 			meetingStart,
 			meetingEnd,
@@ -33,10 +33,10 @@ exports.createMeeting = async (req, res) => {
 
 exports.deleteMeeting = async (req, res) => {
 	try {
-		const { meetingId } = req.params;
+		const { meetingID } = req.params;
 
 		// Find the meeting by ID
-		const meeting = await Meeting.findByPk(meetingId);
+		const meeting = await Meeting.findByPk(meetingID);
 		if (!meeting) {
 			return res.status(404).json({ message: "Meeting not found" });
 		}
@@ -56,11 +56,11 @@ exports.deleteMeeting = async (req, res) => {
 
 exports.getMeetingsByRoom = async (req, res) => {
 	try {
-		const { roomId } = req.params;
+		const { roomID } = req.params;
 		const { clearance } = req.user; // Assuming user clearance level is available in the request
 
 		// Find the room by ID
-		const room = await Room.findByPk(roomId);
+		const room = await Room.findByPk(roomID);
 		if (!room) {
 			return res.status(404).json({ message: "Room not found" });
 		}
@@ -68,7 +68,7 @@ exports.getMeetingsByRoom = async (req, res) => {
 		// Check if the user's clearance level allows them to access the room
 		if (clearance >= room.minPermission) {
 			// Retrieve meetings for the room
-			const meetings = await Meeting.findAll({ where: { roomId } });
+			const meetings = await Meeting.findAll({ where: { roomID } });
 			res.json(meetings);
 		} else {
 			res

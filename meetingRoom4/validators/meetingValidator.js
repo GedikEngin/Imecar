@@ -1,8 +1,8 @@
 const { body, validationResult } = require("express-validator");
 
 exports.createMeetingValidator = [
-	body("userId").notEmpty().isInt(),
-	body("roomId").notEmpty().isInt(),
+	body("userID").notEmpty().isInt(),
+	body("roomID").notEmpty().isInt(),
 	body("meetingDate").notEmpty().isISO8601(),
 	body("meetingStart").notEmpty().isString(),
 	body("meetingEnd").notEmpty().isString(),

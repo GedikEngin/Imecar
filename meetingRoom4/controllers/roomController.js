@@ -16,13 +16,13 @@ exports.createRoom = async (req, res) => {
 	}
 };
 
-exports.deleteRoomById = async (req, res) => {
+exports.deleteRoomByID = async (req, res) => {
 	try {
 		// Extract room ID from request parameters
-		const { roomId } = req.params;
+		const { roomID } = req.params;
 
 		// Find the room by ID and delete it
-		const deletedRoom = await Room.destroy({ where: { id: roomId } });
+		const deletedRoom = await Room.destroy({ where: { id: roomID } });
 
 		if (!deletedRoom) {
 			return res.status(404).json({ message: "Room not found" });
@@ -67,10 +67,10 @@ exports.getAllRooms = async (req, res) => {
 };
 
 // Controller function to get a room by ID
-exports.getRoomById = async (req, res) => {
+exports.getRoomByID = async (req, res) => {
 	try {
-		const { roomId } = req.params;
-		const room = await Room.findByPk(roomId);
+		const { roomID } = req.params;
+		const room = await Room.findByPk(roomID);
 		if (!room) {
 			return res.status(404).json({ message: "Room not found" });
 		}

@@ -5,7 +5,7 @@ const router = express.Router();
 const {
 	register,
 	login,
-	deleteUserById,
+	deleteUserByID,
 	deleteUserByUsername,
 } = require("../controllers/userController");
 const {
@@ -20,7 +20,7 @@ router.post("/register", registerValidator, register);
 router.post("/login", loginValidator, login);
 
 // Route to delete a user by ID
-router.delete("/users/:userId", deleteUserById);
+router.delete("/users/:userID", deleteUserByID);
 
 // Route to delete a user by username
 router.delete("/users/username/:username", deleteUserByUsername);

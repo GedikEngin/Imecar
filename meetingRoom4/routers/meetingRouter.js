@@ -12,10 +12,10 @@ const { createMeetingValidator } = require("../validators/meetingValidator");
 router.post("/meetings", createMeetingValidator, createMeeting);
 
 // Route to delete a meeting by ID
-router.delete("/meetings/:meetingId", deleteMeeting);
+router.delete("/meetings/:meetingID", deleteMeeting);
 
 // Route to get meetings by room ID
-router.get("/rooms/:roomId/meetings", getMeetingsByRoom);
+router.get("/rooms/:roomID/meetings", getMeetingsByRoom);
 
 // Route to get all meetings
 router.get("/meetings", getAllMeetings);

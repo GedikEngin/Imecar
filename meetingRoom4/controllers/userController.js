@@ -49,12 +49,12 @@ exports.login = async (req, res) => {
 };
 
 // Controller function to delete a user by ID
-exports.deleteUserById = async (req, res) => {
+exports.deleteUserByID = async (req, res) => {
 	try {
-		const { userId } = req.params;
+		const { userID } = req.params;
 
 		// Find the user by ID
-		const user = await User.findByPk(userId);
+		const user = await User.findByPk(userID);
 		if (!user) {
 			return res.status(404).json({ message: "User not found" });
 		}
