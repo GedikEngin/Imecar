@@ -112,7 +112,7 @@ exports.deleteUserByID = async (req, res) => {
 };
 
 // Controller function to delete a user by username
-exports.deleteUserByUsername = async (req, res) => {
+exports.deleteUserByName = async (req, res) => {
 	try {
 		const { username } = req.params;
 

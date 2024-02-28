@@ -35,6 +35,6 @@ router.get("/users/name/:username", userController.getUserByName);
 router.delete("/users/:userID", userController.deleteUserByID);
 
 // Route to delete a user by username
-router.delete("/users/username/:username", userController.deleteUserByUsername);
+router.delete("/users/username/:username", userController.deleteUserByName);
 
 module.exports = router;
