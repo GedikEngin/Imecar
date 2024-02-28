@@ -1,6 +1,6 @@
 // userController.js
 
-const { User } = require("../models"); // Import the User model
+const { User } = require("../models/userModel"); // Import the User model
 
 // Controller function to register a new user
 exports.register = async (req, res) => {

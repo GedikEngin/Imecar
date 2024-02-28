@@ -1,6 +1,7 @@
 // meetingController.js
 
-const { Meeting, Room } = require("../models");
+const { Meeting } = require("../models/meetingModel");
+const { Room } = require("../models/roomModel");
 
 exports.createMeeting = async (req, res) => {
 	try {

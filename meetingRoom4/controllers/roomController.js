@@ -1,6 +1,6 @@
 // roomController.js
 
-const { Room, Meeting } = require("../models");
+const { Room } = require("../models/roomModel");
 
 exports.createRoom = async (req, res) => {
 	try {
