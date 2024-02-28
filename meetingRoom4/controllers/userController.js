@@ -89,3 +89,30 @@ exports.deleteUserByUsername = async (req, res) => {
 		res.status(500).json({ message: "Internal server error" });
 	}
 };
+
+// Function to get all rooms
+exports.getAllUsers = async (req, res) => {
+	try {
+		// Retrieve all rooms from the database
+		const users = await User.findAll();
+		res.json(users);
+	} catch (error) {
+		console.error("Error retrieving users:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
+
+// Controller function to get a room by ID
+exports.getUserByID = async (req, res) => {
+	try {
+		const { userID } = req.params;
+		const user = await User.findByPk(userID);
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
+		res.json(user);
+	} catch (error) {
+		console.error("Error retrieving user:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
