@@ -9,11 +9,9 @@ exports.createMeeting = async (req, res) => {
 		// Check if the user has permission to create a meeting in the specified room
 		const room = await Room.findByPk(roomId);
 		if (!room || req.user.clearance < room.minPermission) {
-			return res
-				.status(403)
-				.json({
-					message: "Insufficient clearance to create a meeting in this room",
-				});
+			return res.status(403).json({
+				message: "Insufficient clearance to create a meeting in this room",
+			});
 		}
 
 		// Create the meeting
@@ -76,6 +74,16 @@ exports.getMeetingsByRoom = async (req, res) => {
 				.status(403)
 				.json({ message: "Insufficient clearance to access the room" });
 		}
+	} catch (error) {
+		console.error("Error retrieving meetings:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
+
+exports.getAllMeetings = async (req, res) => {
+	try {
+		const meetings = await Meeting.findAll();
+		res.json(meetings);
 	} catch (error) {
 		console.error("Error retrieving meetings:", error);
 		res.status(500).json({ message: "Internal server error" });
