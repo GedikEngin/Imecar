@@ -3,11 +3,11 @@ const router = express.Router();
 const roomController = require("../controllers/roomController");
 const { createRoomValidator } = require("../validators/roomValidator");
 
-// Route to get all rooms
-router.get("/rooms", roomController.getAllRooms);
-
 // Route to create a room
 router.post("/rooms", createRoomValidator, roomController.createRoom);
+
+// Route to get all rooms
+router.get("/rooms", roomController.getAllRooms);
 
 // Route to get a room by ID
 router.get("/rooms/:roomID", roomController.getRoomByID);

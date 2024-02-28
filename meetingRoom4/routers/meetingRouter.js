@@ -1,23 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const {
-	createMeeting,
-	deleteMeeting,
-	getMeetingsByRoom,
-	getAllMeetings,
-} = require("../controllers/meetingController");
+const meetingController = require("../controllers/meetingController");
 const { createMeetingValidator } = require("../validators/meetingValidator");
 
 // Route to create a new meeting
-router.post("/meetings", createMeetingValidator, createMeeting);
-
-// Route to delete a meeting by ID
-router.delete("/meetings/:meetingID", deleteMeeting);
+router.post(
+	"/meetings",
+	createMeetingValidator,
+	meetingController.createMeeting
+);
 
 // Route to get meetings by room ID
-router.get("/rooms/:roomID/meetings", getMeetingsByRoom);
+router.get("/rooms/:roomID/meetings", meetingController.getMeetingsByRoom);
 
 // Route to get all meetings
-router.get("/meetings", getAllMeetings);
+router.get("/meetings", meetingController.getAllMeetings);
+
+// Route to delete a meeting by ID
+router.delete("/meetings/:meetingID", meetingController.deleteMeeting);
 
 module.exports = router;
