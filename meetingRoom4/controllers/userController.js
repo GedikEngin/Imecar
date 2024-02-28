@@ -47,3 +47,45 @@ exports.login = async (req, res) => {
 		res.status(500).json({ message: "Internal server error" });
 	}
 };
+
+// Controller function to delete a user by ID
+exports.deleteUserById = async (req, res) => {
+	try {
+		const { userId } = req.params;
+
+		// Find the user by ID
+		const user = await User.findByPk(userId);
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
+
+		// Delete the user
+		await user.destroy();
+
+		res.json({ message: "User deleted successfully" });
+	} catch (error) {
+		console.error("Error deleting user:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
+
+// Controller function to delete a user by username
+exports.deleteUserByUsername = async (req, res) => {
+	try {
+		const { username } = req.params;
+
+		// Find the user by username
+		const user = await User.findOne({ where: { username } });
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
+
+		// Delete the user
+		await user.destroy();
+
+		res.json({ message: "User deleted successfully" });
+	} catch (error) {
+		console.error("Error deleting user:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
