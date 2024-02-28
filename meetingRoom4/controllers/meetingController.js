@@ -31,29 +31,6 @@ exports.createMeeting = async (req, res) => {
 	}
 };
 
-exports.deleteMeeting = async (req, res) => {
-	try {
-		const { meetingID } = req.params;
-
-		// Find the meeting by ID
-		const meeting = await Meeting.findByPk(meetingID);
-		if (!meeting) {
-			return res.status(404).json({ message: "Meeting not found" });
-		}
-
-		// Check if the user has permission to delete the meeting (assuming permission checks)
-		// Additional permission logic can be added here
-
-		// Delete the meeting
-		await meeting.destroy();
-
-		res.json({ message: "Meeting deleted successfully" });
-	} catch (error) {
-		console.error("Error deleting meeting:", error);
-		res.status(500).json({ message: "Internal server error" });
-	}
-};
-
 exports.getMeetingsByRoom = async (req, res) => {
 	try {
 		const { roomID } = req.params;
@@ -87,6 +64,29 @@ exports.getAllMeetings = async (req, res) => {
 		res.json(meetings);
 	} catch (error) {
 		console.error("Error retrieving meetings:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
+
+exports.deleteMeeting = async (req, res) => {
+	try {
+		const { meetingID } = req.params;
+
+		// Find the meeting by ID
+		const meeting = await Meeting.findByPk(meetingID);
+		if (!meeting) {
+			return res.status(404).json({ message: "Meeting not found" });
+		}
+
+		// Check if the user has permission to delete the meeting (assuming permission checks)
+		// Additional permission logic can be added here
+
+		// Delete the meeting
+		await meeting.destroy();
+
+		res.json({ message: "Meeting deleted successfully" });
+	} catch (error) {
+		console.error("Error deleting meeting:", error);
 		res.status(500).json({ message: "Internal server error" });
 	}
 };
