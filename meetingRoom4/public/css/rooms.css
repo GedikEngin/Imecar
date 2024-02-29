@@ -1,58 +1,80 @@
 /* Custom CSS for Rooms page */
 
-/* Container for the existing rooms */
-#existingRoomsContainer {
-	margin-top: 20px;
+/* Main container */
+.main-container {
+	width: 50%;
+	margin: 10vh auto 0; /* Center horizontally and add space at the top */
+	display: grid;
+	grid-template-rows: auto auto;
+	gap: 20px;
+	justify-content: center;
+	align-items: center;
+	background-color: #f8f8f8;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	border-radius: 10px; /* Rounded edges */
 }
 
-/* Custom dropdown container */
-.custom-dropdown {
-	position: relative;
-	display: inline-block;
-	width: 200px; /* Adjust width as needed */
+/* Title */
+#pageTitle {
+	grid-column: 1 / span 2;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
 }
 
-/* Dropdown selected item */
-.dropdown-selected {
-	background-color: #f0f0f0;
-	padding: 10px;
-	cursor: pointer;
-	border: 1px solid #ccc;
+/* Row */
+.row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 50px;
 }
 
-/* Dropdown list */
-.dropdown-list {
-	display: none;
-	position: absolute;
+/* Column */
+.column {
+	display: flex; /* Change to flex to allow vertical stacking */
+	flex-direction: column; /* Stack children vertically */
+	position: relative; /* Add relative positioning */
 	background-color: #fff;
+	padding: 50px; /* Increase padding for wider appearance */
+	height: 300px; /* Increase height */
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	width: 100%;
-	max-height: 200px; /* Adjust max height as needed */
-	overflow-y: auto;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	border: 1px solid #ccc;
+	border-radius: 10px; /* Rounded edges */
 }
 
-/* Dropdown list items */
-.dropdown-list li {
+/* New Select Element */
+#roomSelect {
+	width: calc(100% - 10px); /* Adjust width to account for padding */
 	padding: 10px;
-	cursor: pointer;
+	margin-top: 5px;
+	border-radius: 5px; /* Rounded edges */
 }
 
-/* Show dropdown list on hover */
-.custom-dropdown:hover .dropdown-list {
-	display: block;
-}
-
-/* Button to delete room */
-.delete-button {
-	margin-top: 10px;
+/* Universal Button styling */
+.column button {
+	position: absolute; /* Position buttons absolutely */
+	bottom: 20px; /* Place buttons at the bottom */
+	left: 50%; /* Center horizontally */
+	transform: translateX(-50%); /* Adjust for centering */
 	padding: 10px 20px;
 	background-color: #ff6347;
 	color: #fff;
 	border: none;
 	cursor: pointer;
-	border-radius: 5px;
+	border-radius: 5px; /* Rounded edges */
+}
+
+/* Text Input styling */
+label {
+	margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+	width: calc(100% - 10px); /* Adjust width to account for padding */
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px; /* Rounded edges */
 }

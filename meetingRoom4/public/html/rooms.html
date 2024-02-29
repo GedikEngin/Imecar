@@ -4,58 +4,65 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Rooms</title>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-			integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		/>
 		<link rel="stylesheet" href="../css/rooms.css" />
 	</head>
 	<body>
-		<h1>Rooms</h1>
-
-		<!-- Container 1: Display Existing Rooms -->
-		<div id="existingRoomsContainer">
-			<h2>Existing Rooms</h2>
-			<div class="custom-dropdown">
-				<div class="dropdown-selected">Select a room</div>
-				<ul class="dropdown-list" id="roomList"></ul>
+		<main class="main-container">
+			<!-- Row 1: Title -->
+			<div class="row">
+				<h1 id="pageTitle">Rooms</h1>
 			</div>
-			<button class="delete-button" id="deleteRoomButton">Delete Room</button>
-		</div>
 
-		<!-- Container 2: Create New Room Form -->
-		<div id="createRoomContainer">
-			<h2>Create New Room</h2>
-			<form id="createRoomForm">
-				<label for="roomName">Room Name:</label>
-				<input type="text" id="roomName" name="roomName" required /><br />
+			<!-- Row 2: Containers -->
+			<div class="row">
+				<!-- Row 2 Column 1: Existing Rooms -->
+				<div class="column" id="existingRoomsContainer">
+					<h2>Existing Rooms</h2>
 
-				<label for="minPermission">Minimum Permission:</label>
-				<input
-					type="number"
-					id="minPermission"
-					name="minPermission"
-					min="0"
-					max="3"
-					required
-				/><br />
+					<!-- New Select Element -->
+					<label for="roomSelect">Select a room:</label>
+					<select name="rooms" id="roomSelect">
+						<option value="">--Please choose an option--</option>
+						<!-- Options will be dynamically populated by JavaScript -->
+					</select>
 
-				<label for="department">Department:</label>
-				<select id="department" name="department" required>
-					<option value="software">Software</option>
-					<option value="engineering">Engineering</option>
-					<option value="design">Design</option>
-					<option value="owner">Owner</option></select
-				><br />
+					<button class="delete-button" id="deleteRoomButton">
+						Delete Room
+					</button>
+				</div>
 
-				<button type="submit">Create Room</button>
-			</form>
-		</div>
+				<!-- Row 2 Column 2: Create New Room Form -->
+				<div class="column" id="createRoomContainer">
+					<h2>Create New Room</h2>
+					<form id="createRoomForm">
+						<label for="roomName">Room Name:</label>
+						<input type="text" id="roomName" name="roomName" required /><br />
 
-		<!-- Include any JavaScript files here -->
+						<label for="minPermission">Minimum Permission:</label>
+						<input
+							type="number"
+							id="minPermission"
+							name="minPermission"
+							min="0"
+							max="3"
+							required
+						/><br />
+
+						<label for="department">Department:</label>
+						<select id="department" name="department" required>
+							<option value="software">Software</option>
+							<option value="engineering">Engineering</option>
+							<option value="design">Design</option>
+							<option value="owner">Owner</option></select
+						><br />
+
+						<button type="submit">Create Room</button>
+					</form>
+				</div>
+			</div>
+		</main>
+
+		<!-- Include the JavaScript file -->
 		<script src="../js/rooms.js"></script>
 	</body>
 </html>

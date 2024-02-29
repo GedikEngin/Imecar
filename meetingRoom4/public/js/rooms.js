@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-	const roomList = document.getElementById("roomList");
+	const roomSelect = document.getElementById("roomSelect");
 	const createRoomForm = document.getElementById("createRoomForm");
 
 	// Fetch and display existing rooms when the page loads
@@ -57,39 +57,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// Function to display existing rooms
 	function displayRooms(rooms) {
-		roomList.innerHTML = ""; // Clear previous room list
+		roomSelect.innerHTML = ""; // Clear previous room options
 
 		rooms.forEach((room) => {
-			const listItem = document.createElement("li");
-			listItem.textContent = `${room.roomName} - Minimum Permission: ${room.minPermission} - Room ID: ${room.id}`;
-
-			// Add event listener to delete the room when clicked
-			listItem.addEventListener("click", async function () {
-				const confirmDelete = confirm(
-					`Are you sure you want to delete room "${room.roomName}"?`
-				);
-				if (confirmDelete) {
-					try {
-						const response = await fetch(`/room/delete/roomID/${room.id}`, {
-							method: "DELETE",
-						});
-
-						if (response.ok) {
-							// Room deleted successfully, refresh the room list
-							fetchRooms();
-						} else {
-							const data = await response.json();
-							console.error("Error deleting room:", data.message);
-							// Handle error - display error message to the user
-						}
-					} catch (error) {
-						console.error("Error deleting room:", error);
-						// Handle error - display error message to the user
-					}
-				}
-			});
-
-			roomList.appendChild(listItem);
+			const option = document.createElement("option");
+			option.value = room.id;
+			option.textContent = `${room.roomName} - ${room.department} - roomID: ${room.id}`;
+			roomSelect.appendChild(option);
 		});
 	}
+
+	// Add event listener to delete button
+	const deleteRoomButton = document.getElementById("deleteRoomButton");
+	deleteRoomButton.addEventListener("click", function () {
+		const roomId = roomSelect.value;
+		if (roomId) {
+			const confirmDelete = confirm(
+				`Are you sure you want to delete the selected room?`
+			);
+			if (confirmDelete) {
+				// Perform delete action here
+				alert("Room deleted!"); // Placeholder for actual delete action
+			}
+		} else {
+			alert("Please select a room to delete.");
+		}
+	});
 });
