@@ -9,12 +9,18 @@ exports.meetingController = {
 				req.body;
 
 			// Check if the user has permission to create a meeting in the specified room
+
 			const room = await Room.findByPk(roomID);
-			if (!room || req.user.clearance < room.minPermission) {
+			const user = await User.findByPk(userID);
+
+			if (!room || user.permission > room.minPermission) {
 				return res.status(403).json({
 					message: "Insufficient clearance to create a meeting in this room",
 				});
 			}
+
+			// this is where you would try to get userID from the encrypted cookie and attempt to decrypt it to create a meeting
+			// currently pass userID into it manually
 
 			// Create the meeting
 			const meeting = await Meeting.create({
@@ -32,11 +38,21 @@ exports.meetingController = {
 		}
 	},
 
-	async getMeetingsByRoom(req, res) {
+	async getAllMeetings(req, res) {
 		await connect();
 		try {
-			const { roomID } = req.params;
-			const { clearance } = req.user; // Assuming user clearance level is available in the request
+			const meetings = await Meeting.findAll();
+			res.json(meetings);
+		} catch (error) {
+			console.error("Error retrieving meetings:", error);
+			res.status(500).json({ message: "Internal server error" });
+		}
+	},
+
+	async getMeetingsByRoomDate(req, res) {
+		await connect();
+		try {
+			const { roomID, meetingDate } = req.params;
 
 			// Find the room by ID
 			const room = await Room.findByPk(roomID);
@@ -44,26 +60,9 @@ exports.meetingController = {
 				return res.status(404).json({ message: "Room not found" });
 			}
 
-			// Check if the user's clearance level allows them to access the room
-			if (clearance >= room.minPermission) {
-				// Retrieve meetings for the room
-				const meetings = await Meeting.findAll({ where: { roomID } });
-				res.json(meetings);
-			} else {
-				res
-					.status(403)
-					.json({ message: "Insufficient clearance to access the room" });
-			}
-		} catch (error) {
-			console.error("Error retrieving meetings:", error);
-			res.status(500).json({ message: "Internal server error" });
-		}
-	},
-
-	async getAllMeetings(req, res) {
-		await connect();
-		try {
-			const meetings = await Meeting.findAll();
+			const meetings = await Meeting.findAll({
+				where: { roomID, meetingDate },
+			});
 			res.json(meetings);
 		} catch (error) {
 			console.error("Error retrieving meetings:", error);
