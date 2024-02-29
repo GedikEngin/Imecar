@@ -74,7 +74,7 @@ exports.roomController = {
 			const { roomID } = req.params;
 
 			// Find the room by ID and delete it
-			const deletedRoom = await Room.destroy({ where: { id: roomID } });
+			const deletedRoom = await Room.destroy({ where: { roomID: roomID } });
 
 			if (!deletedRoom) {
 				return res.status(404).json({ message: "Room not found" });
