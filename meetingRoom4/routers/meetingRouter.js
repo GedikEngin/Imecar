@@ -16,6 +16,13 @@ router.get(
 );
 
 // Route to delete a meeting by ID
-router.delete("/meetings/:meetingID", meetingController.deleteMeeting);
+router.delete(
+	"/delete/meetingID/:meetingID",
+	meetingController.deleteMeetingByID
+);
+router.delete(
+	"/delete/byInfo/:roomID/:meetingDate/:meetingStart",
+	meetingController.deleteMeetingByInfo
+);
 
 module.exports = router;

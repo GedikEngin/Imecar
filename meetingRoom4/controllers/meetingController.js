@@ -70,13 +70,39 @@ exports.meetingController = {
 		}
 	},
 
-	async deleteMeeting(req, res) {
+	async deleteMeetingByID(req, res) {
 		await connect();
 		try {
 			const { meetingID } = req.params;
 
 			// Find the meeting by ID
 			const meeting = await Meeting.findByPk(meetingID);
+			if (!meeting) {
+				return res.status(404).json({ message: "Meeting not found" });
+			}
+
+			// Check if the user has permission to delete the meeting (assuming permission checks)
+			// Additional permission logic can be added here
+
+			// Delete the meeting
+			await meeting.destroy();
+
+			res.json({ message: "Meeting deleted successfully" });
+		} catch (error) {
+			console.error("Error deleting meeting:", error);
+			res.status(500).json({ message: "Internal server error" });
+		}
+	},
+
+	async deleteMeetingByInfo(req, res) {
+		await connect();
+		try {
+			const { roomID, meetingDate, meetingStart } = req.params;
+
+			// Find the meeting by ID
+			const meeting = await Meeting.findOne({
+				where: { roomID, meetingDate, meetingStart },
+			});
 			if (!meeting) {
 				return res.status(404).json({ message: "Meeting not found" });
 			}
