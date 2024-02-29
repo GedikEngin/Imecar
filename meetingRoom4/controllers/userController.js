@@ -6,8 +6,6 @@ exports.userController = {
 	// Controller function to register a new user
 	async register(req, res) {
 		await connect();
-		console.log("entering register");
-		console.log(req.body);
 		try {
 			// Check if a user with the same username already exists
 			const existingUser = await User.findOne({
@@ -28,6 +26,31 @@ exports.userController = {
 			res.status(201).json(newUser);
 		} catch (error) {
 			console.error("Error registering user:", error);
+			res.status(500).json({ message: "Internal server error" });
+		}
+	},
+
+	// Controller function to login a user
+	async login(req, res) {
+		await connect();
+		try {
+			const { username, password } = req.body;
+
+			// Find the user in the database
+			const user = await User.findOne({
+				where: { username: req.body.username },
+			});
+
+			// Verify password
+			if (!user || user.password !== password) {
+				return res
+					.status(401)
+					.json({ message: "Invalid username or password" });
+			}
+
+			res.json(user);
+		} catch (error) {
+			console.error("Error logging in user:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
 	},
@@ -73,29 +96,6 @@ exports.userController = {
 			res.json(user);
 		} catch (error) {
 			console.error("Error retrieving user:", error);
-			res.status(500).json({ message: "Internal server error" });
-		}
-	},
-
-	// Controller function to login a user
-	async login(req, res) {
-		await connect();
-		try {
-			const { username, password } = req.body;
-
-			// Find the user in the database
-			const user = await User.findOne({ where: { username } });
-
-			// Verify password
-			if (!user || user.password !== password) {
-				return res
-					.status(401)
-					.json({ message: "Invalid username or password" });
-			}
-
-			res.json(user);
-		} catch (error) {
-			console.error("Error logging in user:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
 	},

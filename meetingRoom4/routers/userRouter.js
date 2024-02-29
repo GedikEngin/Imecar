@@ -16,18 +16,18 @@ router.post("/register", registerValidator, userController.register);
 router.post("/login", loginValidator, userController.login);
 
 // Route to get all users
-router.get("/user", userController.getAllUsers);
+router.get("/users", userController.getAllUsers);
 
 // Route to get a user by ID
-router.get("/users/:userID", userController.getUserByID);
+router.get("/search/userID/:userID", userController.getUserByID);
 
 // Route to get a user by name
-router.get("/users/name/:username", userController.getUserByName);
+router.get("/search/userName/:username", userController.getUserByName);
 
 // Route to delete a user by ID
-router.delete("/users/:userID", userController.deleteUserByID);
+router.delete("/delete/userID/:userID", userController.deleteUserByID);
 
 // Route to delete a user by username
-router.delete("/users/username/:username", userController.deleteUserByName);
+router.delete("/delete/userName/:username", userController.deleteUserByName);
 
 module.exports = router;
