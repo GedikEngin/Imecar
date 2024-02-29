@@ -1,6 +1,6 @@
 // meetingController.js
 
-const { Meeting, Room, User, connect, close } = require("../configs/dbConfig");
+const { Meeting, Room, User, connect } = require("../configs/dbConfig");
 exports.meetingController = {
 	async createMeeting(req, res) {
 		await connect();

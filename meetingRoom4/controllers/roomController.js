@@ -1,4 +1,4 @@
-const { Room } = require("../configs/dbConfig"); // importing relevant model (with sequelize) from dbconfig
+const { Room, connect } = require("../configs/dbConfig"); // importing relevant model (with sequelize) from dbconfig
 
 exports.roomController = {
 	// Controller functions for room operations
