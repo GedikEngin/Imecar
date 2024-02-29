@@ -20,7 +20,6 @@ exports.roomController = {
 			console.error("Error creating room:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 
 	// Function to get all rooms
@@ -34,7 +33,6 @@ exports.roomController = {
 			console.error("Error retrieving rooms:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 
 	// Controller function to get a room by ID
@@ -51,7 +49,6 @@ exports.roomController = {
 			console.error("Error retrieving room:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 
 	// Controller function to get a room by name
@@ -68,7 +65,6 @@ exports.roomController = {
 			console.error("Error retrieving room:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 
 	async deleteRoomByID(req, res) {
@@ -89,7 +85,6 @@ exports.roomController = {
 			console.error("Error deleting room:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 
 	async deleteRoomByName(req, res) {

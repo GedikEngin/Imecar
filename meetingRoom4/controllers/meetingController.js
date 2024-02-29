@@ -3,6 +3,7 @@
 const { Meeting, Room, User, connect, close } = require("../configs/dbConfig");
 exports.meetingController = {
 	async createMeeting(req, res) {
+		await connect();
 		try {
 			const { userID, roomID, meetingDate, meetingStart, meetingEnd } =
 				req.body;
@@ -32,6 +33,7 @@ exports.meetingController = {
 	},
 
 	async getMeetingsByRoom(req, res) {
+		await connect();
 		try {
 			const { roomID } = req.params;
 			const { clearance } = req.user; // Assuming user clearance level is available in the request
@@ -59,6 +61,7 @@ exports.meetingController = {
 	},
 
 	async getAllMeetings(req, res) {
+		await connect();
 		try {
 			const meetings = await Meeting.findAll();
 			res.json(meetings);
@@ -69,6 +72,7 @@ exports.meetingController = {
 	},
 
 	async deleteMeeting(req, res) {
+		await connect();
 		try {
 			const { meetingID } = req.params;
 

@@ -30,7 +30,6 @@ exports.userController = {
 			console.error("Error registering user:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 
 	// Function to get all users
@@ -44,7 +43,6 @@ exports.userController = {
 			console.error("Error retrieving users:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 
 	// Controller function to get a room by ID
@@ -61,7 +59,6 @@ exports.userController = {
 			console.error("Error retrieving user:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 
 	// Controller function to get a user by name
@@ -78,7 +75,6 @@ exports.userController = {
 			console.error("Error retrieving user:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 
 	// Controller function to login a user
@@ -102,7 +98,6 @@ exports.userController = {
 			console.error("Error logging in user:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 
 	// Controller function to delete a user by ID
@@ -125,7 +120,6 @@ exports.userController = {
 			console.error("Error deleting user:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 
 	// Controller function to delete a user by username
@@ -148,6 +142,5 @@ exports.userController = {
 			console.error("Error deleting user:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
-		await close();
 	},
 };
