@@ -9,6 +9,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(express.json());
+app.use(express.static("public")); // Serve static files from the public directory
 
 app.use("/user", userRouter);
 app.use("/room", roomRouter);

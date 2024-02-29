@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Register</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+			integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+	</head>
+	<body>
+		<div class="container">
+			<h2>Register</h2>
+			<form id="registerForm">
+				<label for="username">Username</label>
+				<input type="text" id="username" name="username" required />
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password" required />
+				<label for="permission">Permission</label>
+				<input type="text" id="permission" name="permission" required />
+				<label for="department">Department</label>
+				<input type="text" id="department" name="department" required />
+				<button type="submit">Register</button>
+			</form>
+			<p id="message"></p>
+		</div>
+		<script src="../js/register.js"></script>
+	</body>
+</html>
