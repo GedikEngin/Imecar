@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const meetingController = require("../controllers/meetingController");
+const { meetingController } = require("../controllers/meetingController");
 const { createMeetingValidator } = require("../validators/meetingValidator");
 
 // Route to create a new meeting

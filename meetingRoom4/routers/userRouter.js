@@ -2,14 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
-// const {
-// 	register,
-// 	login,
-// 	deleteUserByID,
-// 	deleteUserByUsername,
-// } = require("../controllers/userController");
-
-const userController = require("../controllers/userController");
+const { userController } = require("../controllers/userController");
 
 const {
 	registerValidator,
