@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Meeting Room Calendar</title>
+		<link rel="stylesheet" href="../css/meetings.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div id="calendar-header">
+				<h2>Meeting Room Calendar</h2>
+				<div id="calendar-nav">
+					<select id="roomSelect">
+						<!-- Placeholder for room options -->
+					</select>
+					<input type="date" id="startDate" onchange="validateDate()" />
+					<button id="prev-week" onclick="prevWeek()">Previous Week</button>
+					<button id="next-week" onclick="nextWeek()">Next Week</button>
+					<button onclick="loadCalendar()">Load Calendar</button>
+				</div>
+			</div>
+			<div id="calendar"></div>
+
+			<!-- Container for view/delete and create meetings -->
+			<div class="meeting-options">
+				<!-- View/delete meetings section -->
+				<div class="view-delete-section">
+					<h3>View/Delete Meetings</h3>
+					<div class="meetings-list">
+						<!-- Meetings list -->
+					</div>
+					<button onclick="deleteSelectedMeetings()">
+						Delete Selected Meetings
+					</button>
+				</div>
+
+				<!-- Create meeting section -->
+				<div class="create-meeting-section">
+					<h3>Create Meeting</h3>
+					<input type="text" id="meetingDate" placeholder="Meeting Date" />
+					<input
+						type="text"
+						id="meetingStart"
+						placeholder="Meeting Start Time"
+					/>
+					<input type="text" id="meetingEnd" placeholder="Meeting End Time" />
+					<button onclick="createMeeting()">Create Meeting</button>
+				</div>
+			</div>
+		</div>
+		<script src="../js/meetings.js"></script>
+	</body>
+</html>

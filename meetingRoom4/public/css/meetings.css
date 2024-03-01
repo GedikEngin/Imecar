@@ -1,0 +1,144 @@
+/* meetings.css */
+
+/* Global styles */
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f8f8f8;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 75%;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #f8f8f8; /* Light gray */
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#calendar {
+	margin-top: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	background-color: #fff; /* White */
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.day {
+	flex-basis: calc(100% / 8);
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+
+.date {
+	background-color: #f8f8f8; /* Light gray */
+	padding: 5px;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+.date:hover {
+	background-color: #e9e9e9; /* Slightly lighter gray on hover */
+}
+
+.meeting {
+	background-color: #ff6347; /* Red */
+	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	cursor: pointer; /* Add cursor pointer */
+	transition: background-color 0.2s; /* Reduced transition time */
+}
+
+.meeting:hover {
+	background-color: #e74c3c; /* Lighter red */
+}
+
+input[type="date"],
+button,
+select {
+	padding: 10px 20px;
+	margin: 10px 0;
+	border: none;
+	border-radius: 5px;
+	background-color: #ff6347; /* Red */
+	color: #fff;
+	cursor: pointer;
+	outline: none;
+	transition: background-color 0.2s; /* Reduced transition time */
+}
+
+input[type="date"]:hover,
+button:hover,
+select:hover {
+	background-color: #e74c3c; /* Lighter red */
+}
+
+input[type="date"]:focus,
+button:focus,
+select:focus {
+	background-color: #e74c3c; /* Lighter red */
+}
+
+.selected {
+	background-color: #6c757d; /* Gray */
+	color: white; /* White text */
+	font-weight: bold; /* Make text bold */
+}
+
+.selected:hover {
+	background-color: #495057; /* Darker gray */
+	color: white; /* White text */
+	font-weight: bold; /* Make text bold */
+}
+
+/* Add background box to days of the week (labels) */
+.day {
+	background-color: #f8f8f8; /* Light gray */
+	padding: 5px;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+/* Add background box to dates */
+.date {
+	background-color: #fff; /* White */
+	padding: 5px;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+/* Add borders and light gray background to labels */
+label {
+	margin-bottom: 5px;
+	border-bottom: 1px solid #ccc; /* Light gray border */
+	padding-bottom: 5px;
+	background-color: #f8f8f8; /* Light gray background */
+}
+
+/* Style the meeting options container */
+.meeting-options {
+	display: grid;
+	grid-template-columns: 1fr 1fr; /* Split into two sections */
+	gap: 20px; /* Add gap between sections */
+}
+
+/* Style the view/delete section */
+.view-delete-section {
+	background-color: #f0f0f0; /* Light gray */
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the create meeting section */
+.create-meeting-section {
+	background-color: #f0f0f0; /* Light gray */
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
