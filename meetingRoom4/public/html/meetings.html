@@ -17,36 +17,53 @@
 					<input type="date" id="startDate" onchange="validateDate()" />
 					<button id="prev-week" onclick="prevWeek()">Previous Week</button>
 					<button id="next-week" onclick="nextWeek()">Next Week</button>
-					<button onclick="loadCalendar()">Load Calendar</button>
+					<button id="deleteMeetingsButton" onclick="deleteSelectedMeetings()">
+						Delete Selected Meetings
+					</button>
 				</div>
 			</div>
 			<div id="calendar"></div>
 
-			<!-- Container for view/delete and create meetings -->
-			<div class="meeting-options">
-				<!-- View/delete meetings section -->
-				<div class="view-delete-section">
-					<h3>View/Delete Meetings</h3>
-					<div class="meetings-list">
-						<!-- Meetings list -->
-					</div>
-					<button onclick="deleteSelectedMeetings()">
-						Delete Selected Meetings
-					</button>
-				</div>
-
-				<!-- Create meeting section -->
+			<!-- Container for create meeting section -->
+			<div class="create-meeting-container">
+				<h3>Create Meeting</h3>
 				<div class="create-meeting-section">
-					<h3>Create Meeting</h3>
-					<input type="text" id="meetingDate" placeholder="Meeting Date" />
+					<label for="userID">User ID:</label>
 					<input
-						type="text"
+						type="number"
+						id="userID"
+						placeholder="Enter userID"
+						required
+					/>
+
+					<label for="meetingDate">Meeting Date:</label>
+					<input
+						type="date"
+						id="meetingDate"
+						class="custom-input"
+						placeholder="Meeting Date"
+						required
+					/>
+
+					<label for="meetingStart">Meeting Start Time:</label>
+					<input
+						type="time"
 						id="meetingStart"
 						placeholder="Meeting Start Time"
+						required
 					/>
-					<input type="text" id="meetingEnd" placeholder="Meeting End Time" />
-					<button onclick="createMeeting()">Create Meeting</button>
+
+					<label for="meetingEnd">Meeting End Time:</label>
+					<input
+						type="time"
+						id="meetingEnd"
+						placeholder="Meeting End Time"
+						required
+					/>
 				</div>
+				<button id="createMeetingButton" onclick="createMeeting()">
+					Create Meeting
+				</button>
 			</div>
 		</div>
 		<script src="../js/meetings.js"></script>

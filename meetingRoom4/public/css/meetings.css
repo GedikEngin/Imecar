@@ -1,5 +1,3 @@
-/* meetings.css */
-
 /* Global styles */
 body {
 	font-family: Arial, sans-serif;
@@ -112,33 +110,62 @@ select:focus {
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
 }
 
-/* Add borders and light gray background to labels */
-label {
-	margin-bottom: 5px;
-	border-bottom: 1px solid #ccc; /* Light gray border */
-	padding-bottom: 5px;
-	background-color: #f8f8f8; /* Light gray background */
-}
-
-/* Style the meeting options container */
-.meeting-options {
-	display: grid;
-	grid-template-columns: 1fr 1fr; /* Split into two sections */
-	gap: 20px; /* Add gap between sections */
-}
-
-/* Style the view/delete section */
-.view-delete-section {
-	background-color: #f0f0f0; /* Light gray */
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
 /* Style the create meeting section */
 .create-meeting-section {
 	background-color: #f0f0f0; /* Light gray */
 	padding: 20px;
 	border-radius: 10px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Create meeting container */
+.create-meeting-container {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 20px;
+}
+
+.create-meeting-section {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	background-color: #fff;
+	padding: 30px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+}
+
+/* Form input styling */
+.create-meeting-section label {
+	margin-bottom: 5px;
+}
+
+.create-meeting-section input[type="text"],
+.create-meeting-section input[type="time"],
+.create-meeting-section input[type="number"],
+.create-meeting-section select {
+	width: calc(100% - 10px);
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+/* Button styling */
+.create-meeting-container button {
+	padding: 10px 20px;
+	background-color: #ff6347;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+/* Button hover effect */
+.create-meeting-container button:hover {
+	background-color: #e74c3c;
+}
+
+.custom-input {
+	background-color: gray;
 }

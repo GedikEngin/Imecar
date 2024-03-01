@@ -93,6 +93,9 @@ function renderCalendar(meetings, startDate) {
 
 		calendar.appendChild(dayDiv);
 	}
+
+	// Display selected meetings in the "View/Delete Meetings" section
+	displaySelectedMeetings(meetings);
 }
 
 function addDays(dateString, days) {
@@ -142,10 +145,74 @@ function handleMeetingSelection(meetingID) {
 	// Add your logic here to handle the selected meeting
 }
 
-// Add event listener for room select dropdown
-document.getElementById("roomSelect").addEventListener("change", () => {
-	loadCalendar(); // Load calendar when a new room is selected
-});
+// Function to display selected meetings in the "View/Delete Meetings" section
+function displaySelectedMeetings(meetings) {
+	const meetingsList = document.querySelector(".meetings-list");
+	meetingsList.innerHTML = ""; // Clear previous meetings
 
-// Add event listener to the start date input field for validation
-document.getElementById("startDate").addEventListener("change", validateDate);
+	meetings.forEach((meeting) => {
+		const meetingItem = document.createElement("div");
+		meetingItem.textContent = `${meeting.meetingStart} - ${meeting.meetingEnd}`;
+		meetingsList.appendChild(meetingItem);
+	});
+}
+
+// Function to delete selected meetings
+async function deleteSelectedMeetings() {
+	const selectedMeetings = document.querySelectorAll(".selected");
+	const meetingIDs = Array.from(selectedMeetings).map((meeting) =>
+		meeting.getAttribute("data-meeting-id")
+	);
+
+	try {
+		for (const meetingID of meetingIDs) {
+			const response = await fetch(`/meeting/delete/meetingID/${meetingID}`, {
+				method: "DELETE",
+			});
+			if (!response.ok) {
+				throw new Error(`Failed to delete meeting with ID ${meetingID}`);
+			}
+		}
+		// Reload the calendar after deleting meetings
+		loadCalendar();
+	} catch (error) {
+		console.error("Error deleting meetings:", error.message);
+	}
+}
+
+// Function to create a meeting
+async function createMeeting() {
+	try {
+		const userID = document.getElementById("userID").value;
+		const roomID = document.getElementById("roomSelect").value;
+		const meetingDate = document.getElementById("meetingDate").value;
+		const meetingStart = document.getElementById("meetingStart").value;
+		const meetingEnd = document.getElementById("meetingEnd").value;
+
+		const response = await fetch("/meeting/create", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				userID,
+				roomID,
+				meetingDate,
+				meetingStart,
+				meetingEnd,
+			}),
+		});
+
+		const data = await response.json();
+
+		if (!response.ok) {
+			throw new Error(data.message || "Failed to create meeting");
+		}
+
+		// Reload the calendar after creating the meeting
+		loadCalendar();
+	} catch (error) {
+		console.error("Error creating meeting:", error.message);
+		alert("Failed to create meeting: " + error.message);
+	}
+}
