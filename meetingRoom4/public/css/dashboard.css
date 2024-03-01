@@ -11,7 +11,7 @@ body {
 	margin: 10vh auto 0;
 	display: grid;
 	grid-template-rows: 1fr 1fr;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr;
 	gap: 20px;
 	justify-content: center;
 	align-items: center;
