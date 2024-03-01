@@ -14,7 +14,6 @@ window.onload = function () {
 
 		loadCalendar();
 	} else {
-		console.log("yeet");
 		disableCalendarControls();
 		window.location.href = "index.html";
 	}

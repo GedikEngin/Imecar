@@ -1,26 +1,32 @@
 // userController.js
 
 const { User, connect } = require("../configs/dbConfig"); // importing relevant model (with sequelize) from dbconfig
+const { auth } = require("../middlewares/auth/auth"); // Import the auth object from auth.js
 
 exports.userController = {
 	// Controller function to register a new user
 	async register(req, res) {
 		await connect();
 		try {
+			const { username, password, permission, department } = req.body;
+
 			// Check if a user with the same username already exists
 			const existingUser = await User.findOne({
-				where: { username: req.body.username },
+				where: { username },
 			});
 			if (existingUser) {
 				return res.status(400).json({ message: "Username is already taken" });
 			}
 
+			// Hash the password
+			const hashedPassword = await auth.hashPassword(password);
+
 			// Create a new user in the database
 			const newUser = await User.create({
-				username: req.body.username,
-				password: req.body.password, // Make sure to hash the password before storing it in the database
-				permission: req.body.permission,
-				department: req.body.department,
+				username,
+				password: hashedPassword,
+				permission,
+				department,
 			});
 
 			res.status(201).json(newUser);
@@ -30,7 +36,6 @@ exports.userController = {
 		}
 	},
 
-	// Controller function to login a user
 	async login(req, res) {
 		await connect();
 		try {
@@ -38,17 +43,26 @@ exports.userController = {
 
 			// Find the user in the database
 			const user = await User.findOne({
-				where: { username: req.body.username },
+				where: { username },
 			});
 
-			// Verify password
-			if (!user || user.password !== password) {
+			if (!user) {
 				return res
 					.status(401)
 					.json({ message: "Invalid username or password" });
 			}
 
-			res.json(user);
+			// Check password
+			const passwordMatch = await auth.checkPassword(password, user.password);
+			if (!passwordMatch) {
+				return res
+					.status(401)
+					.json({ message: "Invalid username or password" });
+			}
+
+			// Generate JWT token
+			const token = auth.generateToken(user);
+			res.json({ token });
 		} catch (error) {
 			console.error("Error logging in user:", error);
 			res.status(500).json({ message: "Internal server error" });
