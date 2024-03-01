@@ -1,6 +1,14 @@
 // meetingController.js
 
-const { Meeting, Room, User, connect } = require("../configs/dbConfig");
+const {
+	Meeting,
+	Room,
+	User,
+	connect,
+	sequelize,
+} = require("../configs/dbConfig");
+const { Op } = require("sequelize");
+
 exports.meetingController = {
 	async createMeeting(req, res) {
 		await connect();
@@ -66,6 +74,28 @@ exports.meetingController = {
 			res.json(meetings);
 		} catch (error) {
 			console.error("Error retrieving meetings:", error);
+			res.status(500).json({ message: "Internal server error" });
+		}
+	},
+
+	async getAllMeetingsBetween(req, res) {
+		await connect();
+		try {
+			const { queryDateStart, queryDateEnd, roomID } = req.params;
+
+			// Find all meetings between the specified dates
+			const meetings = await Meeting.findAll({
+				where: {
+					meetingDate: {
+						[Op.between]: [queryDateStart, queryDateEnd],
+					},
+					roomID: roomID,
+				},
+			});
+
+			res.status(200).json(meetings);
+		} catch (error) {
+			console.error("Error retrieving meetings between dates:", error);
 			res.status(500).json({ message: "Internal server error" });
 		}
 	},

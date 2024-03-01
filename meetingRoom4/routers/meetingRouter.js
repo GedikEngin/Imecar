@@ -9,6 +9,12 @@ router.post("/create", createMeetingValidator, meetingController.createMeeting);
 // Route to get all meetings
 router.get("/meetings", meetingController.getAllMeetings);
 
+// Route to get all meetings between two dates
+router.get(
+	"/search/between/:queryDateStart/:queryDateEnd/:roomID",
+	meetingController.getAllMeetingsBetween
+);
+
 // Route to get meetings by room ID
 router.get(
 	"/search/:roomID/:meetingDate",
