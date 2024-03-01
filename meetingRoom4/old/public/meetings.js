@@ -1,35 +1,6 @@
-// Function to handle window onload event
 window.onload = async function () {
-	try {
-		const decodedToken = await decodeToken();
-
-		if (decodedToken) {
-			// If token is decoded successfully, use the decoded information
-			console.log("Decoded Token:", decodedToken);
-			loadRooms();
-		} else {
-			// If token decoding fails or not found
-			alert("Failed to decode token or token not found");
-		}
-	} catch (error) {
-		console.error("Error:", error);
-		alert("Error decoding token");
-	}
+	await loadRooms(); // Load rooms when the page loads
 };
-
-// Function to decode token by making a request to the server
-async function decodeToken() {
-	const response = await fetch("/cookies/decodeToken", {
-		credentials: "include", // Important for including cookies in the request
-	});
-	if (response.ok) {
-		const data = await response.json();
-		return data.decoded;
-	} else {
-		console.error("Failed to decode token:", response.statusText);
-		return null;
-	}
-}
 
 async function loadRooms() {
 	try {

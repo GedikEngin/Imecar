@@ -19,19 +19,19 @@ exports.auth = {
 
 	// This function takes a user object and returns a JWT token.
 	async generateToken(user, res) {
-		const { _id, id } = user;
-		const token = jwt.sign({ _id, id }, process.env.JWT_SECRET, {
+		const { userID } = user;
+		const token = jwt.sign({ userID }, process.env.JWT_SECRET, {
 			expiresIn: "1h",
 		});
 
 		// Set the token as a cookie
 		const tokenCookie = serialize("token", token, {
-			httpOnly: true,
+			httpOnly: false,
 			maxAge: 3600000, // 1 hour
-			secure: false, // Set to true in production (for HTTPS)
+			secure: false, // Set to true if you're using HTTPS
 			sameSite: "strict",
+			path: "/", // Ensure the cookie is available for all routes
 		});
-
 		// Add the cookie to the response headers
 		res.setHeader("Set-Cookie", tokenCookie);
 

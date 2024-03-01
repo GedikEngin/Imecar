@@ -2,6 +2,7 @@ const express = require("express");
 const userRouter = require("./routers/userRouter");
 const roomRouter = require("./routers/roomRouter");
 const meetingRouter = require("./routers/meetingRouter");
+const cookiesRouter = require("./routers/cookiesRouter");
 const { connect } = require("./configs/dbConfig"); // Import the connect function
 require("dotenv").config();
 
@@ -14,6 +15,7 @@ app.use(express.static("public")); // Serve static files from the public directo
 app.use("/user", userRouter);
 app.use("/room", roomRouter);
 app.use("/meeting", meetingRouter);
+app.use("/cookies", cookiesRouter);
 
 // Connect to the database when the server starts
 connect()
