@@ -12,7 +12,7 @@
 				<h2>Meeting Room Calendar</h2>
 				<div id="calendar-nav">
 					<select id="roomSelect">
-						<!-- Placeholder for room options -->
+						<option value="" disabled selected>Select a room</option>
 					</select>
 					<input type="date" id="startDate" onchange="validateDate()" />
 					<button id="prev-week" onclick="prevWeek()">Previous Week</button>
@@ -28,20 +28,20 @@
 			<div class="create-meeting-container">
 				<h3>Create Meeting</h3>
 				<div class="create-meeting-section">
-					<label for="userID">User ID:</label>
-					<input
-						type="number"
-						id="userID"
-						placeholder="Enter userID"
-						required
-					/>
-
 					<label for="meetingDate">Meeting Date:</label>
 					<input
 						type="date"
 						id="meetingDate"
 						class="custom-input"
 						placeholder="Meeting Date"
+						required
+					/>
+
+					<label for="userID">User ID:</label>
+					<input
+						type="number"
+						id="userID"
+						placeholder="Enter userID"
 						required
 					/>
 
