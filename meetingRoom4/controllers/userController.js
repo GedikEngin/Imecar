@@ -61,7 +61,7 @@ exports.userController = {
 			}
 
 			// Generate JWT token
-			const token = auth.generateToken(user);
+			const token = auth.generateToken(user, res);
 			res.json({ token });
 		} catch (error) {
 			console.error("Error logging in user:", error);

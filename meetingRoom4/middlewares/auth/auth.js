@@ -1,6 +1,7 @@
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { serialize } = require("cookie");
 
 const saltRounds = 10;
 const JWT_SECRET = process.env.JWT_SECRET; // Use JWT secret key from .env file
@@ -17,9 +18,24 @@ exports.auth = {
 	},
 
 	// This function takes a user object and returns a JWT token.
-	async generateToken(user) {
+	async generateToken(user, res) {
 		const { _id, id } = user;
-		return jwt.sign({ _id, id }, JWT_SECRET, { expiresIn: "1h" });
+		const token = jwt.sign({ _id, id }, process.env.JWT_SECRET, {
+			expiresIn: "1h",
+		});
+
+		// Set the token as a cookie
+		const tokenCookie = serialize("token", token, {
+			httpOnly: true,
+			maxAge: 3600000, // 1 hour
+			secure: false, // Set to true in production (for HTTPS)
+			sameSite: "strict",
+		});
+
+		// Add the cookie to the response headers
+		res.setHeader("Set-Cookie", tokenCookie);
+
+		return token;
 	},
 
 	//This function takes a user object and returns a refresh token.
