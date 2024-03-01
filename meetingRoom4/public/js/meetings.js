@@ -24,7 +24,12 @@ async function decodeToken() {
 	});
 	if (response.ok) {
 		const data = await response.json();
-		return data.decoded;
+		const decodedToken = data.decoded;
+		if (decodedToken) {
+			// Populate the userID field in the HTML
+			document.getElementById("userID").value = decodedToken.userID;
+		}
+		return decodedToken;
 	} else {
 		console.error("Failed to decode token:", response.statusText);
 		return null;
@@ -63,10 +68,15 @@ async function loadRooms() {
 	}
 }
 
-async function loadCalendar() {
+async function loadCalendar(roomID, startDate) {
 	try {
-		const roomID = document.getElementById("roomSelect").value;
-		const startDate = document.getElementById("startDate").value;
+		if (!roomID) {
+			roomID = document.getElementById("roomSelect").value;
+		}
+		if (!startDate) {
+			startDate = document.getElementById("startDate").value;
+		}
+
 		const endDate = addDays(startDate, 6);
 		const response = await fetch(
 			`/meeting/search/between/${startDate}/${endDate}/${roomID}`
@@ -245,3 +255,9 @@ async function createMeeting() {
 		alert("Failed to create meeting: " + error.message);
 	}
 }
+
+document
+	.getElementById("roomSelect")
+	.addEventListener("change", async function () {
+		await loadCalendar(); // Trigger loading meetings for the selected room and current date range
+	});
