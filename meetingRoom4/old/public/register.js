@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	registerForm.addEventListener("submit", async function (event) {
 		event.preventDefault();
-
 		const formData = new FormData(registerForm);
 		const username = formData.get("username");
 		const password = formData.get("password");
@@ -12,7 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		const department = formData.get("department");
 
 		try {
-			const response = await fetch("/user/register", {
+			const response = await fetch("/register", {
+				// Updated URL
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
