@@ -1,0 +1,86 @@
+/* Global styles */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f8f8f8;
+}
+
+.container {
+	width: 30%;
+	margin: 10vh auto 0;
+	display: grid;
+	grid-template-rows: auto auto;
+	gap: 20px;
+	justify-content: center;
+	align-items: center;
+	background-color: #f8f8f8;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	padding: 20px;
+	border-radius: 10px;
+}
+
+/* Title */
+.page-title {
+	grid-column: 1 / span 2;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+/* Row */
+.row {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 20px;
+}
+
+/* Column */
+.column {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	background-color: #fff;
+	padding: 30px;
+	height: 300px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+}
+
+/* Form input styling */
+label {
+	margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+	width: calc(100% - 10px);
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+select {
+	width: calc(102%);
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+/* Button styling */
+button {
+	padding: 10px 20px;
+	background-color: #ff6347;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+/* Button hover effect */
+button:hover {
+	background-color: #e74c3c;
+}

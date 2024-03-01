@@ -10,7 +10,7 @@
 	justify-content: center;
 	align-items: center;
 	background-color: #f8f8f8;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	padding: 20px;
 	border-radius: 10px; /* Rounded edges */
 }
@@ -38,7 +38,7 @@
 	background-color: #fff;
 	padding: 50px; /* Increase padding for wider appearance */
 	height: 300px; /* Increase height */
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 	border-radius: 10px; /* Rounded edges */
 }
 
@@ -70,11 +70,18 @@ label {
 }
 
 input[type="text"],
-input[type="number"],
-select {
+input[type="number"] {
 	width: calc(100% - 10px); /* Adjust width to account for padding */
 	padding: 10px;
 	margin-bottom: 10px;
 	border: 1px solid #ccc;
 	border-radius: 5px; /* Rounded edges */
+}
+
+select {
+	width: calc(104%);
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
 }

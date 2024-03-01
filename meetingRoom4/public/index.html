@@ -4,18 +4,66 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Meeting Room App</title>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-			integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		/>
+		<style>
+			/* Global styles */
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+				background-color: #f8f8f8;
+			}
+
+			.container {
+				width: 50%;
+				height: auto; /* Adjusted height */
+				margin: 10vh auto; /* 5vh spacing from the top and bottom */
+				display: grid;
+				grid-template-rows: 6vh 1fr; /* 6vh for title, 1fr for buttons */
+				grid-template-columns: 50vh; /* 10vh spacing between the buttons */
+				justify-content: center;
+				align-items: center;
+				background-color: #f8f8f8;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+				padding: 20px;
+				border-radius: 10px;
+			}
+
+			/* Title */
+			.page-title {
+				grid-row: 1 / span 1; /* Spanning the first row */
+				grid-column: 1 / span 2; /* Spanning both columns */
+				text-align: center;
+				font-size: 24px;
+				font-weight: bold;
+				margin-bottom: 5vh;
+				margin-top: 4vh;
+			}
+
+			/* Button styling */
+			button {
+				padding: 30px 60px; /* Larger padding */
+				background-color: #ff6347;
+				color: #fff;
+				border: none;
+				cursor: pointer;
+				border-radius: 5px;
+				font-size: 18px;
+				width: 40vh; /* Fixed width */
+				margin-top: 1vh; /* Adjusted */
+			}
+
+			/* Button hover effect */
+			button:hover {
+				background-color: #e74c3c;
+			}
+		</style>
 	</head>
 	<body>
-		<h1>Welcome to the Meeting Room App</h1>
-		<button onclick="redirectToRegister()">Register</button>
-		<button onclick="redirectToLogin()">Login</button>
+		<div class="container">
+			<h1 class="page-title">Welcome to the Meeting Room App</h1>
+			<button onclick="redirectToRegister()">Register</button>
+			<button onclick="redirectToLogin()">Login</button>
+		</div>
 
 		<script>
 			function redirectToRegister() {
