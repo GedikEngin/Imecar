@@ -1,11 +1,12 @@
-class UserDTO {
-	constructor(id) {
-		this.id = id;
-	}
+// userDTO.js
 
-	static convertToDTO(userEntity) {
-		return new UserDTO(userEntity.id);
+class UserDTO {
+	constructor(userID, username, permission, department) {
+		this.userID = userID;
+		this.username = username;
+		this.permission = permission;
+		this.department = department;
 	}
 }
 
-module.exports = UserDTO;
+module.exports = { UserDTO };
