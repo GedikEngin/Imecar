@@ -19,7 +19,8 @@ window.onload = async function () {
 
 // Function to decode token by making a request to the server
 async function decodeToken() {
-	const response = await fetch("/cookies/decodeToken", {
+	const response = await fetch("/auth/decodeToken", {
+		// Update the endpoint path
 		credentials: "include", // Important for including cookies in the request
 	});
 	if (response.ok) {

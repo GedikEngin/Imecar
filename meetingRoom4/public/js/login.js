@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		try {
 			const response = await fetch("/user/login", {
-				// Updated URL
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -19,7 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
 			});
 
 			if (response.ok) {
-				window.location.href = "../html/dashboard.html"; // Redirect to dashboard on successful login
+				const data = await response.json();
+				// Redirect to dashboard on successful login
+				window.location.href = "../html/dashboard.html";
 			} else {
 				const data = await response.json();
 				message.textContent = data.message;

@@ -1,8 +1,9 @@
 const express = require("express");
+const cookieParser = require("cookie-parser"); // Import cookie-parser
 const userRouter = require("./routers/userRouter");
 const roomRouter = require("./routers/roomRouter");
 const meetingRouter = require("./routers/meetingRouter");
-const cookiesRouter = require("./routers/cookiesRouter");
+const authRouter = require("./routers/authRouter"); // Update to authRouter
 const { connect } = require("./configs/dbConfig"); // Import the connect function
 require("dotenv").config();
 
@@ -10,12 +11,13 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(express.json());
+app.use(cookieParser()); // Use cookie-parser middleware
 app.use(express.static("public")); // Serve static files from the public directory
 
 app.use("/user", userRouter);
 app.use("/room", roomRouter);
 app.use("/meeting", meetingRouter);
-app.use("/cookies", cookiesRouter);
+app.use("/auth", authRouter); // Updated to use authRouter
 
 // Connect to the database when the server starts
 connect()

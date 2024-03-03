@@ -1,7 +1,7 @@
 // userController.js
 
 const { User, connect } = require("../configs/dbConfig"); // importing relevant model (with sequelize) from dbconfig
-const { auth } = require("../middlewares/auth/auth"); // Import the auth object from auth.js
+const { auth, tokens, cookies } = require("../middlewares/auth/auth"); // Import the auth object from auth.js
 
 exports.userController = {
 	// Controller function to register a new user
@@ -60,9 +60,21 @@ exports.userController = {
 					.json({ message: "Invalid username or password" });
 			}
 
-			// Generate JWT token
-			const token = auth.generateToken(user, res);
-			res.json({ token });
+			// Generate JWT tokens
+			const accessToken = await tokens.generateAccessToken(user.userID);
+			const refreshToken = await tokens.generateRefreshToken(user.userID);
+
+			// Set access token as a cookie
+			res.cookie("accessToken", accessToken, {
+				httpOnly: false, // Access token should be accessible by JavaScript
+			});
+
+			// Set refresh token as an HTTP-only cookie
+			res.cookie("refreshToken", refreshToken, {
+				httpOnly: true, // Refresh token should not be accessible by JavaScript
+			});
+
+			res.json({ message: "Login successful" });
 		} catch (error) {
 			console.error("Error logging in user:", error);
 			res.status(500).json({ message: "Internal server error" });
