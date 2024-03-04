@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>LED Controller</title>
+	</head>
+	<body>
+		<h1>LED Controller</h1>
+		<button onclick="setColor(255, 0, 0)">Set Red</button>
+		<button onclick="setColor(0, 0, 255)">Set Blue</button>
+		<button onclick="setColor(0, 255, 0)">Set Green</button>
+
+		<script>
+			function setColor(red, green, blue) {
+				fetch(`/setcolor?red=${red}&green=${green}&blue=${blue}`)
+					.then((response) => response.text())
+					.then((data) => console.log(data))
+					.catch((error) => console.error("Error:", error));
+			}
+		</script>
+	</body>
+</html>
