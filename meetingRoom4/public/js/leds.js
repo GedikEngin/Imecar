@@ -2,14 +2,13 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 	// Function to send requests to the server to control the LED
-
-	function sendRequest(endpoint) {
+	function sendRequest(endpoint, data = {}) {
 		fetch(`/led/${endpoint}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({}),
+			body: JSON.stringify(data),
 		})
 			.then((response) => {
 				if (!response.ok) {
@@ -25,21 +24,15 @@ document.addEventListener("DOMContentLoaded", function () {
 			});
 	}
 
-	// Event listeners for the buttons
-
-	document.getElementById("setRed").addEventListener("click", function () {
-		sendRequest("setRed");
-	});
-
-	document.getElementById("setYellow").addEventListener("click", function () {
-		sendRequest("setYellow");
-	});
-
-	document.getElementById("setGreen").addEventListener("click", function () {
-		sendRequest("setGreen");
-	});
-
-	document.getElementById("toggleBlink").addEventListener("click", function () {
-		sendRequest("toggleBlink");
-	});
+	// Event listener for the container, delegating to the buttons
+	document
+		.querySelector(".container")
+		.addEventListener("click", function (event) {
+			if (event.target.classList.contains("setLed")) {
+				const hue = event.target.id;
+				sendRequest("setLed", { hue });
+			} else if (event.target.id === "toggleBlink") {
+				sendRequest("toggleBlink");
+			}
+		});
 });
