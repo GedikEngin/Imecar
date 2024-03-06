@@ -11,7 +11,7 @@ body {
 	margin: 10vh auto 0;
 	display: grid;
 	grid-template-rows: 1fr 1fr;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
 	gap: 20px;
 	justify-content: center;
 	align-items: center;
@@ -23,7 +23,7 @@ body {
 
 /* Title */
 .page-title {
-	grid-column: 1 / span 3; /* Span across all three columns */
+	grid-column: 1 / span 4; /* Span across all three columns */
 	text-align: center;
 	font-size: 24px;
 	font-weight: bold;

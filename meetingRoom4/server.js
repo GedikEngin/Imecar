@@ -2,6 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser"); // Import cookie-parser
 const userRouter = require("./routers/userRouter");
 const roomRouter = require("./routers/roomRouter");
+const ledRouter = require("./routers/ledRouter");
 const meetingRouter = require("./routers/meetingRouter");
 const authRouter = require("./routers/authRouter"); // Update to authRouter
 const { connect } = require("./configs/dbConfig"); // Import the connect function
@@ -17,7 +18,8 @@ app.use(express.static("public")); // Serve static files from the public directo
 app.use("/user", userRouter);
 app.use("/room", roomRouter);
 app.use("/meeting", meetingRouter);
-app.use("/auth", authRouter); // Updated to use authRouter
+app.use("/auth", authRouter);
+app.use("/led", ledRouter);
 
 // Connect to the database when the server starts
 connect()
