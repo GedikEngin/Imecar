@@ -4,13 +4,24 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
 		<title>LED Controller</title>
+		<link
+			rel="stylesheet"
+			href="../css/leds.css"
+		/>
 	</head>
 	<body>
-		<button id="redButton">Red</button>
-		<button id="greenButton">Green</button>
-
+		<div class="container">
+			<h1 class="page-title">LED Controls</h1>
+			<button id="redButton">Red</button>
+			<button id="greenButton">Green</button>
+			<button id="toggleBlink">Toggle Blink</button>
+			<button id="clearButton">Clear LEDs</button>
+		</div>
 		<script src="../js/leds.js"></script>
 	</body>
 </html>
