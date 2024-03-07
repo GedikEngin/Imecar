@@ -1,4 +1,5 @@
 // can be used to control more advanced led functions that cant easily be defined as preset functions within the cpp code of the esp32
+const axios = require("axios");
 
 const stringToHue = {
 	blue: 170,
@@ -24,10 +25,8 @@ exports.ledControls = {
 		saturation = saturation || 255;
 		value = value || 255;
 
-		console.log("hue");
-		console.log(hue);
 		// Check if hue is a color name, if so, replace it with its corresponding hue value
-		if (stringToHue[hue]) {
+		if (stringToHue[hue] || hue === "red") {
 			hue = stringToHue[hue];
 		}
 
@@ -38,38 +37,28 @@ exports.ledControls = {
 			value: parseInt(value),
 		};
 
-		console.log("Body:");
-		console.log(req.body);
-		console.log("");
-		console.log("");
-		console.log("");
-		console.log("data:");
-		console.log(data);
+		console.error("data");
+		console.error(data);
 
 		try {
-			// Send request to ESP32 endpoint using fetch
-			const response = await fetch("http://192.168.4.1/esp32/setLeds", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data),
-			});
+			// Send request to ESP32 endpoint using Axios
+			console.error("data");
+			const response = await axios.post(
+				"http://192.168.4.1/esp32/setLeds",
+				data
+			);
+			console.error("data");
 
 			// Check if response is successful
-			if (!response.ok) {
-				throw new Error("Network response was not ok");
+			if (!response.data || response.status !== 200) {
+				throw new Error("Invalid response from ESP32");
 			}
-
-			// Parse response body as JSON
-			const responseData = await response.json();
-			console.log(responseData); // Log response data
 
 			// Send success response to the client
 			res.status(200).json({ message: "LEDs set to specified color" });
 		} catch (error) {
 			// Handle errors
-			console.error("There was a problem with the fetch operation:", error);
+			console.error("There was a problem with the Axios request:", error);
 			// Send error response to the client
 			res.status(500).json({ error: "Internal server error" });
 		}
