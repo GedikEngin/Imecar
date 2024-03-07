@@ -29,31 +29,35 @@
 						<!-- Options will be dynamically populated by JavaScript -->
 					</select>
 
-					<label for="hueSlider">Hue:</label>
+					<label for="hueSlider">Hue: <span id="hueValue">0</span></label>
 					<input
 						type="range"
 						id="hueSlider"
 						class="slider"
 						min="0"
-						max="360"
+						max="255"
 					/>
 
-					<label for="saturationSlider">Saturation:</label>
+					<label for="saturationSlider"
+						>Saturation: <span id="saturationValue">0</span></label
+					>
 					<input
 						type="range"
 						id="saturationSlider"
 						class="slider"
 						min="0"
-						max="100"
+						max="255"
 					/>
 
-					<label for="valueSlider">Value (Brightness):</label>
+					<label for="valueSlider"
+						>Value (Brightness): <span id="valueBrightness">0</span></label
+					>
 					<input
 						type="range"
 						id="valueSlider"
 						class="slider"
 						min="0"
-						max="100"
+						max="255"
 					/>
 
 					<!-- First Button Row -->
