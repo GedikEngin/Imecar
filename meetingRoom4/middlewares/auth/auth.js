@@ -24,11 +24,11 @@ exports.auth = {
 exports.tokens = {
 	// Functions related to tokens
 	async generateAccessToken(userID) {
-		return jwt.sign({ userID }, JWT_SECRET, { expiresIn: "15m" });
+		return jwt.sign({ userID }, JWT_SECRET, { expiresIn: "2h" });
 	},
 
 	async generateRefreshToken(userID) {
-		return jwt.sign({ userID }, JWT_REFRESH_SECRET, { expiresIn: "1.5h" });
+		return jwt.sign({ userID }, JWT_REFRESH_SECRET, { expiresIn: "24h" });
 	},
 };
 
