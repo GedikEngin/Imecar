@@ -1,38 +1,29 @@
 // leds.js
-
 document.addEventListener("DOMContentLoaded", function () {
-	// Function to send requests to the server to control the LED
-	function sendRequest(endpoint, data = {}) {
-		fetch(`/led/${endpoint}`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		})
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error("Network response was not ok");
-				}
-				return response.json();
-			})
-			.then((data) => {
-				console.log(data);
-			})
-			.catch((error) => {
-				console.error("There was a problem with the fetch operation:", error);
-			});
-	}
+	document.getElementById("redButton").addEventListener("click", function () {
+		setLeds(0, 255, 255); // Set LEDs to red
+	});
 
-	// Event listener for the container, delegating to the buttons
-	document
-		.querySelector(".container")
-		.addEventListener("click", function (event) {
-			if (event.target.classList.contains("setLed")) {
-				const hue = event.target.id;
-				sendRequest("setLed", { hue });
-			} else if (event.target.id === "toggleBlink") {
-				sendRequest("toggleBlink");
+	document.getElementById("greenButton").addEventListener("click", function () {
+		setLeds(85, 255, 255); // Set LEDs to green
+	});
+
+	function setLeds(hue, saturation, value) {
+		var xhr = new XMLHttpRequest();
+		xhr.open(
+			"GET",
+			`http://192.168.4.1:8080/esp32/setLeds?hue=${hue}&saturation=${saturation}&value=${value}`,
+			true
+		);
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					console.log(xhr.responseText);
+				} else {
+					console.error("Error:", xhr.statusText);
+				}
 			}
-		});
+		};
+		xhr.send();
+	}
 });

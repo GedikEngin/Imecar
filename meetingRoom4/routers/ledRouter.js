@@ -9,6 +9,4 @@ router.post("/setLed", ledControls.setLeds);
 
 router.post("/toggleBlink", ledControls.toggleBlink);
 
-router.post("/func2", ledControls.func2);
-
 module.exports = router;
