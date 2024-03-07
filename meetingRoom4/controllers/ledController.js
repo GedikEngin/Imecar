@@ -102,7 +102,18 @@ exports.ledControls = {
 		}
 	},
 
-	async setMeetingLed(color) {
-		// Logic to control LED based on color
+	async setLedsUI(req, res) {
+		try {
+			const { microEspIP, hue, saturation, value } = req.body;
+			console.log(req.body);
+
+			// Construct URL with query parameters
+			const url = `http://${microEspIP}/esp32/setLeds?hue=${hue}&saturation=${saturation}&value=${value}`;
+			// Send GET request with Axios
+			const response = await axios.get(url);
+			res.json(response.data);
+		} catch (error) {
+			res.status(500).json({ error: error.message });
+		}
 	},
 };

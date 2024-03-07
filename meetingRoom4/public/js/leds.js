@@ -17,6 +17,12 @@ document
 		const saturation = document.getElementById("saturationSlider").value;
 		const value = document.getElementById("valueSlider").value;
 
+		// Get the selected MicroEsp IP from the dropdown
+		const microEspSelect = document.getElementById("microEspSelect");
+		const selectedIndex = microEspSelect.selectedIndex;
+		const microEspIP =
+			microEspSelect.options[selectedIndex].getAttribute("data-ip");
+
 		try {
 			const response = await fetch("/led/setLedUI", {
 				method: "POST",
@@ -27,6 +33,7 @@ document
 					hue,
 					saturation,
 					value,
+					microEspIP, // Pass the MicroEsp IP along with hue, saturation, and value
 				}),
 			});
 
@@ -88,6 +95,7 @@ async function fetchMicroEsps() {
 					const option = document.createElement("option");
 					option.value = microEsp.microEspID;
 					option.textContent = `${room.roomName} --- ${microEsp.microEspIP} --- ${deviceType}`;
+					option.setAttribute("data-ip", microEsp.microEspIP); // Add MicroEsp IP as a data attribute
 					microEspSelect.appendChild(option);
 				} else {
 					console.error(

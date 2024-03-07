@@ -17,7 +17,7 @@ router.get("/search/microEspID/:microEspID", microEspController.getMicroEspID);
 // Route to delete a MicroEsp by ID
 router.delete("/delete/microEspID/:microEspID", microEspController.deleteMicroEspID);
 
-// Route to delete a MicroEsp by IP
+// Route to delete a MicroEsp by IP and roomID
 router.delete("/delete/microEspIPRoomID/:microEspIP/:roomID", microEspController.deleteMicroEspIPRoomID);
 
 module.exports = router;
