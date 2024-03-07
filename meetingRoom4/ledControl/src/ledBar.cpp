@@ -29,7 +29,7 @@ void setup()
     server.on("/esp32/setLeds", HTTP_GET, [](AsyncWebServerRequest *request)
               {
                   String path = request->url(); // Get the whole URI
-                  Serial.println("Received URL: " + path);
+                  Serial.println("Received URL: " + request->url());
 
                   // Parse URL parameters
                   int hue = 0;
@@ -40,11 +40,6 @@ void setup()
                       saturation = request->getParam("saturation")->value().toInt();
                       value = request->getParam("value")->value().toInt();
                   }
-
-                  Serial.println("Parsed values:");
-                  Serial.println("hue: " + String(hue));
-                  Serial.println("saturation: " + String(saturation));
-                  Serial.println("value: " + String(value));
 
                   // Set LEDs using CHSV color assignment
                   for (int i = 0; i < NUM_LEDS; i++) {
