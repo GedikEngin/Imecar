@@ -2,10 +2,12 @@ const { Sequelize } = require("sequelize");
 const userModel = require("../models/userModel");
 const roomModel = require("../models/roomModel");
 const meetingModel = require("../models/meetingModel");
+const microEspModel = require("../models/microEspModel");
+
 require("dotenv").config();
 
 const sequelize = new Sequelize({
-	logging: false,
+	// logging: false,
 	host: process.env.DB_HOST,
 	username: process.env.DB_USER,
 	password: process.env.DB_PASSWORD,
@@ -22,6 +24,9 @@ const sequelize = new Sequelize({
 const User = userModel(sequelize, Sequelize);
 const Room = roomModel(sequelize, Sequelize);
 const Meeting = meetingModel(sequelize, Sequelize);
+const MicroEsp = microEspModel(sequelize, Sequelize); // Add this line
+
+let isConnected = false;
 
 // Define associations
 User.hasMany(Meeting, { foreignKey: "userID" });
@@ -29,6 +34,9 @@ Meeting.belongsTo(User, { foreignKey: "userID" });
 
 Room.hasMany(Meeting, { foreignKey: "roomID" });
 Meeting.belongsTo(Room, { foreignKey: "roomID" });
+
+Room.hasMany(MicroEsp, { foreignKey: "roomID" });
+MicroEsp.belongsTo(Room, { foreignKey: "roomID" });
 
 // Custom Sync function to ensure correct order of table creation
 async function customSync() {
@@ -47,6 +55,10 @@ async function customSync() {
 		await Meeting.sync({ force: false });
 		console.log("Meetings table synced successfully.");
 
+		// Sync MicroEsp last to ensure foreign keys are available
+		await MicroEsp.sync({ force: false });
+		console.log("MicroEsp table synced successfully.");
+
 		console.log("All tables synced successfully.");
 	} catch (error) {
 		console.error("Error syncing tables: ", error);
@@ -57,10 +69,17 @@ async function customSync() {
 customSync();
 
 // Connect function
+
 async function connect() {
 	try {
-		await sequelize.authenticate();
-		console.log("Connection has been established successfully.");
+		if (!isConnected) {
+			await sequelize.authenticate();
+			console.log("Connection has been established successfully.");
+			isConnected = true;
+		} else {
+			// If already connected, re-authenticate without logging anything to the console
+			await sequelize.authenticate();
+		}
 	} catch (error) {
 		console.error("Unable to connect to the database:", error);
 	}
@@ -76,4 +95,4 @@ async function close() {
 	}
 }
 
-module.exports = { sequelize, User, Room, Meeting, connect, close };
+module.exports = { sequelize, User, Room, Meeting, MicroEsp, connect, close };

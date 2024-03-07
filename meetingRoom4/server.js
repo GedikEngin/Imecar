@@ -1,16 +1,17 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
 
-const cookieParser = require("cookie-parser");
 const userRouter = require("./routers/userRouter");
 const roomRouter = require("./routers/roomRouter");
 const meetingRouter = require("./routers/meetingRouter");
-const ledRouter = require("./routers/ledRouter");
 const authRouter = require("./routers/authRouter");
-const { connect } = require("./configs/dbConfig");
+const ledRouter = require("./routers/ledRouter");
+const microEspRouter = require("./routers/microEspRouter");
+
 const cron = require("node-cron");
-const { ledControls } = require("./controllers/ledController");
+const cookieParser = require("cookie-parser");
+const { connect } = require("./configs/dbConfig");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -20,26 +21,14 @@ app.use(cookieParser());
 app.use(express.static("public"));
 app.use(cors());
 
+// Mount routers
 app.use("/user", userRouter);
 app.use("/room", roomRouter);
 app.use("/meeting", meetingRouter);
 app.use("/auth", authRouter);
 app.use("/led", ledRouter);
+app.use("/microesp", microEspRouter);
 
-// regular start:
-// connect()
-// 	.then(() => {
-// 		// Start the server after establishing the database connection
-// 		app.listen(port, () => {
-// 			console.log(`Server is running on port ${port}`);
-// 		});
-// 	})
-// 	.catch((error) => {
-// 		console.error("Error connecting to the database:", error);
-// 		process.exit(1); // Exit with error
-// 	});
-
-// start with check meeting:
 async function startServer() {
 	try {
 		await connect();
@@ -49,21 +38,20 @@ async function startServer() {
 			console.log(`Server is running on port ${port}`);
 		});
 
-		// Wait for 10 seconds before scheduling the checkNextMeeting function
+		// Initial check after 2.5 seconds
 		setTimeout(() => {
-			// Schedule the checkNextMeeting function to run every 5 minutes
-			cron.schedule("*/5 * * * *", () => {
-				console.log("Running checkNextMeeting every 5 minutes");
-				ledControls.checkNextMeeting();
-			});
+			console.log("Running initial checkNextMeeting after 2.5 seconds");
+			ledRouter.get("/checkNextMeeting");
+		}, 2500);
 
-			// Call checkNextMeeting upon starting the server
-			console.log("Running checkNextMeeting upon starting the server");
-			ledControls.checkNextMeeting();
-		}, 2500); // 10 seconds delay
+		// Schedule the checkNextMeeting function to run every 5 minutes
+		cron.schedule("*/5 * * * *", () => {
+			console.log("Running checkNextMeeting every 5 minutes");
+			ledRouter.get("/checkNextMeeting");
+		});
 	} catch (error) {
 		console.error("Error connecting to the database:", error);
-		process.exit(1); // Exit with error
+		process.exit(1);
 	}
 }
 

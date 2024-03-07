@@ -9,7 +9,7 @@
 		<title>LED Control and MicroEsp Addition</title>
 		<link
 			rel="stylesheet"
-			href="../css/leds.css"
+			href="../css/temp.css"
 		/>
 	</head>
 	<body>
@@ -47,7 +47,7 @@
 						max="100"
 					/>
 
-					<label for="valueSlider">Value (Brightness):</label>
+					<label for="valueSlider">Value:</label>
 					<input
 						type="range"
 						id="valueSlider"
@@ -102,10 +102,11 @@
 				<form id="addMicroEspForm">
 					<label for="roomSelect">Room Name:</label>
 					<select
-						name="roomID"
+						name="room"
 						id="roomSelect"
 					>
-						<option value="">-- Please choose a room --</option>
+						<option value="">-- Please choose an option --</option>
+						<!-- Options will be dynamically populated by JavaScript -->
 					</select>
 
 					<label for="deviceTypeSelect">Device Type:</label>
@@ -123,20 +124,13 @@
 						id="microEspIP"
 						name="microEspIP"
 						required
-						placeholder="IP Address:Port"
 					/>
 
 					<button type="submit">Add MicroEsp</button>
-					<button
-						type="button"
-						id="deleteByIPButton"
-					>
-						Delete By IP
-					</button>
 				</form>
 			</div>
 		</main>
 
-		<script src="../js/leds.js"></script>
+		<script src="../js/scripts.js"></script>
 	</body>
 </html>

@@ -2,9 +2,15 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
 		<title>Rooms</title>
-		<link rel="stylesheet" href="../css/rooms.css" />
+		<link
+			rel="stylesheet"
+			href="../css/rooms.css"
+		/>
 	</head>
 	<body>
 		<main class="main-container">
@@ -16,27 +22,44 @@
 			<!-- Row 2: Containers -->
 			<div class="row">
 				<!-- Row 2 Column 1: Existing Rooms -->
-				<div class="column" id="existingRoomsContainer">
+				<div
+					class="column"
+					id="existingRoomsContainer"
+				>
 					<h2>Existing Rooms</h2>
 
 					<!-- New Select Element -->
 					<label for="roomSelect">Select a room:</label>
-					<select name="rooms" id="roomSelect">
+					<select
+						name="rooms"
+						id="roomSelect"
+					>
 						<option value="">--Please choose an option--</option>
 						<!-- Options will be dynamically populated by JavaScript -->
 					</select>
 
-					<button class="delete-button" id="deleteRoomButton">
+					<button
+						class="delete-button"
+						id="deleteRoomButton"
+					>
 						Delete Room
 					</button>
 				</div>
 
 				<!-- Row 2 Column 2: Create New Room Form -->
-				<div class="column" id="createRoomContainer">
+				<div
+					class="column"
+					id="createRoomContainer"
+				>
 					<h2>Create New Room</h2>
 					<form id="createRoomForm">
 						<label for="roomName">Room Name:</label>
-						<input type="text" id="roomName" name="roomName" required /><br />
+						<input
+							type="text"
+							id="roomName"
+							name="roomName"
+							required
+						/><br />
 
 						<label for="minPermission">Minimum Permission:</label>
 						<input
@@ -49,7 +72,11 @@
 						/><br />
 
 						<label for="department">Department:</label>
-						<select id="department" name="department" required>
+						<select
+							id="department"
+							name="department"
+							required
+						>
 							<option value="software">Software</option>
 							<option value="engineering">Engineering</option>
 							<option value="design">Design</option>
