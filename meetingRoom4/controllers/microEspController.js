@@ -58,6 +58,18 @@ exports.microEspController = {
 		}
 	},
 
+	async getMicroEspIP(roomID) {
+		try {
+			const microEsp = await MicroEsp.findOne({
+				where: { roomID, microEspLed: true },
+			});
+			return microEsp;
+		} catch (error) {
+			console.error("Error retrieving MicroEsp:", error);
+			throw error; // Re-throw the error to handle it in the calling function
+		}
+	},
+
 	async deleteMicroEspID(req, res) {
 		await connect();
 		try {

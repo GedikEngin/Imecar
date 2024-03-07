@@ -6,8 +6,10 @@ const userRouter = require("./routers/userRouter");
 const roomRouter = require("./routers/roomRouter");
 const meetingRouter = require("./routers/meetingRouter");
 const authRouter = require("./routers/authRouter");
-const ledRouter = require("./routers/ledRouter");
 const microEspRouter = require("./routers/microEspRouter");
+const ledRouter = require("./routers/ledRouter");
+
+const { ledControls } = require("./controllers/ledController"); // Import ledControls
 
 const cron = require("node-cron");
 const cookieParser = require("cookie-parser");
@@ -39,15 +41,15 @@ async function startServer() {
 		});
 
 		// Initial check after 2.5 seconds
-		setTimeout(() => {
+		setTimeout(async () => {
 			console.log("Running initial checkNextMeeting after 2.5 seconds");
-			ledRouter.get("/checkNextMeeting");
+			await ledControls.checkNextMeeting(); // Call checkNextMeeting directly
 		}, 2500);
 
-		// Schedule the checkNextMeeting function to run every 5 minutes
-		cron.schedule("*/5 * * * *", () => {
-			console.log("Running checkNextMeeting every 5 minutes");
-			ledRouter.get("/checkNextMeeting");
+		// Schedule the checkNextMeeting function to run every 1 minute
+		cron.schedule("*/1 * * * *", async () => {
+			console.log("Running checkNextMeeting every 1 minute");
+			await ledControls.checkNextMeeting(); // Call checkNextMeeting directly
 		});
 	} catch (error) {
 		console.error("Error connecting to the database:", error);

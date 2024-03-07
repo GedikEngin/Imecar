@@ -1,7 +1,7 @@
-// can be used to control more advanced led functions that cant easily be defined as preset functions within the cpp code of the esp32
 const axios = require("axios");
 const { roomController } = require("../controllers/roomController");
 const { meetingController } = require("../controllers/meetingController");
+const { microEspController } = require("../controllers/microEspController"); // Import microEspController
 
 const stringToHue = {
 	blue: 170,
@@ -41,23 +41,31 @@ exports.ledControls = {
 		}
 	},
 
-	async checkNextMeeting(req, res) {
+	// Function to check the status of upcoming meetings and control LEDs accordingly
+	async checkNextMeeting() {
 		try {
 			// Get current date and time
 			const currentDate = new Date();
 
-			// Get all rooms using getAllRoomsLed
+			// Fetch all rooms
 			const rooms = await roomController.getAllRoomsLed();
 
 			// Iterate over each room
 			for (const room of rooms) {
-				// Get meetings for the current room on the current date
+				// Fetch microEsp by room ID
+				const microEsp = await microEspController.getMicroEspIP(room.roomID);
+				if (!microEsp) {
+					console.error(`MicroEsp not found for room ${room.roomName}`);
+					continue;
+				}
+
+				// Fetch meetings for the current room on the current date
 				const meetings = await meetingController.getMeetingsByRoomDateLed(
 					room.roomID,
 					currentDate.toISOString().split("T")[0]
 				);
 
-				// Iterate over meetings to find the next one
+				// Iterate over meetings
 				for (const meeting of meetings) {
 					const meetingStartDate = new Date(
 						meeting.meetingDate + "T" + meeting.meetingStart
@@ -66,34 +74,65 @@ exports.ledControls = {
 						meeting.meetingDate + "T" + meeting.meetingEnd
 					);
 
-					// Check if the meeting starts within the next 15 minutes and has not already started
+					// Calculate time differences in milliseconds
+					const timeUntilMeetingStart =
+						meetingStartDate.getTime() - currentDate.getTime();
+					const timeSinceMeetingEnd =
+						currentDate.getTime() - meetingEndDate.getTime();
+
+					// Status 1: Meeting starts within the next 15 minutes
 					if (
-						meetingStartDate.getTime() > currentDate.getTime() &&
-						meetingStartDate.getTime() - currentDate.getTime() <= 15 * 60 * 1000
+						timeUntilMeetingStart <= 15 * 60 * 1000 &&
+						timeUntilMeetingStart > 0
 					) {
-						console.log(`Meeting in 15 minutes in ${room.roomName} - Yellow`);
-						// Execute setMeetingLed with yellow color
-						await this.setMeetingLed("yellow");
+						const timeUntilMeeting = Math.ceil(
+							timeUntilMeetingStart / 1000 / 60
+						);
+						console.log(
+							`Meeting in ${timeUntilMeeting} minutes in ${room.roomName} - Yellow`
+						);
+						await this.setLedsInternal({
+							microEspIP: microEsp.microEspIP,
+							hue: stringToHue.yellow,
+							saturation: 255,
+							value: 255,
+						});
 					}
 
-					// Check if the meeting is ongoing
+					// Status 2: Meeting is ongoing
 					if (
 						currentDate >= meetingStartDate &&
 						currentDate <= meetingEndDate
 					) {
 						console.log(`Meeting ongoing in ${room.roomName} - Red`);
-						// Execute setMeetingLed with red color
-						await this.setMeetingLed("red");
+						const timeUntilEnd = Math.ceil(
+							(meetingEndDate.getTime() - currentDate.getTime()) / 1000 / 60
+						);
+						console.log(`Time until meeting ends: ${timeUntilEnd} minutes`);
+						await this.setLedsInternal({
+							microEspIP: microEsp.microEspIP,
+							hue: stringToHue.red,
+							saturation: 255,
+							value: 255,
+						});
 					}
 
-					// Check if the meeting has ended within the last 15 minutes
+					// Status 3: Meeting has ended within the last 15 minutes
 					if (
-						currentDate > meetingEndDate &&
-						currentDate.getTime() - meetingEndDate.getTime() <= 15 * 60 * 1000
+						timeSinceMeetingEnd <= 15 * 60 * 1000 &&
+						timeSinceMeetingEnd > 0
 					) {
 						console.log(`Meeting ended in ${room.roomName} - Green`);
-						// Execute setMeetingLed with green color for 15 minutes
-						await this.setMeetingLed("green");
+						const timeSinceEnd = Math.ceil(timeSinceMeetingEnd / 1000 / 60);
+						console.log(
+							`Time elapsed since meeting ended: ${timeSinceEnd} minutes`
+						);
+						await this.setLedsInternal({
+							microEspIP: microEsp.microEspIP,
+							hue: stringToHue.green,
+							saturation: 255,
+							value: 255,
+						});
 					}
 				}
 			}
@@ -114,6 +153,19 @@ exports.ledControls = {
 			res.json(response.data);
 		} catch (error) {
 			res.status(500).json({ error: error.message });
+		}
+	},
+
+	// Function to set LEDs internally
+	async setLedsInternal({ microEspIP, hue, saturation, value }) {
+		try {
+			// Construct URL with query parameters
+			const url = `http://${microEspIP}/esp32/setLeds?hue=${hue}&saturation=${saturation}&value=${value}`;
+			// Send GET request with Axios
+			const response = await axios.get(url);
+			console.log(response.data); // Log the response data
+		} catch (error) {
+			console.error("Error setting LEDs internally:", error);
 		}
 	},
 };
