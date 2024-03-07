@@ -78,6 +78,25 @@ exports.meetingController = {
 		}
 	},
 
+	async getMeetingsByRoomDateLed(roomID, meetingDate) {
+		await connect();
+		try {
+			// Find the room by ID
+			const room = await Room.findByPk(roomID);
+			if (!room) {
+				throw new Error("Room not found");
+			}
+
+			const meetings = await Meeting.findAll({
+				where: { roomID, meetingDate },
+			});
+			return meetings;
+		} catch (error) {
+			console.error("Error retrieving meetings:", error);
+			throw error;
+		}
+	},
+
 	async getAllMeetingsBetween(req, res) {
 		await connect();
 		try {

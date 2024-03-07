@@ -51,6 +51,19 @@ exports.roomController = {
 		}
 	},
 
+	// Function to get all rooms - router doesn't have authentication so backend LED controllers can use it without cookies
+	async getAllRoomsLed() {
+		await connect();
+		try {
+			// Retrieve all rooms from the database
+			const rooms = await Room.findAll();
+			return rooms;
+		} catch (error) {
+			console.error("Error retrieving rooms:", error);
+			throw error;
+		}
+	},
+
 	// Controller function to get a room by name
 	async getRoomByName(req, res) {
 		await connect();
