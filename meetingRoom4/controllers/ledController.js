@@ -144,13 +144,10 @@ exports.ledControls = {
 	async setLedsUI(req, res) {
 		try {
 			const { microEspIP, hue, saturation, value } = req.body;
-			console.log(req.body);
 
 			// Construct URL with query parameters
 			const url = `http://${microEspIP}/esp32/setLeds?hue=${hue}&saturation=${saturation}&value=${value}`;
 			// Send GET request with Axios
-
-			console.log(url);
 
 			const response = await axios.get(url);
 			res.json(response.data);
@@ -181,9 +178,6 @@ exports.ledControls = {
 			const url = `http://${microEspIP}/esp32/setLeds?hue=${String(
 				hue
 			)}&saturation=${String(saturation)}&value=${String(value)}`;
-
-			console.log(req.body);
-			console.log(url);
 
 			// Send GET request with Axios
 			const response = await axios.get(url);
