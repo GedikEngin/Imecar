@@ -149,6 +149,9 @@ exports.ledControls = {
 			// Construct URL with query parameters
 			const url = `http://${microEspIP}/esp32/setLeds?hue=${hue}&saturation=${saturation}&value=${value}`;
 			// Send GET request with Axios
+
+			console.log(url);
+
 			const response = await axios.get(url);
 			res.json(response.data);
 		} catch (error) {
@@ -166,6 +169,37 @@ exports.ledControls = {
 			console.log(response.data); // Log the response data
 		} catch (error) {
 			console.error("Error setting LEDs internally:", error);
+		}
+	},
+
+	// Function to set LED colors based on the button box input
+	async setLedsButtonBox(req, res) {
+		try {
+			const { hue, saturation, value, microEspIP } = req.body;
+
+			// Construct URL with query parameters
+			const url = `http://${microEspIP}/esp32/setLeds?hue=${String(
+				hue
+			)}&saturation=${String(saturation)}&value=${String(value)}`;
+
+			console.log(req.body);
+			console.log(url);
+
+			// Send GET request with Axios
+			const response = await axios.get(url);
+			res.json(response.data);
+		} catch (error) {
+			res.status(500).json({ error: error.message });
+		}
+	},
+
+	async toggleBlink(req, res) {
+		try {
+			// Trigger the blinking here
+			console.log("test"); // Print "test" in the console
+			res.json({ message: "Blinking triggered" });
+		} catch (error) {
+			res.status(500).json({ error: error.message });
 		}
 	},
 };

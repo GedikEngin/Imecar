@@ -7,6 +7,7 @@ const { ledControls } = require("../controllers/ledController");
 
 router.post("/setLed", ledControls.setLeds);
 router.post("/setLedUI", ledControls.setLedsUI);
+router.post("/setLedsButtonBox", ledControls.setLedsButtonBox);
 router.post("/toggleBlink", ledControls.toggleBlink);
 router.get("/checkNextMeeting", ledControls.checkNextMeeting);
 
