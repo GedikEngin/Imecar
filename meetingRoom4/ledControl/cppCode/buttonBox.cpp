@@ -8,8 +8,7 @@ const char *ssid = "ESP32_AP";
 const char *password = "password";
 const char *serverAddress = "http://192.168.4.1:8080/esp32/setLeds";
 
-const int switchPin = 1;
-const int ledPin = 2;
+const int switchPin = 9;
 int switchState = 0;
 int lastSwitchState = HIGH;
 unsigned long lastDebounceTime = 0;
@@ -43,8 +42,7 @@ void setup()
 {
   Serial.begin(9600);
   pinMode(switchPin, INPUT_PULLUP);
-  pinMode(ledPin, OUTPUT);
-
+  
   // Connect to WiFi
   Serial.printf("Connecting to %s ", ssid);
   WiFi.begin(ssid, password);
@@ -76,13 +74,11 @@ void loop()
       if (switchState == LOW)
       {
         Serial.println("State 1");
-        digitalWrite(ledPin, HIGH);
         sendHttpRequest(0, 255, 255); // State 1: Hue 0, Saturation 255, Value 255
       }
       else
       {
         Serial.println("State 2");
-        digitalWrite(ledPin, LOW);
         sendHttpRequest(90, 255, 255); // State 2: Hue 90, Saturation 255, Value 255
       }
     }
