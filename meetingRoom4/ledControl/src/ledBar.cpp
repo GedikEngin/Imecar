@@ -4,7 +4,7 @@
 #include <ESPAsyncWebServer.h>
 #include <FastLED.h>
 
-#define LED_PIN 3
+#define LED_PIN 17
 #define NUM_LEDS 50
 #define LED_TYPE WS2812B
 #define COLOR_ORDER RGB
