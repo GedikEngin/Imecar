@@ -42,13 +42,13 @@ async function startServer() {
 
 		// Initial check after 2.5 seconds
 		setTimeout(async () => {
-			console.log("Running initial checkNextMeeting after 2.5 seconds");
+			// console.log("Running initial checkNextMeeting after 2.5 seconds");
 			await ledControls.checkNextMeeting(); // Call checkNextMeeting directly
 		}, 2500);
 
 		// Schedule the checkNextMeeting function to run every 1 minute
 		cron.schedule("*/1 * * * *", async () => {
-			console.log("Running checkNextMeeting every 1 minute");
+			// console.log("Running checkNextMeeting every 1 minute");
 			await ledControls.checkNextMeeting(); // Call checkNextMeeting directly
 		});
 	} catch (error) {

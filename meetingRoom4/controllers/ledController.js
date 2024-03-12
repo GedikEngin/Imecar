@@ -187,11 +187,30 @@ exports.ledControls = {
 		}
 	},
 
-	async toggleBlink(req, res) {
+	async toggleBlinkButtonBox(req, res) {
+		console.log("Blinking triggered");
+
+		// Extract command and lastSwitchState from request query
+		const { command, lastSwitchState, microEspIP } = req.body;
+
+		const hue = stringToHue[lastSwitchState];
+		const saturation = 255;
+		const value = 255;
+
+		console.log(lastSwitchState);
+		console.log(hue);
+
 		try {
-			// Trigger the blinking here
-			console.log("test"); // Print "test" in the console
-			res.json({ message: "Blinking triggered" });
+			// Construct URL with query parameters
+			const url = `http://${microEspIP}/esp32/blinkToggle?hue=${String(
+				hue
+			)}&saturation=${String(saturation)}&value=${String(
+				value
+			)}&command=${String(command)}`;
+
+			// Send GET request with Axios
+			const response = await axios.get(url);
+			res.json(response.data);
 		} catch (error) {
 			res.status(500).json({ error: error.message });
 		}
