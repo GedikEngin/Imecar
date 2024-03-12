@@ -10,6 +10,7 @@ const char *password = "password"; // Replace with your WiFi password
 
 // IP of the linked LED / the IP of the ESP the button box is in the same room with
 const char *microEspIP = "192.168.4.1:8080";
+const char *serverIP = "192.168.4.3:8080";
 
 // GPIO pin where the toggle switch is connected
 const int switchPin = 22;
@@ -53,7 +54,7 @@ void setLedsButtonBox(String command)
     Serial.println("Sending the following instructions to server: " + command);
 
     HTTPClient http;
-    http.begin("http://192.168.4.3:8080/led/setLedsButtonBox");
+    http.begin("http://" + String(serverIP) + "/led/setLedsButtonBox");
     http.addHeader("Content-Type", "application/json");
 
     String payload = "";
