@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "author": "Engin Gedik",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": -4.76, "attrs": {} },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw1",
+      "top": -14.8,
+      "left": 204.7,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-switch",
+      "id": "sw2",
+      "top": 49.6,
+      "left": 211.7,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-neopixel-canvas",
+      "id": "neopixels2",
+      "top": -109.4,
+      "left": -442.7,
+      "attrs": { "rows": "1", "cols": "50", "matrixBrightness": "10" }
+    },
+    { "type": "wokwi-vcc", "id": "vcc1", "top": -52.8, "left": 34.56, "rotate": 270, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:GND.2", "sw1:2", "black", [ "h72.04", "v-26.1" ] ],
+    [ "esp:GND.2", "sw2:2", "black", [ "h72.04", "v57.5" ] ],
+    [ "sw1:1", "esp:22", "green", [ "h-60.2", "v6.8" ] ],
+    [ "sw2:1", "esp:21", "green", [ "h-57.6", "v19.2" ] ],
+    [ "vcc1:VCC", "neopixels2:VDD", "red", [ "v0", "h72.2" ] ],
+    [ "esp:17", "neopixels2:DIN", "green", [ "h211.2", "v-192", "h-153.6", "v9.6" ] ],
+    [ "esp:GND.2", "neopixels2:VSS", "black", [ "h38.4", "v-115.2" ] ]
+  ],
+  "dependencies": {}
+}

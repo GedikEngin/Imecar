@@ -52,25 +52,6 @@ void setup()
 
         request->send(200, "application/json", "{\"message\": \"LEDs set to specified color\"}"); });
 
-    // Define the route for handling the LED settings and printing command and hue
-    server.on("/esp32/setLeds", HTTP_GET, [](AsyncWebServerRequest *request)
-              {
-        String path = request->url();
-        Serial.println("Received URL: " + request->url());
-
-        String command = "";
-        int hue = 0;
-        if (request->hasParam("command") && request->hasParam("hue")) {
-            command = request->getParam("command")->value();
-            hue = request->getParam("hue")->value().toInt();
-        }
-
-        // Print command and hue
-        Serial.println("Command: " + command);
-        Serial.println("Hue: " + String(hue));
-
-        request->send(200, "text/plain", "Command and Hue received."); });
-
     server.begin();
 }
 
