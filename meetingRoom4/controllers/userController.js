@@ -231,6 +231,4 @@ exports.userController = {
 			res.status(500).json(errorResponse(500, "Internal server error"));
 		}
 	},
-
-	// Add other controller functions here...
 };

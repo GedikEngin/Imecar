@@ -26,6 +26,8 @@
 		"pg": "^8.11.3",
 		"postgres": "^3.4.3",
 		"querystring": "^0.2.1",
-		"sequelize": "^6.37.1"
+		"sequelize": "^6.37.1",
+		"swagger-jsdoc": "^6.2.8",
+		"swagger-ui-express": "^5.0.0"
 	}
 }

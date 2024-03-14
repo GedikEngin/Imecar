@@ -1,47 +1,160 @@
-// roomRouter.js
+/**
+ * @swagger
+ * tags:
+ *   name: Room
+ *   description: Operations related to rooms
+ */
 
 const express = require("express");
 const router = express.Router();
 const { roomController } = require("../controllers/roomController");
-const { cookies } = require("../middlewares/auth/auth"); // Import the cookies object from auth.js
+const { cookies } = require("../middlewares/auth/auth");
 const { createRoomValidator } = require("../validators/roomValidator");
 
-// Route for creating a room
+/**
+ * @swagger
+ * /api/room/create:
+ *   post:
+ *     tags: [Room]
+ *     summary: Create a new room
+ *     description: Create a new room with the provided information.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Room'
+ *     responses:
+ *       '200':
+ *         description: Room successfully created.
+ *       '400':
+ *         description: Invalid request or missing required parameters.
+ */
 router.post(
 	"/create",
-	cookies.verifyAndAttachUser, // Using verifyAndAttachUser middleware from cookies object
+	cookies.verifyAndAttachUser,
 	createRoomValidator,
 	roomController.createRoom
 );
 
-// Route to get all rooms
-router.get("/rooms", cookies.verifyAndAttachUser, roomController.getAllRooms); // Using verifyAndAttachUser middleware from cookies object
+/**
+ * @swagger
+ * /api/room/rooms:
+ *   get:
+ *     tags: [Room]
+ *     summary: Get all rooms
+ *     description: Retrieve a list of all rooms.
+ *     responses:
+ *       '200':
+ *         description: A list of rooms.
+ */
+router.get("/rooms", cookies.verifyAndAttachUser, roomController.getAllRooms);
 
-// Route to get a room by ID
+/**
+ * @swagger
+ * /api/room/search/roomID/{roomID}:
+ *   get:
+ *     tags: [Room]
+ *     summary: Get room by ID
+ *     description: Retrieve a room by its ID.
+ *     parameters:
+ *       - in: path
+ *         name: roomID
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the room to retrieve.
+ *     responses:
+ *       '200':
+ *         description: Room found.
+ *       '404':
+ *         description: Room not found.
+ */
 router.get(
 	"/search/roomID/:roomID",
-	cookies.verifyAndAttachUser, // Using verifyAndAttachUser middleware from cookies object
+	cookies.verifyAndAttachUser,
 	roomController.getRoomByID
 );
 
-// Route to get a room by name
+/**
+ * @swagger
+ * /api/room/search/roomName/{roomName}:
+ *   get:
+ *     tags: [Room]
+ *     summary: Get room by name
+ *     description: Retrieve a room by its name.
+ *     parameters:
+ *       - in: path
+ *         name: roomName
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Name of the room to retrieve.
+ *     responses:
+ *       '200':
+ *         description: Room found.
+ *       '404':
+ *         description: Room not found.
+ */
 router.get(
 	"/search/roomName/:roomName",
-	cookies.verifyAndAttachUser, // Using verifyAndAttachUser middleware from cookies object
+	cookies.verifyAndAttachUser,
 	roomController.getRoomByName
 );
 
-// Route to delete a room by ID
+/**
+ * @swagger
+ * /api/room/delete/roomID/{roomID}:
+ *   delete:
+ *     tags: [Room]
+ *     summary: Delete room by ID
+ *     description: Delete a room by its ID.
+ *     parameters:
+ *       - in: path
+ *         name: roomID
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the room to delete.
+ *     responses:
+ *       '200':
+ *         description: Room successfully deleted.
+ *       '401':
+ *         description: Unauthorized - user not authenticated.
+ *       '404':
+ *         description: Room not found.
+ */
 router.delete(
 	"/delete/roomID/:roomID",
-	cookies.verifyAndAttachUser, // Using verifyAndAttachUser middleware from cookies object
+	cookies.verifyAndAttachUser,
 	roomController.deleteRoomByID
 );
 
-// Route to delete a room by name
+/**
+ * @swagger
+ * /api/room/delete/roomName/{roomName}:
+ *   delete:
+ *     tags: [Room]
+ *     summary: Delete room by name
+ *     description: Delete a room by its name.
+ *     parameters:
+ *       - in: path
+ *         name: roomName
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Name of the room to delete.
+ *     responses:
+ *       '200':
+ *         description: Room successfully deleted.
+ *       '401':
+ *         description: Unauthorized - user not authenticated.
+ *       '404':
+ *         description: Room not found.
+ */
 router.delete(
 	"/delete/roomName/:roomName",
-	cookies.verifyAndAttachUser, // Using verifyAndAttachUser middleware from cookies object
+	cookies.verifyAndAttachUser,
 	roomController.deleteRoomByName
 );
 
