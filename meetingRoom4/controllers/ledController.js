@@ -32,15 +32,6 @@ exports.ledControls = {
 		}
 	},
 
-	async toggleBlink(req, res) {
-		try {
-			// Implement logic to toggle LED blinking
-			res.json({ message: "LED blinking toggled" });
-		} catch (error) {
-			res.status(500).json({ error: error.message });
-		}
-	},
-
 	// Function to check the status of upcoming meetings and control LEDs accordingly
 	async checkNextMeeting() {
 		try {
@@ -171,6 +162,7 @@ exports.ledControls = {
 
 	// Function to set LED colors based on the button box input
 	async setLedsButtonBox(req, res) {
+		console.log("setLedsButtonBox");
 		try {
 			const { hue, saturation, value, microEspIP } = req.body;
 
@@ -187,26 +179,15 @@ exports.ledControls = {
 		}
 	},
 
-	async toggleBlinkButtonBox(req, res) {
-		console.log("Blinking triggered");
+	async startAnimationButtonBox(req, res) {
+		console.log("startAnimationButtonBox");
 
-		// Extract command and lastSwitchState from request query
-		const { command, lastSwitchState, microEspIP } = req.body;
+		microEspIP = req.query.microEspIP;
 
-		const hue = stringToHue[lastSwitchState];
-		const saturation = 255;
-		const value = 255;
-
-		console.log(lastSwitchState);
-		console.log(hue);
-
+		console.log(microEspIP);
 		try {
 			// Construct URL with query parameters
-			const url = `http://${microEspIP}/esp32/blinkToggle?hue=${String(
-				hue
-			)}&saturation=${String(saturation)}&value=${String(
-				value
-			)}&command=${String(command)}`;
+			const url = `http://${microEspIP}/esp32/startAnimation`;
 
 			// Send GET request with Axios
 			const response = await axios.get(url);

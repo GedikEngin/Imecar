@@ -6,7 +6,7 @@
 
 const char *ssid = "ESP32_AP";
 const char *password = "password";
-const char *serverAddress = "http://192.168.4.1:8080/esp32/setLeds";
+const char *serverAddressSetLeds = "http://192.168.4.1:8080/esp32/setLeds";
 
 const int switchPin = 9;
 int switchState = 0;
@@ -14,9 +14,9 @@ int lastSwitchState = HIGH;
 unsigned long lastDebounceTime = 0;
 unsigned long debounceDelay = 100;
 
-void sendHttpRequest(int hue, int saturation, int value)
+void sendHttpSetLed(int hue, int saturation, int value)
 {
-  String url = String(serverAddress) + "?hue=" + String(hue) + "&saturation=" + String(saturation) + "&value=" + String(value);
+  String url = String(serverAddressSetLeds) + "?hue=" + String(hue) + "&saturation=" + String(saturation) + "&value=" + String(value);
   HTTPClient http;
 
   Serial.print("Sending HTTP request to: ");
@@ -42,7 +42,7 @@ void setup()
 {
   Serial.begin(9600);
   pinMode(switchPin, INPUT_PULLUP);
-  
+
   // Connect to WiFi
   Serial.printf("Connecting to %s ", ssid);
   WiFi.begin(ssid, password);
@@ -73,13 +73,13 @@ void loop()
 
       if (switchState == LOW)
       {
-        Serial.println("State 1");
-        sendHttpRequest(0, 255, 255); // State 1: Hue 0, Saturation 255, Value 255
+        Serial.println("Red");
+        sendHttpSetLed(0, 255, 255); // State 1: Hue 0, Saturation 255, Value 255
       }
       else
       {
-        Serial.println("State 2");
-        sendHttpRequest(90, 255, 255); // State 2: Hue 90, Saturation 255, Value 255
+        Serial.println("Green");
+        sendHttpSetLed(90, 255, 255); // State 2: Hue 90, Saturation 255, Value 255
       }
     }
   }

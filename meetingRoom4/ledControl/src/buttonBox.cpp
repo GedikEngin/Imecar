@@ -3,25 +3,30 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <HTTPClient.h>
+#include <iostream>
 
-// WiFi credentials
-const char *ssid = "ESP32_AP";     // Replace with your WiFi SSID
-const char *password = "password"; // Replace with your WiFi password
+// WiFi/Connections
 
-// IP of the linked LED / the IP of the ESP the button box is in the same room with
+// const char *ssid = "ESP32_AP";
+// const char *password = "password";
+const char *ssid = "MW42V_A8CA";
+const char *password = "91014264"; // own
+
 const char *microEspIP = "192.168.4.1:8080";
-const char *serverIP = "192.168.4.3:8080";
 
-// GPIO pin where the toggle switch and blink is connected
+// const char *serverIP = "192.168.4.3:8080";
+const char *serverIP = "192.168.1.154:8080"; // own
+
+// Pins
 const int switchPin = 22;
-const int blinkPin = 21;
+const int animationPin = 21;
 
 // Switch and blink states
-bool switchState = false;
-bool lastSwitchState = false;
+int animationState = 0;
+int switchState = 0;
 
-bool blinkState = false;
-bool lastBlinkState = false;
+int lastAnimationState = HIGH;
+int lastSwitchState = HIGH;
 
 // Function to connect to WiFi
 void connectToWiFi()
@@ -70,12 +75,6 @@ void setLedsButtonBoxSwitch(String command)
     else if (command == "greenSwitch")
     {
         payload = "{\"hue\": 94, \"saturation\": 255, \"value\": 255, \"microEspIP\": \"" + String(microEspIP) + "\"}";
-    }
-    else if (command == "blinkOn")
-    {
-    }
-    else if (command == "blinkOff")
-    {
     };
 
     int httpResponseCode = http.POST(payload);
@@ -95,32 +94,21 @@ void setLedsButtonBoxSwitch(String command)
     http.end();
 }
 
-void setLedsButtonBoxBlink(String command, bool lastSwitchState)
+void startAnimationButtonBox()
 {
-    Serial.println("Sending the following instructions to server: " + command);
-
+    Serial.println("sending start animation command");
     HTTPClient http;
-    String url = "http://" + String(serverIP) + "/led/toggleBlinkButtonBox";
-    Serial.println("URL: " + url);
-    http.begin(url);
-    http.addHeader("Content-Type", "application/json");
-
-    String payload = "{\"command\": \"" + command + "\", \"lastSwitchState\": \"" + (lastSwitchState ? "red" : "green") + "\", \"microEspIP\": \"" + String(microEspIP) + "\"}";
-
-    int httpResponseCode = http.POST(payload);
-
+    http.begin("http://" + String(serverIP) + "/led/startAnimationButtonBox?microEspIP=" + microEspIP);
+    int httpResponseCode = http.GET();
     if (httpResponseCode > 0)
     {
-        String response = http.getString();
-        Serial.println("Response code: " + String(httpResponseCode));
-        Serial.println("Response: " + response);
+        Serial.println("Triggered server action successfully");
     }
     else
     {
-        Serial.print("Error on sending POST request: ");
+        Serial.print("Error triggering server action: ");
         Serial.println(httpResponseCode);
     }
-
     http.end();
 }
 
@@ -131,6 +119,7 @@ void setup()
 
     // Initialize switch pin
     pinMode(switchPin, INPUT_PULLUP);
+    pinMode(animationPin, INPUT_PULLUP);
 
     // Connect to WiFi
     connectToWiFi();
@@ -140,7 +129,7 @@ void loop()
 {
     // Read the state of the switch
     switchState = digitalRead(switchPin);
-    blinkState = digitalRead(blinkPin);
+    animationState = digitalRead(animationPin);
 
     // Check if the state of the switch has changed
     if (switchState != lastSwitchState)
@@ -159,21 +148,18 @@ void loop()
     }
 
     // Check if the state of the blink has changed
-    if (blinkState != lastBlinkState)
+    if (animationState != lastAnimationState)
     {
-        if (blinkState == HIGH)
+        if (animationState == HIGH)
         {
-            // Switch is ON, send payload for LED ON
-            Serial.println("startBlink");
-            setLedsButtonBoxBlink("startBlink", lastSwitchState);
+            Serial.println("animation trigger is on");
+            startAnimationButtonBox();
         }
         else
         {
-            // Switch is OFF, send payload for LED OFF
-            Serial.println("stopBlink");
-            setLedsButtonBoxBlink("stopBlink", lastSwitchState);
+            Serial.println("animation trigger is off");
         }
-        lastBlinkState = blinkState;
+        lastAnimationState = animationState;
     }
 
     delay(200); // Adjust delay as needed for debounce or responsiveness
