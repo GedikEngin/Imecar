@@ -4,13 +4,13 @@
 #include <ESPAsyncWebServer.h>
 #include <FastLED.h>
 
-#define LED_PIN 17
+const char *ssid = "MW42V_A8CA";
+const char *password = "91014264";
+
+#define LED_PIN 33
 #define NUM_LEDS 50
 #define LED_TYPE WS2812B
 #define COLOR_ORDER RGB
-
-const char *ssid = "ESP32_AP";
-const char *password = "password";
 
 int frameIndex = 0;
 
@@ -453,351 +453,6 @@ void setColors()
         fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
         break;
     case 70:
-
-        for (int i = 4; i <= 45; i++)
-        {
-            leds[i] = CRGB(191, 191, 191);
-        }
-        break;
-
-    case 71:
-        for (int i = 0; i <= 49; i += 4)
-        {
-            leds[i] = CRGB(191, 191, 191);
-            leds[i + 1] = CRGB(191, 191, 191);
-            leds[i + 2] = CRGB(191, 191, 191);
-            leds[i + 3] = CRGB(191, 191, 191);
-        }
-
-        for (int i = 4; i <= 49; i += 8)
-        {
-            leds[i] = CRGB(128, 128, 128);
-            leds[i + 1] = CRGB(128, 128, 128);
-            leds[i + 2] = CRGB(128, 128, 128);
-            leds[i + 3] = CRGB(128, 128, 128);
-            leds[i + 4] = CRGB(191, 191, 191);
-            leds[i + 5] = CRGB(191, 191, 191);
-            leds[i + 6] = CRGB(191, 191, 191);
-            leds[i + 7] = CRGB(191, 191, 191);
-        }
-        break;
-
-    case 72:
-
-        for (int i = 0; i <= 49; i += 8)
-        {
-            leds[i] = CRGB(128, 128, 128);
-            leds[i + 1] = CRGB(128, 128, 128);
-            leds[i + 2] = CRGB(128, 128, 128);
-            leds[i + 3] = CRGB(128, 128, 128);
-            leds[i + 4] = CRGB(64, 64, 64);
-            leds[i + 5] = CRGB(64, 64, 64);
-            leds[i + 6] = CRGB(64, 64, 64);
-            leds[i + 7] = CRGB(64, 64, 64);
-        }
-
-        for (int i = 4; i <= 49; i += 8)
-        {
-            leds[i] = CRGB(64, 64, 64);
-            leds[i + 1] = CRGB(64, 64, 64);
-            leds[i + 2] = CRGB(64, 64, 64);
-            leds[i + 3] = CRGB(64, 64, 64);
-            leds[i + 4] = CRGB(128, 128, 128);
-            leds[i + 5] = CRGB(128, 128, 128);
-            leds[i + 6] = CRGB(128, 128, 128);
-            leds[i + 7] = CRGB(128, 128, 128);
-        }
-        break;
-
-    case 73:
-        for (int i = 0; i <= 49; i += 8)
-        {
-            leds[i] = CRGB(64, 64, 64);
-            leds[i + 1] = CRGB(64, 64, 64);
-            leds[i + 2] = CRGB(64, 64, 64);
-            leds[i + 3] = CRGB(64, 64, 64);
-            leds[i + 4] = CRGB(0, 0, 0);
-            leds[i + 5] = CRGB(0, 0, 0);
-            leds[i + 6] = CRGB(0, 0, 0);
-            leds[i + 7] = CRGB(0, 0, 0);
-        }
-        for (int i = 4; i <= 49; i += 8)
-        {
-            leds[i] = CRGB(0, 0, 0);
-            leds[i + 1] = CRGB(0, 0, 0);
-            leds[i + 2] = CRGB(0, 0, 0);
-            leds[i + 3] = CRGB(0, 0, 0);
-            leds[i + 4] = CRGB(64, 64, 64);
-            leds[i + 5] = CRGB(64, 64, 64);
-            leds[i + 6] = CRGB(64, 64, 64);
-            leds[i + 7] = CRGB(64, 64, 64);
-        }
-        break;
-
-    case 74:
-        for (int i = 0; i < NUM_LEDS; i++)
-        {
-            leds[i] = CRGB(0, 0, 0);
-        }
-        break;
-    case 75:
-        break;
-    case 76:
-        break;
-    case 77:
-        break;
-    case 78:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 79:
-        break;
-    case 80:
-        break;
-    case 81:
-        break;
-    case 82:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 83:
-        break;
-    case 84:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 85:
-        break;
-    case 86:
-        break;
-    case 87:
-        break;
-    case 88:
-        break;
-    case 89:
-        break;
-    case 90:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 91:
-        break;
-    case 92:
-        break;
-    case 93:
-        break;
-    case 94:
-        break;
-    case 95:
-        break;
-    case 96:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 97:
-        break;
-    case 98:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 99:
-        break;
-    case 100:
-        break;
-    case 101:
-        break;
-    case 102:
-        break;
-    case 103:
-        break;
-    case 104:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 105:
-        break;
-    case 106:
-        break;
-    case 107:
-        break;
-    case 108:
-        break;
-    case 109:
-        break;
-    case 110:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 111:
-        break;
-    case 112:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 113:
-        break;
-    case 114:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 115:
-        break;
-    case 116:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 117:
-        break;
-    case 118:
-        break;
-    case 119:
-        break;
-    case 120:
-        break;
-    case 121:
-        break;
-    case 122:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 123:
-        break;
-    case 124:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 125:
-        break;
-    case 126:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 127:
-        break;
-    case 128:
-        break;
-    case 129:
-        break;
-    case 130:
-        break;
-    case 131:
-        break;
-    case 132:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 133:
-        break;
-    case 134:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 135:
-        break;
-    case 136:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 137:
-        break;
-    case 138:
-        break;
-    case 139:
-        break;
-    case 140:
-        break;
-    case 141:
-        break;
-    case 142:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 143:
-        break;
-    case 144:
-        break;
-    case 145:
-        break;
-    case 146:
-        break;
-    case 147:
-        break;
-    case 148:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 149:
-        break;
-    case 150:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 151:
-        break;
-    case 152:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 153:
-        break;
-    case 154:
-        break;
-    case 155:
-        break;
-    case 156:
-        break;
-    case 157:
-        break;
-    case 158:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 159:
-        break;
-    case 160:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 161:
-        break;
-    case 162:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 163:
-        break;
-    case 164:
-        break;
-    case 165:
-        break;
-    case 166:
-        break;
-    case 167:
-        break;
-    case 168:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 169:
-        break;
-    case 170:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 171:
-        break;
-    case 172:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 173:
-        break;
-    case 174:
-        break;
-    case 175:
-        break;
-    case 176:
-        break;
-    case 177:
-        break;
-    case 178:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 179:
-        break;
-    case 180:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
-        break;
-    case 181:
-        break;
-    case 182:
-        fill_solid(leds, NUM_LEDS, CRGB(0, 0, 0));
-        break;
-    case 183:
-        break;
-    case 184:
-        break;
-    case 185:
-        break;
-    case 186:
-        break;
-    case 187:
-        break;
-    case 188:
-        fill_solid(leds, NUM_LEDS, CRGB(255, 255, 255));
         break;
     }
 }
@@ -806,22 +461,34 @@ void startAnimation()
 {
     frameIndex = 0; // Reset frame index to start the animation from the beginning
 
-    while (frameIndex < 188) // Iterate through all frames of the animation
+    while (frameIndex < 70) // Iterate through all frames of the animation
     {
         setColors();    // Set colors for the current frame
         FastLED.show(); // Show the current frame
-        delay(75);      // Delay between frames (adjust as needed)
+        delay(50);      // Delay between frames (adjust as needed)
         frameIndex++;   // Move to the next frame
     }
 }
 
 void setup()
 {
-    Serial.begin(115200);
+    Serial.begin(9600);
     delay(1000);
-    WiFi.softAP(ssid, password);
-    Serial.print("Access Point IP address: ");
-    Serial.println(WiFi.softAPIP());
+    WiFi.begin(ssid, password); // Connect to the specified Wi-Fi network
+    Serial.print("Connecting to ");
+    Serial.print(ssid);
+
+    // Wait for connection
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        delay(500);
+        Serial.print(".");
+    }
+    Serial.println("");
+
+    Serial.print("Connected to WiFi network with IP address: ");
+    Serial.println(WiFi.localIP());
+
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS);
 
     // Enable CORS for all routes
@@ -854,12 +521,12 @@ void setup()
     // startAnimation
     server.on("/esp32/startAnimation", HTTP_GET, [](AsyncWebServerRequest *request)
               {
-        String path = request->url();
-        Serial.println("Received URL: " + request->url());
+                  String path = request->url();
+                  Serial.println("Received URL: " + request->url());
 
-        startAnimation();
+                  startAnimation();
 
-        request->send(200, "application/json", "{\"message\": \"Animation started\"}"); });
+                  request->send(200, "application/json", "{\"message\": \"Animation started\"}"); });
 
     server.begin();
 }

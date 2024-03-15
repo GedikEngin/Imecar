@@ -7,15 +7,12 @@
 
 // WiFi/Connections
 
-// const char *ssid = "ESP32_AP";
-// const char *password = "password";
 const char *ssid = "MW42V_A8CA";
-const char *password = "91014264"; // own
+const char *password = "91014264";
 
-const char *microEspIP = "192.168.4.1:8080";
+const char *microEspIP = "192.168.1.102:8080";
 
-// const char *serverIP = "192.168.4.3:8080";
-const char *serverIP = "192.168.1.154:8080"; // own
+const char *serverIP = "192.168.1.154:8080";
 
 // Pins
 const int switchPin = 22;
@@ -94,21 +91,57 @@ void setLedsButtonBoxSwitch(String command)
     http.end();
 }
 
-void startAnimationButtonBox()
+// void startAnimationButtonBox()
+// {
+//     Serial.println("sending start animation command");
+//     HTTPClient http;
+//     http.begin("http://" + String(serverIP) + "/led/startAnimationButtonBox?microEspIP=" + microEspIP);
+//     int httpResponseCode = http.GET();
+//     if (httpResponseCode > 0)
+//     {
+//         Serial.println("Triggered server action successfully");
+//     }
+//     else
+//     {
+//         Serial.print("Error triggering server action: ");
+//         Serial.println(httpResponseCode);
+//     }
+//     http.end();
+// }
+
+void startAnimationButtonBox(String command)
 {
-    Serial.println("sending start animation command");
+    Serial.println("Sending the following instructions to server: " + command);
+
     HTTPClient http;
-    http.begin("http://" + String(serverIP) + "/led/startAnimationButtonBox?microEspIP=" + microEspIP);
-    int httpResponseCode = http.GET();
+    http.begin("http://" + String(microEspIP) + "/esp32/setLeds");
+    http.addHeader("Content-Type", "application/json");
+
+    String payload = "";
+
+    if (command == "redSwitch")
+    {
+        payload = "{\"hue\": 0, \"saturation\": 255, \"value\": 255, \"microEspIP\": \"" + String(microEspIP) + "\"}";
+    }
+    else if (command == "greenSwitch")
+    {
+        payload = "{\"hue\": 94, \"saturation\": 255, \"value\": 255, \"microEspIP\": \"" + String(microEspIP) + "\"}";
+    };
+
+    int httpResponseCode = http.POST(payload);
+
     if (httpResponseCode > 0)
     {
-        Serial.println("Triggered server action successfully");
+        String response = http.getString();
+        Serial.println("Response code: " + String(httpResponseCode));
+        Serial.println("Response: " + response);
     }
     else
     {
-        Serial.print("Error triggering server action: ");
+        Serial.print("Error on sending POST: ");
         Serial.println(httpResponseCode);
     }
+
     http.end();
 }
 
@@ -148,19 +181,35 @@ void loop()
     }
 
     // Check if the state of the blink has changed
+    // if (animationState != lastAnimationState)
+    // {
+    //     if (animationState == HIGH)
+    //     {
+    //         Serial.println("animation trigger is 'on'");
+    //         startAnimationButtonBox();
+    //     }
+    //     else
+    //     {
+    //         Serial.println("animation trigger is 'off'");
+    //         startAnimationButtonBox();
+    //     }
+    //     lastAnimationState = animationState;
+    // }
     if (animationState != lastAnimationState)
     {
         if (animationState == HIGH)
         {
-            Serial.println("animation trigger is on");
-            startAnimationButtonBox();
+            // Switch is ON, send payload for LED ON
+            setLedsButtonBoxSwitch("redSwitch");
         }
         else
         {
-            Serial.println("animation trigger is off");
+            // Switch is OFF, send payload for LED OFF
+            setLedsButtonBoxSwitch("greenSwitch");
         }
         lastAnimationState = animationState;
     }
 
     delay(200); // Adjust delay as needed for debounce or responsiveness
 }
+ 
