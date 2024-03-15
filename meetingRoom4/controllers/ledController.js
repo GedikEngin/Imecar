@@ -184,7 +184,6 @@ exports.ledControls = {
 
 		microEspIP = req.query.microEspIP;
 
-		console.log(microEspIP);
 		try {
 			// Construct URL with query parameters
 			const url = `http://${microEspIP}/esp32/startAnimation`;
